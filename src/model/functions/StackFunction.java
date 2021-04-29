@@ -21,8 +21,8 @@ public class StackFunction extends FunctionAB {
 	@Override
 	public double getValue(double x) {
 		
+		//store the partially calculated value at x
 		double accumulator = 0;
-		
 		
 		for(Object token : parsedExpressionList) {
 			

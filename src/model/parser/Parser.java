@@ -9,7 +9,7 @@ import model.functions.FunctionIF;
 public class Parser {
 	
 	
-	//turn an Expression (String) into a FunctionIF
+	//turn an Expression (String) into a list in reverse-Polish notation
 	public static LinkedList<Object> parseExpression(Expression expression) {
 		
 		ExpressionParser parser = new ExpressionParser();
