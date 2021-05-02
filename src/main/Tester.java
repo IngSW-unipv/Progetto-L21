@@ -10,9 +10,10 @@ public class Tester {
 
 	public static void main(String[] args) {
 		
-		StackFunction f = new StackFunction("x+2.1110000100101010-4/4+0");
+		//doesn't always respect PEMDAS!!!!!!
+		StackFunction f = new StackFunction("2+2+x/x");
 		
-		f.getValue(10);
+		System.out.println(f.getValue(2));;
 		
 		
 	}

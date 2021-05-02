@@ -12,8 +12,10 @@ public class StackFunction extends FunctionAB {
 	
 	public StackFunction(String expressionString) {
 		
+		//save the expression of this function.
 		this.expression = new Expression(expressionString);
 		
+		//call the parser to get a list of tokens in reverse-Polish notation.
 		parsedExpressionList = Parser.parseExpression(expression);
 	
 	}
@@ -21,13 +23,63 @@ public class StackFunction extends FunctionAB {
 	@Override
 	public double getValue(double x) {
 		
-		//store the partially calculated value at x
-		double accumulator = 0;
 		
+		
+		//store the partially calculated value at x
+		Double accumulator = null;
+		//buffer used to store an operand 
+		Double buffer = null;
+		
+		//go through all of the tokens of the expression.
 		for(Object token : parsedExpressionList) {
 			
-		
-			if(token.toString().toUpperCase().equals(token)) {
+			System.out.println(token);
+			
+			//if the token is a number:
+			//if no exception is thrown, token is a number:
+			try {
+				double number = Double.parseDouble(token.toString());
+				buffer = number;
+				
+			}catch(NumberFormatException e) {
+				
+			}
+			
+			
+			//if the token is an "x", add its (double) value to the accumulator. Somehow*
+			if(token.toString().toLowerCase().equals("x")) { 
+				buffer = x;
+				
+				
+			}
+			
+			
+
+			//...else the token is a function:
+			
+			
+			
+			
+			//initialize accumulator if it's still null
+			if(accumulator==null) {
+				accumulator =buffer;
+			}
+			
+			
+			//if the token is an operator:
+			switch(token.toString()) {
+			case "+":
+				accumulator+=buffer;
+				break;
+			case "-":
+				accumulator-=buffer;
+				break;
+			case "*":
+				accumulator=accumulator*buffer;
+				break;
+			case "/":
+				accumulator=accumulator/buffer;
+				break;
 				
 			}
 			
@@ -37,7 +89,8 @@ public class StackFunction extends FunctionAB {
 			
 		}
 	
-		return 0;
+		//return the final accumulated value.
+		return accumulator;
 	}
 	
 	
