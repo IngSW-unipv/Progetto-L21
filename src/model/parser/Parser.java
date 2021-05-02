@@ -4,8 +4,6 @@ import java.util.LinkedList;
 
 import org.scijava.parsington.ExpressionParser;
 
-import model.functions.FunctionIF;
-
 public class Parser {
 	
 	
@@ -17,7 +15,7 @@ public class Parser {
 		LinkedList<Object> linkedList = parser.parsePostfix(expression.toString());
 		
 		
-		//System.out.println(linkedList);
+//		System.out.println(linkedList);
 		
 		return linkedList;
 	}
