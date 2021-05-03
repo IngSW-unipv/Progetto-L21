@@ -37,10 +37,5 @@ public class SupportedFunctions {
 		return false;
 	}
 	
-	
-	
-	
-	
-	
 
 }

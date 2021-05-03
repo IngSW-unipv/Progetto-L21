@@ -1,11 +1,9 @@
 package model.functions;
 
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.Stack;
-import java.util.logging.Level;
-
 import com.sun.istack.internal.logging.Logger;
-
 import model.parser.Expression;
 import model.parser.Parser;
 
@@ -55,10 +53,10 @@ public class StackFunction extends FunctionAB {
 		//"branching" stack, that will contain a (possibly nested) function's return value.
 		Stack<Double> functionsEvalStack = new Stack<Double>();
 				
-		//to keep track of nested function calls
+		//to keep track of nested function calls.
 		Stack<String> functionNamesStack = new Stack<String>();
 		
-		//currentStack (could point either to resultsStack or functionsStack)
+		//currentStack (could point either to resultsStack or functionsStack).
 		Stack<Double> currentStack = resultsStack;
 		
 		
@@ -130,11 +128,14 @@ public class StackFunction extends FunctionAB {
 			Double val2=null;
 			try {
 				//pop two operands from the currentStack, prepare for operation.
+				System.out.println(functionsEvalStack);
 				val1 = currentStack.pop();
 				val2 = currentStack.pop();
-			}catch(Exception e) {
+			}catch(EmptyStackException e) {
 				//no second operand? it might be the end-result.
 				//But idk...
+				//e.printStackTrace();
+				
 			}
 			
 			//check what operator must be used, perform the operation,
@@ -169,12 +170,6 @@ public class StackFunction extends FunctionAB {
 		return resultsStack.pop();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+
 
 }
