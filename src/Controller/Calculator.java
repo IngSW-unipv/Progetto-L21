@@ -1,4 +1,5 @@
-package Controller;
+package controller;
+
 
 // This is Facade Controller 
 public class Calculator {
