@@ -81,11 +81,11 @@ public class StackFunction extends FunctionAB {
 			
 			//IS TOKEN THE BEGINNING OF A FUNCTION CALL?
 			if(SupportedFunctions.isFunction(token.toString().toLowerCase())) {
-				//push a new name in the functions call stack
+				//push a new name in the functionNamesStack
 				functionNamesStack.push(token.toString().toLowerCase());
 				//log the start of a function call
 				logger.info(token.toString().toUpperCase()+" FUNCTION CALLED");
-				//switch currentStack to functionsStack
+				//switch currentStack to functionsEvalStack
 				currentStack = functionsEvalStack;
 				continue; //skip to the next iteration
 			}
