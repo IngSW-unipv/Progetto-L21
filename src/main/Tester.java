@@ -35,11 +35,9 @@ public class Tester {
 
 		//System.out.println("FINAL RESULT: "+f.getValue(Math.PI));
 		
+		//GESTIRE L'ULTIMO STEP, CHE NON VIENE CALCOLATO
 		for(Coordinate c : f.getSamples(-2.0, +2.0, 0.1)) {
 			System.out.println(c);
-//			int y = (int)(c.x*1000);
-//			c.x = (double)y/1000;
-//			System.out.println(c.x);
 		}
 		
 //		System.out.print(new DecimalFormat("##.##").format(0.87654321));

@@ -1,7 +1,6 @@
 package model.functions;
 
 import java.util.ArrayList;
-
 import model.Coordinate;
 import model.parser.Expression;
 
@@ -16,6 +15,7 @@ public abstract class FunctionAB implements FunctionIF {
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
 		
 		ArrayList<Coordinate> coordinatesList = new ArrayList<Coordinate>();
+
 		
 		for(double i = lowerBound; i <= upperBound; i+=step) {
 			coordinatesList.add(new Coordinate(i, getValue(i)));

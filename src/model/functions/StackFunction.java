@@ -15,14 +15,12 @@ import model.parser.Parser;
 
 public class StackFunction extends FunctionAB {
 
-	
 	//this is a reverse-Polish (postfix) notation list of operands, 
 	//operators and functions
 	LinkedList<Object> parsedExpressionList;
 	
 	//this is a logger, for testing purposes
 	Logger logger;
-	
 	
 	//to create a new StackFunction, pass it the expression to be parsed 
 	public StackFunction(String expressionString) {
@@ -46,7 +44,7 @@ public class StackFunction extends FunctionAB {
 	//to evaluate the expression for a given value of x.
 	@Override
 	public double getValue(double x) {
-
+	
 		//the main stack, the one that will hold the final result.
 		Stack<Double> resultsStack = new Stack<>();
 		
