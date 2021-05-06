@@ -3,6 +3,7 @@ package main;
 import model.Calculator;
 import model.functions.FunctionIF;
 import view.GraphFrame;
+import view.TestualScanning;
 
 public class Tester {
 
@@ -16,8 +17,9 @@ public class Tester {
 
 		Calculator c = new Calculator();
 		GraphFrame g = new GraphFrame(c);
-		FunctionIF f = c.addFunction("x^2+1");
-		FunctionIF f2 = c.addFunction("sin(x)");
+//		FunctionIF f = c.addFunction("x^2+1");
+//		FunctionIF f2 = c.addFunction("sin(x)");
+		TestualScanning t = new TestualScanning(c);
 		
 		
 //		System.out.println("FINAL RESULT: " + f.getValue(1));
