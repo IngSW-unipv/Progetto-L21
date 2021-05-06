@@ -1,7 +1,8 @@
 package main;
 
-import model.Coordinate;
-import model.functions.StackFunction;
+import model.Calculator;
+import model.functions.FunctionIF;
+import view.GraphFrame;
 
 public class Tester {
 
@@ -9,38 +10,26 @@ public class Tester {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-	
-		//StackFunction f = new StackFunction("1+sin(x)"); 
-		
-		//StackFunction f = new StackFunction("1+x*(5+x)");
 
-		//StackFunction f = new StackFunction("sin(cos(tan(1)))");
-		
-		//StackFunction f = new StackFunction("sin(1)+sin(1)");
-		
-		//StackFunction f = new StackFunction("sin(x)");
- 		
-		//StackFunction f = new StackFunction("1+sin(cos(1+3))");
-		
-		//StackFunction f = new StackFunction("1+x^2");
-		
-		//StackFunction f = new StackFunction("tan(x)"); GESTIRE QUESTO CASO, NON ESATTAMENTE NULLO, x = pigreco 
-		
-		//StackFunction f = new StackFunction("sin(cos(x)^(tan(x)))/(x^2+1)");
-		
-		//StackFunction f = new StackFunction("(sin(x))^cos(0)");
-		
-		StackFunction f = new StackFunction("x"); 
+		//StackFunction f = new StackFunction("tan(x)"); 
+		//GESTIRE QUESTO CASO, NON ESATTAMENTE NULLO, x = pigreco 
 
-		//System.out.println("FINAL RESULT: "+f.getValue(Math.PI));
+		Calculator c = new Calculator();
+		GraphFrame g = new GraphFrame(c);
+		FunctionIF f = c.addFunction("x^2+1");
+		FunctionIF f2 = c.addFunction("sin(x)");
 		
+		
+//		System.out.println("FINAL RESULT: " + f.getValue(1));
+
 		//GESTIRE L'ULTIMO STEP, CHE NON VIENE CALCOLATO
-		for(Coordinate c : f.getSamples(-2.0, +2.0, 0.1)) {
-			System.out.println(c);
-		}
+//		for(Coordinate co : f.getSamples(-2.0, +2.0, 0.01)) {
+//			System.out.println(co);
+//		}
 		
-//		System.out.print(new DecimalFormat("##.##").format(0.87654321));
+		
+
+		//System.out.print(new DecimalFormat("##.##").format(0.87654321));
 	}
 
 }

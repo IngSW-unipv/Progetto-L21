@@ -21,6 +21,13 @@ public class Coordinate {
 		return "Coordinate [x=" + x + ", y=" + y + "]";
 	}
 	
+	
+	/**
+	 * To convert number with only n decimal points
+	 * @param x
+	 * @param decimals
+	 * @return
+	 */
 	public static double toPrecision(double x, int decimals) {
 		int factor = (int) Math.pow(10, decimals);
 		

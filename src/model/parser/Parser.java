@@ -14,7 +14,6 @@ public class Parser {
 		
 		LinkedList<Object> linkedList = parser.parsePostfix(expression.toString());
 		
-		
 //		System.out.println(linkedList);
 		
 		return linkedList;
