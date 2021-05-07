@@ -217,14 +217,16 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 	 */
 	@Override
 	public void update(ArrayList<Object> message) {
+		
 		switch((String)message.get(1)) {
 		case "ADDED":
 			functionsOnDisplay.add((FunctionIF)message.get(0));
-			zoom(1);
+			repaint();
 			break;
 			
 		case "DELETED":
 			functionsOnDisplay.remove((FunctionIF)message.get(0));
+			repaint();
 			break;
 		}
 	}
