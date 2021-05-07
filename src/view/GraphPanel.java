@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -13,6 +14,9 @@ import model.functions.FunctionIF;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements Observer {
 
+	private static final int PANEL_WIDTH = 600;
+	private static final int PANEL_HEIGHT = 600;
+	
 	// hardcode parametrs for the graph 
 	int xMin = -20;
 	int xMax = 20;
@@ -23,8 +27,8 @@ public class GraphPanel extends JPanel implements Observer {
 	private FunctionIF drawFunction;
 
 
-	public GraphPanel(int PANEL_WIDTH, int PANEL_HEIGHT) {
-		this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
+	public GraphPanel() {
+		setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
 	}
 
 	/**
