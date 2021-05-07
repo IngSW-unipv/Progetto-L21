@@ -3,7 +3,10 @@ package model.functions;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.Stack;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
+
+import com.sun.istack.internal.logging.Logger;
+
 import model.parser.Expression;
 import model.parser.Parser;
 
@@ -37,7 +40,7 @@ public class StackFunction extends FunctionAB {
 		parsedExpressionList = Parser.parseExpression(expression);
 
 		//get a logger for this class
-		logger = Logger.getLogger("");
+		logger = Logger.getLogger(StackFunction.class);
 
 		//log a "creation successful" message
 		logger.info("INITIALIZED STACKFUNCTION: "+expression.toString()+"\n"+parsedExpressionList.toString());

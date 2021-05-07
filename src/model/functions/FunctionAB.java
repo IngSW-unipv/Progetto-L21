@@ -33,5 +33,15 @@ public abstract class FunctionAB implements FunctionIF {
 	}
 
 
+	
+	@Override
+	public String getExpression() {
+		return expression.toString();
+	}
+
+	
+	
+	
+
 
 }

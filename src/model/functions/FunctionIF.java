@@ -23,6 +23,8 @@ public interface FunctionIF {
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step);
 	
 	
+	public String getExpression();
+	
 	
 	//public FunctionIF getDerivative();
 	

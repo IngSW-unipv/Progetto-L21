@@ -38,7 +38,7 @@ public class Calculator implements Observable{
 		this.functions.add(f);
 		ArrayList<Object> a = new ArrayList<Object>();
 		a.add(f);
-		a.add("Funzione aggiunta");
+		a.add("ADDED");
 		notifyObservers(a);
 		return f;
 	}
@@ -52,8 +52,30 @@ public class Calculator implements Observable{
 		this.functions.remove(f);
 		ArrayList<Object> a = new ArrayList<Object>();
 		a.add(f);
-		a.add("Funzione rimossa");
+		a.add("DELETED");
 		notifyObservers(a);
+	}
+	
+	/**
+	 * @overload
+	 * Remove a FunctionIF by its index
+	 */
+    public void removeFunction(int index) {
+		ArrayList<Object> a = new ArrayList<Object>();
+		removeFunction(functions.get(index));
+	}
+    
+    
+    /**
+	 * @overload
+	 * Remove a FunctionIF by its expression
+	 */
+	public void removeFunction(String expression) {
+		for(int i=0; i< functions.size(); i++) {
+			if(functions.get(i).getExpression().equals(expression)) {
+				removeFunction(functions.get(i));
+			}
+		}
 	}
 	
 	
@@ -71,9 +93,9 @@ public class Calculator implements Observable{
 	}
 
 	@Override
-	public void notifyObservers(ArrayList<Object> o) {
-		for(Observer oo : observers) {
-			oo.update(o);
+	public void notifyObservers(ArrayList<Object> message) {
+		for(Observer observer : observers) {
+			observer.update(message);
 		}
 	}
 	
