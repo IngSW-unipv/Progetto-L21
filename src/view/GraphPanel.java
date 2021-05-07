@@ -14,8 +14,8 @@ import model.functions.FunctionIF;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements Observer {
 
-	private static final int PANEL_WIDTH = 600;
-	private static final int PANEL_HEIGHT = 600;
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 600;
 	
 	// hardcode parametrs for the graph 
 	int xMin = -20;
@@ -28,7 +28,7 @@ public class GraphPanel extends JPanel implements Observer {
 
 
 	public GraphPanel() {
-		setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 	}
 
 	/**
