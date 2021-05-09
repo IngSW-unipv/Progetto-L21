@@ -46,8 +46,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 	//this is the (Cartesian) coordinate pointed to by the cursor on screen
 	//it's constantly kept up to date by the HoveringCoordinatesThread
 	volatile Coordinate cursorCartesianCoord;
-					
-			
+
 
 	public GraphPanel() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -100,7 +99,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 		
 		//cast the Graphics obj to a Graphics2D obj
 		Graphics2D g2d = (Graphics2D)arg0;
-		
 		
 		//paint the background
 		g2d.setColor(BG_COLOR);

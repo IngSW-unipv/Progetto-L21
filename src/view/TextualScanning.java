@@ -43,20 +43,17 @@ public class TextualScanning {
 			System.out.println("Introduci funzione desiderata: ");
 			String command = scan.nextLine();
 			
+			//try finding the pattern (Anything)WHITESPACE(Anything)
 			Matcher matcher = Pattern.compile("(.*?)\\s+(.*?)").matcher(command);
 			matcher.find();
 			
-			
-			System.out.println(matcher.group(1));
-			
+			//get the first part (The command), and run a switch on it
 			switch(matcher.group(1).toUpperCase()) {
 			
 			case "PLOT":
-				matcher.find();
 				c.addFunction(command.toUpperCase().replace("PLOT", "").trim());
 				break;
 			case "DEL":
-				matcher.find();
 				c.removeFunction(command.toUpperCase().replace("DEL", "").trim());
 				break;
 			}
