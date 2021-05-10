@@ -32,8 +32,8 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
     //(for now) hardcoded parameters for the graph 
 	int xMin = -20;
 	int xMax = 20;
-	int yMin = -18;
-	int yMax = 18;
+	int yMin = -20;
+	int yMax = 20;
 	double step = 0.1;
 	Color BG_COLOR =  Color.black;
 	Color AXES_COLOR = Color.yellow;
@@ -259,7 +259,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 		switch((String)message.get(1)) {
 		case "ADDED":
-			if(functionsOnDisplay.size()<=MAX_FUNCTIONS_ON_DISPLAY) {
+			if(functionsOnDisplay.size()<MAX_FUNCTIONS_ON_DISPLAY) {
 				functionsOnDisplay.add((FunctionIF)message.get(0));
 				repaint();
 			}
@@ -359,7 +359,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 		//Coordinate cartesianDistance = pixelToCartesian(distanceMovedX, distanceMovedY);
 		
-		this.panHorizontally(-distanceMovedX/30);
+		this.panHorizontally(distanceMovedX/30);
 		this.panVerically(-distanceMovedY/30);
 		
 		System.out.println("initial point "+ initialMousePosition);
