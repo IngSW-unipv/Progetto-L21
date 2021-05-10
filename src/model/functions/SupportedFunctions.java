@@ -7,12 +7,12 @@ package model.functions;
  * expression.
  */
 public class SupportedFunctions {
-	
-	
+
+
 	//hardcoded list of supported functions
 	public static String[] functionNames = new String[] {"sin", "cos", "tan", "exp", "Log", "ln"};
-	
-	
+
+
 	/**
 	 * Evaluate a predefined function at a given point
 	 * @param functionName
@@ -34,12 +34,12 @@ public class SupportedFunctions {
 		case "exp" :
 			return Math.exp(x);
 		}
-		
+
 		//default 
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Check if a function is supported
 	 * @param functionName
@@ -53,6 +53,6 @@ public class SupportedFunctions {
 		}
 		return false;
 	}
-	
+
 
 }
