@@ -29,30 +29,27 @@ import model.functions.FunctionIF;
  */
 public class TextualScanning {
 
-	Calculator c;
-
+	/**
+	 * 
+	 */
 	public TextualScanning(Calculator c) {
 		getExpression(c);
 	}
 
-
+	
 	public void getExpression(Calculator c) {
 		Scanner scan = new Scanner(System.in);
 		while(true) {
-			System.out.println("This is the textual interface for a Graph Calculator");
-			System.out.println("\t\t----");
-			System.out.println("Support functions: \"sin\", \"cos\", \"tan\", \"exp\", \"Log\", \"ln\"");
-			System.out.println("You can delete a function on display, press DEL followed by the desired function\n");
-			System.out.println("Enter the desired function (after the Keyword PLOT) : ");
+			System.out.println("Introduci funzione desiderata: ");
 			String command = scan.nextLine();
-
+			
 			//try finding the pattern (Anything)WHITESPACE(Anything)
 			Matcher matcher = Pattern.compile("(.*?)\\s+(.*?)").matcher(command);
 			matcher.find();
-
+			
 			//get the first part (The command), and run a switch on it
 			switch(matcher.group(1).toUpperCase()) {
-
+			
 			case "PLOT":
 				c.addFunction(command.toUpperCase().replace("PLOT", "").trim());
 				break;
@@ -60,9 +57,12 @@ public class TextualScanning {
 				c.removeFunction(command.toUpperCase().replace("DEL", "").trim());
 				break;
 			}
-
+		
+			
+			
 		}
-
+		
+		
 	}
 
 }

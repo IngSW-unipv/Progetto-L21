@@ -10,10 +10,10 @@ import java.util.ArrayList;
  *
  */
 public interface Observer {
-
+	
 	/**
-	 * Notify the observer that the sequence changed.
-	 */
+     * Notify the observer that the sequence changed.
+     */
 	public void update(ArrayList<Object> a);
 
 }
