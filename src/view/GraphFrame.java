@@ -11,7 +11,11 @@ public class GraphFrame extends JFrame {
 		GraphPanel g = new GraphPanel();
 		controller.addObserver(g);
 		
+		
 		this.addKeyListener(g);
+		this.addMouseMotionListener(g);
+		this.addMouseListener(g);
+		this.addMouseWheelListener(g);
 		this.setFocusable(true);
 		this.add(g);
 		

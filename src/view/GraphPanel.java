@@ -10,6 +10,11 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import model.Coordinate;
@@ -17,7 +22,7 @@ import model.Observer;
 import model.functions.FunctionIF;
 
 @SuppressWarnings("serial")
-public class GraphPanel extends JPanel implements Observer, KeyListener{
+public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
 
 	
 	private static final int WIDTH = 600;
@@ -35,6 +40,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 	Color FUNCTIONS_COLOR = Color.red;
 	BasicStroke AXES_STROKE = new BasicStroke(1);
 	BasicStroke FUNCTIONS_STROKE = new BasicStroke(2);
+	int MAX_FUNCTIONS_ON_DISPLAY =3;
 
 	//this list is to store functions to be plotted cumulatively
 	//on the same instance of the graph.
@@ -45,7 +51,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 	
 	//this is the (Cartesian) coordinate pointed to by the cursor on screen
 	//it's constantly kept up to date by the HoveringCoordinatesThread
-	volatile Coordinate cursorCartesianCoord;
+	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 
 
 	public GraphPanel() {
@@ -55,7 +61,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 		autoreferenceToGraphPanel = this;
 		
 		//start the thread that determines the cursorCartesianCoord
-		new HoveringCoordinatesThread().start();	
+		//new HoveringCoordinatesThread().start();	
 	}
 
 	
@@ -253,8 +259,10 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 		
 		switch((String)message.get(1)) {
 		case "ADDED":
-			functionsOnDisplay.add((FunctionIF)message.get(0));
-			repaint();
+			if(functionsOnDisplay.size()<=MAX_FUNCTIONS_ON_DISPLAY) {
+				functionsOnDisplay.add((FunctionIF)message.get(0));
+				repaint();
+			}
 			break;
 			
 		case "DELETED":
@@ -342,45 +350,88 @@ public class GraphPanel extends JPanel implements Observer, KeyListener{
 	
 	
 	
+
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		
+		int distanceMovedX = arg0.getX()- initialMousePosition.x;
+		int distanceMovedY = arg0.getY()- initialMousePosition.y;
+
+		//Coordinate cartesianDistance = pixelToCartesian(distanceMovedX, distanceMovedY);
+		
+		this.panHorizontally(-distanceMovedX/30);
+		this.panVerically(-distanceMovedY/30);
+		
+		System.out.println("initial point "+ initialMousePosition);
+		//System.out.println("distance dragged: " +cartesianDistance);
+		
+	}
+
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		
+		//get the cursor's position RELATIVE TO THE WHOLE SCREEN
+		Point mouseCoord = MouseInfo.getPointerInfo().getLocation();
+		
+		//get the location of the panel
+		Point panelLocation = getPanelLocation();
+
+		//get the position of the cursor RELATIVE TO THE PANEL
+		int mouseOnPanelX = mouseCoord.x - panelLocation.x;
+		int mouseOnPanelY = mouseCoord.y - panelLocation.y;
+		//covert it to the corresponding Cartesian coordinate
+		cursorCartesianCoord = pixelToCartesian(mouseOnPanelX, mouseOnPanelY);
+
+		autoreferenceToGraphPanel.repaint();
+	}
+
+
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent arg0) {
+		this.zoom(arg0.getPreciseWheelRotation());
+	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	Point initialMousePosition = new Point(1,1);
 	
-	/**
-	 * This thread updates the coordinate that the cursor is hovering
-	 * on at any given moment, and tells the graph to paint it right
-	 * next to the cursor. 
-	 * 
-	 * @author L21 Team
-	 *
-	 */
-	class HoveringCoordinatesThread extends Thread{
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		initialMousePosition = arg0.getPoint();
+		System.out.println("mouse pressed called "+initialMousePosition);
+	}
 
-		@Override
-		public void run() {
-			
-			while(true) {
-				
-				//get the cursor's position RELATIVE TO THE WHOLE SCREEN
-				Point mouseCoord = MouseInfo.getPointerInfo().getLocation();
-				
-				//get the location of the panel
-				Point panelLocation = getPanelLocation();
 
-				//get the position of the cursor RELATIVE TO THE PANEL
-				int mouseOnPanelX = mouseCoord.x - panelLocation.x;
-				int mouseOnPanelY = mouseCoord.y - panelLocation.y;
-				//covert it to the corresponding Cartesian coordinate
-				cursorCartesianCoord = pixelToCartesian(mouseOnPanelX, mouseOnPanelY);
 
-				
-				//redraw the panel (updating the coordinate displayed)
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						autoreferenceToGraphPanel.repaint();
-					}
-				});
-				
-			}
-		}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
