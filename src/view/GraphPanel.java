@@ -40,7 +40,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	Color FUNCTIONS_COLOR = Color.red;
 	BasicStroke AXES_STROKE = new BasicStroke(1);
 	BasicStroke FUNCTIONS_STROKE = new BasicStroke(2);
-	int MAX_FUNCTIONS_ON_DISPLAY =3;
 
 	//this list is to store functions to be plotted cumulatively
 	//on the same instance of the graph.
@@ -259,10 +258,8 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 		switch((String)message.get(1)) {
 		case "ADDED":
-			if(functionsOnDisplay.size()<MAX_FUNCTIONS_ON_DISPLAY) {
-				functionsOnDisplay.add((FunctionIF)message.get(0));
-				repaint();
-			}
+			functionsOnDisplay.add((FunctionIF)message.get(0));
+			repaint();
 			break;
 			
 		case "DELETED":
@@ -394,32 +391,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	}
 
 
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		
-	}
-
-
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-
 	Point initialMousePosition = new Point(1,1);
-	
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		initialMousePosition = arg0.getPoint();
@@ -429,10 +401,21 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	public void mouseReleased(MouseEvent arg0) {		
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {		
+	}
+
 	
 	
 	

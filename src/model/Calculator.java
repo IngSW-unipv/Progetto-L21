@@ -13,9 +13,13 @@ import model.functions.StackFunction;
 public class Calculator implements Observable{
 	
 	/**
-	 * Lit of FunctionIF insert by user
+	 * Lit of FunctionIF inserted by user
 	 */
 	private ArrayList<FunctionIF> functions;
+	
+	int MAX_INSERTABLE_FUNCTIONS  = 3;
+	
+	
 	
 	private ArrayList<Observer> observers;
 	
@@ -33,6 +37,10 @@ public class Calculator implements Observable{
 	 * @return
 	 */
 	public FunctionIF addFunction(String stringExpression) {
+		
+		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
+			return null;
+		}
 		
 		StackFunction f = new StackFunction(stringExpression);
 		this.functions.add(f);
