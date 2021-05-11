@@ -33,14 +33,19 @@ public class TextualScanning {
 	 * 
 	 */
 	public TextualScanning(Calculator c) {
-		getExpression(c);
+		try {
+			getExpression(c);
+		} catch (IllegalStateException e) {
+			System.out.println("Non hai inserito la Keyword PLOT davanti alla funzione");
+			getExpression(c);
+		}
 	}
 
 	
 	public void getExpression(Calculator c) {
 		Scanner scan = new Scanner(System.in);
 		while(true) {
-			System.out.println("Introduci funzione desiderata: ");
+			System.out.println("Introduci funzione desiderata, preceduta dalla Keyword PLOT: ");
 			String command = scan.nextLine();
 			
 			//try finding the pattern (Anything)WHITESPACE(Anything)
@@ -58,8 +63,7 @@ public class TextualScanning {
 				break;
 			}
 		
-			
-			
+	
 		}
 		
 		

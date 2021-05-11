@@ -25,44 +25,50 @@ import model.functions.FunctionIF;
 public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
 
 
-	
-    //(for now) hardcoded parameters for the graph 
+
+	//(for now) hardcoded parameters for the graph 
 	int xMin = -20;
 	int xMax = 20;
 	int yMin = -20;
 	int yMax = 20;
 	double step = 0.1;
-	Color BG_COLOR =  Color.black;
-	Color AXES_COLOR = Color.yellow;
+	Color BG_COLOR =  Color.gray;
+	Color AXES_COLOR = Color.black;
 	Color FUNCTIONS_COLOR = Color.red;
-	BasicStroke AXES_STROKE = new BasicStroke(1);
-	BasicStroke FUNCTIONS_STROKE = new BasicStroke(2);
+	BasicStroke AXES_STROKE = new BasicStroke(2);
+	BasicStroke FUNCTIONS_STROKE = new BasicStroke(3);
 	private static final int WIDTH = 600;
 	private static final int HEIGHT = 600;
-	
 
-	//this list is to store functions to be plotted cumulatively
-	//on the same instance of the graph.
+
+	/**
+	 * this list is to store functions to be plotted cumulatively
+	 * on the same instance of the graph.
+	 */
 	ArrayList<FunctionIF> functionsOnDisplay = new ArrayList<FunctionIF>();
-	
-	//this is a reference to this panel (to be used in separate thread)
+
+	/**
+	 * this is a reference to this panel (to be used in separate thread)
+	 */
 	GraphPanel autoreferenceToGraphPanel;
-	
-	//this is the (Cartesian) coordinate pointed to by the cursor on screen
-	//it's constantly kept up to date by the HoveringCoordinatesThread
+
+	/**
+	 * this is the (Cartesian) coordinate pointed to by the cursor on screen
+	 * it's constantly kept up to date by the HoveringCoordinatesThread
+	 */
 	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 
 
 	public GraphPanel() {
-		
+
 		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		
+
 		//get a reference to this panel (to be used in separate thread)
 		autoreferenceToGraphPanel = this;
 	}
 
-	
+
 
 	/**
 	 * Convert Cartesian point to pixel point
@@ -79,7 +85,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		return new Point(pixelX, pixelY);
 	}
 
-	
+
 	/**
 	 * Converts a pixel point to a Cartesian point.
 	 *  
@@ -90,13 +96,13 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @param y
 	 * @return
 	 */
-	
+
 	public Coordinate pixelToCartesian(int x, int y) {
 		double unit = getWidth()/(xMax - xMin); //pixels on the interval
 		return new Coordinate( x/unit +xMin  , yMax - y/unit);
 	}
-	
-	
+
+
 	/**
 	 * The paint method is called by repaint(). 
 	 * It repaints all of the panel, putting on a new 
@@ -106,35 +112,31 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * It also paints the coordinate hovered over by 
 	 * the cursor at any time.
 	 */
-	
+
 	@Override
 	public void paint(Graphics arg0) {
-		
+
 		//cast the Graphics obj to a Graphics2D obj
 		Graphics2D g2d = (Graphics2D)arg0;
-		
+
 		//paint the background
 		g2d.setColor(BG_COLOR);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
-		
+
 		//paint the axes
-		drawAxes(g2d);	
-		
+		drawAxes(g2d);
+
 		//plot the functions in the order they got inserted
 		for(FunctionIF functionOnDisplay : functionsOnDisplay) {
 			plotFunction(functionOnDisplay, g2d, FUNCTIONS_COLOR);
 		}
-		
+
 		//paints the coordinate that the cursor is hovering on
 		Point p = cartesianToPixel(cursorCartesianCoord.x, cursorCartesianCoord.y);
 		g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
-		
+
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * Plots the axes.
 	 * @param g
@@ -146,27 +148,28 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 		Point p1,p2;
 
-		//setta colore degli assi
+		//set axis color
 		g.setColor(AXES_COLOR);
 
-		//setta lo spessore degli assi
+		//set axis thickness
 		g2d.setStroke(AXES_STROKE);
 
 		p1 = cartesianToPixel(-w, 0);
 		p2 = cartesianToPixel(w, 0);
 
-		//disegno asse ascisse
+		//draw xAxis
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);
-		
+
 		p1 = cartesianToPixel(0, -h);
 		p2 = cartesianToPixel(0, h);
 
-		//disegno asse ordinate
+		//draw yAxis
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);  
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Plots a function on the graph, 
 	 * to be called by loop in re/paint().
@@ -176,7 +179,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @param functionsColor
 	 */
 	private void plotFunction(FunctionIF function, Graphics2D g2d, Color functionsColor) {
-		
+
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
 		try {
@@ -184,7 +187,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		} catch (NullPointerException e) {
 			return;
 		}
-		
+
 		//convert it to a list of pixel-points 2b displayed on the screen
 		ArrayList<Point> displayPoints = new ArrayList<Point>();
 		for(Coordinate c : cartesianPoints) {
@@ -192,17 +195,19 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 			displayPoints.add(displayPoint);
 		}
 
-		//set the color, and draw the lines used to approximate 
-		//the graph of the function.
+		/**
+		 * set the color, and draw the lines used to approximate
+		 * the graph of the function. 
+		 */
 		g2d.setColor(functionsColor);
 		for(int i = 0; i < displayPoints.size()-1; i++) {
 			g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 			g2d.setStroke(FUNCTIONS_STROKE);
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * zoom in on the graph (amount > 0), by shrinking the 2 intervals 
 	 * (vertical and horizontal), thus drawing the function in a smaller
@@ -213,18 +218,18 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * 
 	 * @param amount
 	 */
-	
+
 	private void zoom(double amount) {
 		xMin+=amount;
 		yMin+=amount;
-		
+
 		xMax-=amount;
 		xMin-=amount;
-		
+
 		repaint();
 	}
-	
-	
+
+
 	/**
 	 * move around sideways on the graph
 	 */
@@ -233,7 +238,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		xMax+=amount;
 		repaint();
 	}
-	
+
 	/**
 	 * 	move around vertically on the graph
 	 */
@@ -242,7 +247,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		yMax+=amount;
 		repaint();
 	}
-	
+
 	/**
 	 * Reset the graph's perspective to default.
 	 */
@@ -253,23 +258,23 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		yMax = 18;
 		repaint();
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * auto updates the status of the graph based on what happens to the 
 	 * Calculator. ie: adds or removes plotted functions.
 	 */
 	@Override
 	public void update(ArrayList<Object> message) {
-		
+
 		switch((String)message.get(1)) {
 		case "ADDED":
 			functionsOnDisplay.add((FunctionIF)message.get(0));
 			repaint();
 			break;
-			
+
 		case "DELETED":
 			functionsOnDisplay.remove((FunctionIF)message.get(0));
 			repaint();
@@ -277,7 +282,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		}
 	}
 
-	
+
 	/**
 	 * implements a few keyPressed actions, of which:
 	 * 
@@ -290,22 +295,22 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 */
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		
-	
+
+
 		switch(arg0.getKeyCode()) {
 		case KeyEvent.VK_EQUALS:
 			if(arg0.isControlDown()) {
-			  zoom(1);
+				zoom(1);
 			}
 			break;
 		case KeyEvent.VK_MINUS:
 			if(arg0.isControlDown()) {
-			  zoom(-1);
+				zoom(-1);
 			}
 			break;
 		case KeyEvent.VK_H:
 			if(arg0.isControlDown()) {
-			  backHome();
+				backHome();
 			}
 			break;
 		case KeyEvent.VK_UP:
@@ -321,14 +326,11 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 			panHorizontally(-1);
 			break;		
 		}
-		
-		
+
+
 	}
 
-	
-	
-	
-	
+
 	/**
 	 * Get the panel's location on the screen. 
 	 * NB: this is the coordinate of the TOP-LEFT corner of the PANEL.
@@ -338,24 +340,18 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		try {
 			panelLocation = autoreferenceToGraphPanel.getLocationOnScreen();
 		}catch(IllegalComponentStateException e) {
-			
+
 		}	
 		return panelLocation;
 	}
-	
-	
-	
-	
-
-
 
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		
+
 		//get the cursor's position RELATIVE TO THE WHOLE SCREEN
 		Point mouseCoord = MouseInfo.getPointerInfo().getLocation();
-		
+
 		//get the location of the panel
 		Point panelLocation = getPanelLocation();
 
@@ -368,16 +364,16 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		autoreferenceToGraphPanel.repaint();
 	}
 
-	
+
 
 	//>---------------------------------------<
 	/*
 	 * These two methods are used to implement a simple
 	 * move-by-dragging the mouse on the graph functionality.
 	 */
-	
+
 	Point initialMousePosition = new Point(1,1);
-	
+
 	//get the mouse's initial position and store it
 	@Override
 	public void mousePressed(MouseEvent arg0) {
@@ -394,12 +390,11 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		this.panHorizontally(distanceMovedX/40);
 		this.panVerically(-distanceMovedY/40);
 		initialMousePosition = arg0.getPoint();
-        
 	}
 	//>------------------------------------------------<
-	
-	
-	
+
+
+
 	/**
 	 * Make use of the mouse's scroll-wheel to 
 	 * zoom in on the graph.
@@ -411,13 +406,13 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 
-	
-	
+
+
 	//>-----CURRENTLY UNIMPLEMENTED IF METHODS--------<
 	@Override
 	public void mouseReleased(MouseEvent arg0) {		
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 	}
@@ -432,22 +427,22 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		
+
 	}
 	//>-------------------------------------------<
-	
-	
-	
-	
-	
-	
-	
 
 
-	
+
+
+
+
+
+
+
+
 }

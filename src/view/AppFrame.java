@@ -1,28 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import model.Calculator;
 
 /**
@@ -47,8 +33,6 @@ public class AppFrame extends JFrame{
 	//App-Parameters
 	String ICON_PATH = "./images/Cattura.JPG";
 	String TITLE = "Calcolatrice Grafica";
-	
-	
 	
 	public AppFrame(Calculator controller) {
 		
@@ -98,6 +82,8 @@ public class AppFrame extends JFrame{
 		this.setSize(700,700);
 		//set visible
 		this.setVisible(true);
+		//set the initial position
+		this.setLocationRelativeTo(null);
 		//>------------------------------------------------------------<
 		
 	}
@@ -131,12 +117,7 @@ public class AppFrame extends JFrame{
 	private void removeFunctionProcedure(String expression) {
 		controller.removeFunction(expression);
 	}
-	
-	
-	
-	
-	
-	
+
 
 	/**
 	 * This custom menu bar will eventually contain menus and options
@@ -148,9 +129,9 @@ public class AppFrame extends JFrame{
 		public AppMenuBar() {
 			
 			//make the "add" menu
-			JMenu addMenu = new JMenu("aggiungi");
+			JMenu addMenu = new JMenu("Aggiungi");
 			//make the "add function" menu item
-			JMenuItem addFunctionItem = new JMenuItem("funzione");
+			JMenuItem addFunctionItem = new JMenuItem("Funzione");
 			//the addFunctionItem calls the addFunctionProcedure()
 			addFunctionItem.addActionListener(new ActionListener() {
 				@Override
@@ -161,7 +142,6 @@ public class AppFrame extends JFrame{
 			
 			//add the items to the addMenu menu
 			addMenu.add(addFunctionItem);
-			
 			
 			//add the menus to the menu bar
 			this.add(addMenu);

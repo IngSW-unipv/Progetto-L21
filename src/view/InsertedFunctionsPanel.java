@@ -15,14 +15,14 @@ import model.Observer;
 import model.functions.FunctionIF;
 
 public class InsertedFunctionsPanel extends JPanel implements Observer{
-	
-	
+
+
 	//Keeps track of fragments. One fragment for each plotted function.
 	HashMap<String, FunctionFragment> functionFragmentsMap;
-	
+
 	//This panel observes a Calculator controller.
 	Calculator controller;
-	
+
 	public InsertedFunctionsPanel(Calculator controller) {
 		this.controller = controller;
 		//add this panel as an observer to the controller
@@ -30,9 +30,9 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 		//make a new fragment map
 		functionFragmentsMap = new HashMap<String, FunctionFragment>();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * The update method here adds/removes FunctionFragments
 	 * based on inserted/removed functions.
@@ -54,9 +54,9 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 			break;
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * adds a new FunctionFragment to display a new function's expression.
 	 * @param expression
@@ -68,7 +68,7 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 		this.repaint();
 		this.revalidate();
 	}
-	
+
 	/**
 	 * removes an old FunctionFragment of a deleted function.
 	 * @param expression
@@ -79,11 +79,11 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 		this.repaint();
 		this.revalidate();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	/**
 	 * Each plotted function gets to have a FunctionFragment that
 	 * represents its expression on screen, and allows the user 
@@ -94,15 +94,15 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 	 *
 	 */
 	public class FunctionFragment extends JPanel{
-		
+
 		//button that deletes its function 
 		JButton removeButton;
 		//the expression of this fragment's function
 		String expression;
 		//label used to display the expression
 		JLabel label;
-		
-		
+
+
 		public FunctionFragment(String expression) {
 			//set expression
 			this.expression = expression;
@@ -112,14 +112,14 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 			removeButton = new JButton("/");
 			//color of remove button text = RED
 			removeButton.setForeground(Color.red);
-			
+
 			//add button and label
 			this.add(removeButton);
 			this.add(label);
-			
+
 			//makes sure that keylistening doesn't get stuck on this panel for some swing-related reason.
 			removeButton.setFocusable(false);
-			
+
 			//set the remove button's action to = delete the function
 			removeButton.addActionListener(new ActionListener() {
 				@Override
@@ -128,9 +128,9 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 					controller.removeFunction(expression);
 				}
 			});
-			
+
 		}
-		
+
 	}
 
 
@@ -144,7 +144,7 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 
 
 
-	
+
 
 }
 
