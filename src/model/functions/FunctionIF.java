@@ -22,7 +22,10 @@ public interface FunctionIF {
 	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step);
 	
-	
+	/**
+	 * returns the expression of this function
+	 * @return
+	 */
 	public String getExpression();
 	
 	

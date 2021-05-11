@@ -10,11 +10,13 @@ import com.sun.istack.internal.logging.Logger;
 import model.parser.Expression;
 import model.parser.Parser;
 
+/**
+ *StackFunction is initialized with an expression-string.
+ *The expression can contain up to ONE variable (x ONLY),
+ *and can reference supported functions from class: SupportedFunctions.
+ *Supported functions can be composed (nested).
+ */
 
-//StackFunction is initialized with an expression-string.
-//The expression can contain up to ONE variable (x ONLY),
-//and can reference supported functions from class: SupportedFunctions.
-//Supported functions can be composed (nested).
 
 public class StackFunction extends FunctionAB {
 

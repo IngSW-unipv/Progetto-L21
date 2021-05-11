@@ -5,9 +5,10 @@ import model.Coordinate;
 import model.parser.Expression;
 
 /**
- * @author user
- *
+ * Implements some behaviors that are common 
+ * to all kinds of FunctionIFs.
  */
+
 public abstract class FunctionAB implements FunctionIF {
 
 	/**
@@ -16,6 +17,14 @@ public abstract class FunctionAB implements FunctionIF {
 	Expression expression;
 
 
+	
+	/**
+	 * Computes samples of this function from lowerBound to upperBound with a given step 
+	 * @param lowerBound
+	 * @param upperBound
+	 * @param step
+	 * @return
+	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
 
 		ArrayList<Coordinate> coordinatesList = new ArrayList<Coordinate>();
@@ -33,7 +42,10 @@ public abstract class FunctionAB implements FunctionIF {
 	}
 
 
-	
+	/**
+	 * returns the expression of this function
+	 * @return
+	 */
 	@Override
 	public String getExpression() {
 		return expression.toString();

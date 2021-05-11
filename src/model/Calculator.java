@@ -5,22 +5,47 @@ import model.functions.FunctionIF;
 import model.functions.StackFunction;
 
 /**
- * This is Facade Controller 
- * @author user
+ * This is a controller, that is also Observable.
+ * 
+ * Calculator is a facade controller, in that it can 
+ * be told explicitly to add/remove functions from 
+ * the list that it keeps internally.
+ * 
+ * Moreover, observers (such as panels and/or other GUI elements) 
+ * can be added to Calculator. They will thus be
+ * notified of any change in the list of inserted functions.
+ * 
+ * If a new function is added, it will be delivered to 
+ * all of the Observers, so that each one of them can decide 
+ * to display it, or plot it, somehow.
+ * 
+ * If a function is removed, the Observers are told about 
+ * that too.
+ * 
+ * @author Team L21
  *
  */
 
 public class Calculator implements Observable{
 	
 	/**
-	 * Lit of FunctionIF inserted by user
+	 * List of FunctionIFs inserted by user
 	 */
 	private ArrayList<FunctionIF> functions;
 	
+	
+	/**
+	*Due to performance issues, we thought it might be a good
+	*idea to limit the tot number of simultaneously 
+	*plottable functions. Eventually the user may change 
+	*this amount, at their own RAM card's risk.
+	*/
 	int MAX_INSERTABLE_FUNCTIONS  = 3;
 	
-	
-	
+
+	/**
+	 * List of Observers observing this Calculator.
+	 */
 	private ArrayList<Observer> observers;
 	
 	
@@ -28,8 +53,8 @@ public class Calculator implements Observable{
 		
 		this.functions = new ArrayList<FunctionIF>();
 		this.observers = new ArrayList<Observer>();
-		
 	}
+	
 	
 	/**
 	 * To add a FunctionIF in the List 
@@ -38,6 +63,7 @@ public class Calculator implements Observable{
 	 */
 	public FunctionIF addFunction(String stringExpression) {
 		
+		//check if max amount has been reached
 		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
 			return null;
 		}
@@ -51,8 +77,9 @@ public class Calculator implements Observable{
 		return f;
 	}
 	
+	
 	/**
-	 * Remove the FunctionIF
+	 * Remove a FunctionIF from the list
 	 * @param f
 	 */
 	public void removeFunction(FunctionIF f) {
@@ -88,18 +115,28 @@ public class Calculator implements Observable{
 	
 	
 
+	/**
+	 * add an observer to this Calculator.s
+	 */
 	@Override
 	public void addObserver(Observer observer) {
 		this.observers.add(observer);
 		
 	}
 
+	
+	/**
+	 * remove an observer from this Calculator.s
+	 */
 	@Override
 	public void removeObserver(Observer observer) {
 		this.observers.remove(observer);
 		
 	}
 
+	/**
+	 * Tell all of the Observers what on Earth happened with the functions.
+	 */
 	@Override
 	public void notifyObservers(ArrayList<Object> message) {
 		for(Observer observer : observers) {

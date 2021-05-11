@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public interface Observer {
 	
 	/**
-     * Notify the observer that the sequence changed.
+     * Notify the observer of a change. 
+     * Called by an Observable.
      */
-	public void update(ArrayList<Object> a);
+	public void update(ArrayList<Object> messages);
 
 }

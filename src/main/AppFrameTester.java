@@ -3,6 +3,11 @@ package main;
 import model.Calculator;
 import view.AppFrame;
 
+/**
+ * Test the app!
+ *
+ */
+
 public class AppFrameTester {
 
 	public static void main(String[] args) {

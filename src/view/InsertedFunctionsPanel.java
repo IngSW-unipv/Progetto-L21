@@ -88,6 +88,9 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 	 * Each plotted function gets to have a FunctionFragment that
 	 * represents its expression on screen, and allows the user 
 	 * to delete the plotted function at any time.
+	 * 
+	 * Eventually this may contain further options to 
+	 * be applied on single functions, such as derivation.
 	 *
 	 */
 	public class FunctionFragment extends JPanel{

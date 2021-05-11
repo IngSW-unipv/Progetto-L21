@@ -24,10 +24,7 @@ import model.functions.FunctionIF;
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
 
-	
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 600;
-	
+
 	
     //(for now) hardcoded parameters for the graph 
 	int xMin = -20;
@@ -40,6 +37,9 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	Color FUNCTIONS_COLOR = Color.red;
 	BasicStroke AXES_STROKE = new BasicStroke(1);
 	BasicStroke FUNCTIONS_STROKE = new BasicStroke(2);
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 600;
+	
 
 	//this list is to store functions to be plotted cumulatively
 	//on the same instance of the graph.
@@ -54,13 +54,12 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 	public GraphPanel() {
+		
+		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		
 		//get a reference to this panel (to be used in separate thread)
 		autoreferenceToGraphPanel = this;
-		
-		//start the thread that determines the cursorCartesianCoord
-		//new HoveringCoordinatesThread().start();	
 	}
 
 	
@@ -98,6 +97,15 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	}
 	
 	
+	/**
+	 * The paint method is called by repaint(). 
+	 * It repaints all of the panel, putting on a new 
+	 * plain background, then proceeding to sample
+	 * the functions and plot them again.
+	 * 
+	 * It also paints the coordinate hovered over by 
+	 * the cursor at any time.
+	 */
 	
 	@Override
 	public void paint(Graphics arg0) {
@@ -114,7 +122,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 		//plot the functions in the order they got inserted
 		for(FunctionIF functionOnDisplay : functionsOnDisplay) {
-			plotFunction(functionOnDisplay, g2d);
+			plotFunction(functionOnDisplay, g2d, FUNCTIONS_COLOR);
 		}
 		
 		//paints the coordinate that the cursor is hovering on
@@ -150,8 +158,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		//disegno asse ascisse
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);
 		
-		
-		
 		p1 = cartesianToPixel(0, -h);
 		p2 = cartesianToPixel(0, h);
 
@@ -162,12 +168,14 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	
 	
 	/**
-	 * Plots a function on the graph, to be called by loop in paint()
+	 * Plots a function on the graph, 
+	 * to be called by loop in re/paint().
+	 * 
 	 * @param function
 	 * @param g2d
+	 * @param functionsColor
 	 */
-	
-	private void plotFunction(FunctionIF function, Graphics2D g2d) {
+	private void plotFunction(FunctionIF function, Graphics2D g2d, Color functionsColor) {
 		
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
@@ -186,7 +194,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 		//set the color, and draw the lines used to approximate 
 		//the graph of the function.
-		g2d.setColor(FUNCTIONS_COLOR);
+		g2d.setColor(functionsColor);
 		for(int i = 0; i < displayPoints.size()-1; i++) {
 			g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 			g2d.setStroke(FUNCTIONS_STROKE);
@@ -317,15 +325,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 	}
 
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		
-	}
 	
 	
 	
@@ -348,21 +347,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	
 	
 
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		
-		int distanceMovedX = arg0.getX()- initialMousePosition.x;
-		int distanceMovedY = arg0.getY()- initialMousePosition.y;
 
-		//Coordinate cartesianDistance = pixelToCartesian(distanceMovedX, distanceMovedY);
-		
-		this.panHorizontally(distanceMovedX/30);
-		this.panVerically(-distanceMovedY/30);
-		
-		System.out.println("initial point "+ initialMousePosition);
-		//System.out.println("distance dragged: " +cartesianDistance);
-		
-	}
 
 
 	@Override
@@ -383,23 +368,50 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		autoreferenceToGraphPanel.repaint();
 	}
 
+	
 
+	//>---------------------------------------<
+	/*
+	 * These two methods are used to implement a simple
+	 * move-by-dragging the mouse on the graph functionality.
+	 */
+	
+	Point initialMousePosition = new Point(1,1);
+	
+	//get the mouse's initial position and store it
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		initialMousePosition = arg0.getPoint();
+	}
 
+	//calculate the distance that the mouse was dragged for,
+	//and based on that, pan the graph.
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		int distanceMovedX = arg0.getX()- initialMousePosition.x;
+		int distanceMovedY = arg0.getY()- initialMousePosition.y;
+		//TODO: Dynamic calibration. (Fix this magic number):
+		this.panHorizontally(distanceMovedX/30);
+		this.panVerically(-distanceMovedY/30);
+	}
+	//>------------------------------------------------<
+	
+	
+	
+	/**
+	 * Make use of the mouse's scroll-wheel to 
+	 * zoom in on the graph.
+	 */
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent arg0) {
 		this.zoom(arg0.getPreciseWheelRotation());
 	}
 
 
-	Point initialMousePosition = new Point(1,1);
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		initialMousePosition = arg0.getPoint();
-		System.out.println("mouse pressed called "+initialMousePosition);
-	}
 
-
-
+	
+	
+	//>-----CURRENTLY UNIMPLEMENTED IF METHODS--------<
 	@Override
 	public void mouseReleased(MouseEvent arg0) {		
 	}
@@ -416,6 +428,16 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	public void mouseExited(MouseEvent arg0) {		
 	}
 
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		
+	}
+	//>-------------------------------------------<
 	
 	
 	
