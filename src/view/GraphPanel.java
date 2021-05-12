@@ -387,9 +387,8 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		int distanceMovedX = arg0.getX()- initialMousePosition.x;
 		int distanceMovedY = arg0.getY()- initialMousePosition.y;
 		//TODO: Dynamic calibration. (Fix this magic number):
-		this.panHorizontally(distanceMovedX/40);
-		this.panVerically(-distanceMovedY/40);
-		initialMousePosition = arg0.getPoint();
+		this.panHorizontally(distanceMovedX/30);
+		this.panVerically(-distanceMovedX/30);
 	}
 	//>------------------------------------------------<
 

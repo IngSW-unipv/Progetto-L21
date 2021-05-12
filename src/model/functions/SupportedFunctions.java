@@ -10,7 +10,7 @@ public class SupportedFunctions {
 	
 	
 	//hardcoded list of supported functions
-	public static String[] functionNames = new String[] {"sin", "cos", "tan", "exp", "Log", "ln"};
+	public static String[] functionNames = new String[] {"sin", "cos", "tan", "exp", "log10", "ln"};
 	
 	
 	/**
@@ -27,7 +27,7 @@ public class SupportedFunctions {
 			return Math.cos(x);
 		case "tan":
 			return Math.tan(x);
-		case "Log":
+		case "log10":
 			return Math.log10(x);
 		case "ln" :
 			return Math.log(x);
