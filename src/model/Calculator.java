@@ -63,11 +63,17 @@ public class Calculator implements Observable{
 	 */
 	public FunctionIF addFunction(String stringExpression) {
 		
-		//check if max amount has been reached
+		//reject empty expressions
+		if(stringExpression.trim().isEmpty()) {
+			return null;
+		}
+		
+		//reject any function if max amount is exceeded
 		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
 			return null;
 		}
 		
+		//create a StackFunction with the given expression.
 		StackFunction f = new StackFunction(stringExpression);
 		this.functions.add(f);
 		ArrayList<Object> a = new ArrayList<Object>();

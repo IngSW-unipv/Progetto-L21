@@ -143,28 +143,26 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 */
 	private void drawAxes(Graphics g)  {
 		Graphics2D g2d = (Graphics2D)g;
-		int w = getSize().width;
-		int h = getSize().height;
-
-		Point p1,p2;
-
+		
 		//set axis color
 		g.setColor(AXES_COLOR);
 
 		//set axis thickness
 		g2d.setStroke(AXES_STROKE);
-
-		p1 = cartesianToPixel(-w, 0);
-		p2 = cartesianToPixel(w, 0);
-
+	
+		Point p1, p2;
+		
 		//draw xAxis
+		p1 = cartesianToPixel(xMin, 0);
+		p2 = cartesianToPixel(xMax, 0);
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);
-
-		p1 = cartesianToPixel(0, -h);
-		p2 = cartesianToPixel(0, h);
-
+		
+		
 		//draw yAxis
-		g.drawLine(p1.x, p1.y, p2.x, p2.y);  
+		p1 = cartesianToPixel(0, yMin);
+		p2 = cartesianToPixel(0, yMax);
+		g.drawLine(p1.x, p1.y, p2.x, p2.y);
+		
 
 	}
 
