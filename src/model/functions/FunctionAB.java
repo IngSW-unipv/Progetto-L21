@@ -16,7 +16,17 @@ public abstract class FunctionAB implements FunctionIF {
 	 */
 	Expression expression;
 
-
+	
+	/**
+	 * stash the last-calculated bounds and step
+	 */
+	double lastLowerBound, lastUpperBound, lastStep;
+	
+	/**
+	 * store the last-computed samples
+	 */
+	ArrayList<Coordinate> cachedSamples;
+	
 	
 	/**
 	 * Computes samples of this function from lowerBound to upperBound with a given step 
@@ -26,7 +36,13 @@ public abstract class FunctionAB implements FunctionIF {
 	 * @return
 	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
-
+		
+		//check if the samples required are the same as the previous ones, if they are, return the cached samples
+		if(lastLowerBound == lowerBound && lastUpperBound==upperBound && lastStep==step) {
+			return cachedSamples;
+		}
+		
+		
 		ArrayList<Coordinate> coordinatesList = new ArrayList<Coordinate>();
 		
 		double i;
@@ -38,6 +54,11 @@ public abstract class FunctionAB implements FunctionIF {
 		if ( ((int)step) != step )
 			coordinatesList.add(new Coordinate(i, getValue(i)));
 		
+		
+		lastLowerBound = lowerBound;
+		lastUpperBound =upperBound;
+		lastStep =step;
+		cachedSamples = coordinatesList;
 		return coordinatesList;
 	}
 
