@@ -128,6 +128,7 @@ public class AppFrame extends JFrame{
 		
 		public AppMenuBar() {
 			
+			//>------------ADD MENU--------------------<
 			//make the "add" menu
 			JMenu addMenu = new JMenu("Aggiungi");
 			//make the "add function" menu item
@@ -142,10 +143,30 @@ public class AppFrame extends JFrame{
 			
 			//add the items to the addMenu menu
 			addMenu.add(addFunctionItem);
+			//>------------ADD MENU END--------------------<
+
+			
+			
+			
+			//>------------VIEW MENU--------------------<
+			//make the "view" menu
+			JMenu viewMenu = new JMenu("Visualizza");
+			//make the "view zeros" menu item
+			JMenuItem viewZeros = new JMenuItem("zeri");
+			viewZeros.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					graphPanel.toggleHighlightZeros();
+				}				
+			});
+			viewMenu.add(viewZeros);			
+			//>------------VIEW MENU END--------------------<
+			
+			
 			
 			//add the menus to the menu bar
 			this.add(addMenu);
-			
+			this.add(viewMenu);
 			
 		}
 	}

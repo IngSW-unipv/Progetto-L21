@@ -27,19 +27,24 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 	//(for now) hardcoded parameters for the graph 
-	int xMin = -20;
-	int xMax = 20;
-	int yMin = -20;
-	int yMax = 20;
+	double xMin = -20;
+	double xMax = 20;
+	double yMin = -20;
+	double yMax = 20;
 	double step = 0.1;
 	Color BG_COLOR =  Color.gray;
 	Color AXES_COLOR = Color.black;
 	Color FUNCTIONS_COLOR = Color.red;
+	Color ZEROS_COLOR = Color.YELLOW;
 	BasicStroke AXES_STROKE = new BasicStroke(2);
 	BasicStroke FUNCTIONS_STROKE = new BasicStroke(3);
 	private static final int WIDTH = 600;
 	private static final int HEIGHT = 600;
-
+	boolean HIGHLIGHT_ZEROS = true;
+	
+	
+	
+	
 
 	/**
 	 * this list is to store functions to be plotted cumulatively
@@ -77,6 +82,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @return
 	 */
 	public Point cartesianToPixel(double x, double y) {
+		//NB: make sure that xMax and xMin are doubles!!!!! Or else frequent / by zero exception!
 		double unit = getWidth()/(xMax - xMin);
 
 		int pixelX = (int)Math.round(( x  - xMin)*unit);
@@ -130,11 +136,20 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		for(FunctionIF functionOnDisplay : functionsOnDisplay) {
 			plotFunction(functionOnDisplay, g2d, FUNCTIONS_COLOR);
 		}
+		
+		//plots the zeros of all functions
+		if(HIGHLIGHT_ZEROS) {
+			for(FunctionIF functionOnDisplay : functionsOnDisplay) {
+				plotZeros(functionOnDisplay, g2d);
+			}
+		}
 
 		//paints the coordinate that the cursor is hovering on
+		g2d.setColor(Color.black);
 		Point p = cartesianToPixel(cursorCartesianCoord.x, cursorCartesianCoord.y);
 		g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
-
+		
+		
 	}
 
 	/**
@@ -177,7 +192,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @param functionsColor
 	 */
 	private void plotFunction(FunctionIF function, Graphics2D g2d, Color functionsColor) {
-
+		
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
 		try {
@@ -204,7 +219,22 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		}
 
 	}
-
+	
+	
+	/**
+	 * Plots the zeros of a function.
+	 * @param function
+	 */
+	
+	public void plotZeros(FunctionIF function, Graphics2D g2d) {
+		g2d.setColor(ZEROS_COLOR);
+		for(Double zero : function.getZeros()) {
+			Point p = cartesianToPixel(zero, 0);
+			g2d.drawRect(p.x, p.y, 1, 1);
+			g2d.drawString("("+zero+", "+0+")", p.x, p.y);
+		}
+	}
+	
 
 	/**
 	 * zoom in on the graph (amount > 0), by shrinking the 2 intervals 
@@ -401,8 +431,17 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		this.zoom(arg0.getWheelRotation()*(-1));
 	}
 
+	
+	
+	//>-----------SET PREFRERENCES---------<//
 
+	public void toggleHighlightZeros() {
+		this.HIGHLIGHT_ZEROS = !HIGHLIGHT_ZEROS;
+		repaint();
+	}
 
+	
+	//>-------------------------------<//
 
 
 	//>-----CURRENTLY UNIMPLEMENTED IF METHODS--------<
