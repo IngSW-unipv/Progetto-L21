@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -111,12 +114,24 @@ public class AppFrame extends JFrame{
 	}
 	
 	/**
-	 * Tells the controller to remove a specified function 
-	 *
+	 * Prompts the user to select a location for a snapshot of the graph.
 	 */
-	private void removeFunctionProcedure(String expression) {
-		controller.removeFunction(expression);
+	
+	private void saveSnapshotProcedure() {
+		//make a new file chooser
+		JFileChooser fileChooser = new JFileChooser();
+		//set the default file name
+		fileChooser.setSelectedFile(new File("snapshot.png"));
+		//launch the file chooser and get the user's response
+		int response = fileChooser.showOpenDialog(this);
+		//if response is affirmative, save snapshot to user-provided location
+		if(response == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			graphPanel.takeSnapshot(file);
+		}
 	}
+	
+	
 
 
 	/**
@@ -163,10 +178,29 @@ public class AppFrame extends JFrame{
 			//>------------VIEW MENU END--------------------<
 			
 			
+			//>------EXPORT MENU----------------------<
+			//make the "export" menu
+			JMenu exportMenu = new JMenu("Esporta");
+			//make the "export snapshot" menu item
+			JMenuItem exportSnapshot = new JMenuItem("istantanea");
+			exportSnapshot.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {					
+					saveSnapshotProcedure();
+				}
+				
+			});
+			exportMenu.add(exportSnapshot);
+			
+			
+			//>------EXPORT MENU END----------------------<
+			
 			
 			//add the menus to the menu bar
 			this.add(addMenu);
 			this.add(viewMenu);
+			this.add(exportMenu);
 			
 		}
 	}

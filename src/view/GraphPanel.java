@@ -15,7 +15,12 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import model.Coordinate;
 import model.Observer;
@@ -442,6 +447,31 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 	
 	//>-------------------------------<//
+	
+	
+	
+	
+	/**
+	 * Save a snapshot of the graph as an image.
+	 */
+	public void takeSnapshot(File file) {
+		//create a new buffered image
+		BufferedImage snapshot = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB); 
+		//get the graphics object of the buffered image to draw on
+		Graphics2D g = (Graphics2D) snapshot.getGraphics();
+		//print the panel's contents on the image
+		this.print(g);
+		//save the image to a user-defined location
+		try {
+			ImageIO.write(snapshot, "png", file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 
 
 	//>-----CURRENTLY UNIMPLEMENTED IF METHODS--------<

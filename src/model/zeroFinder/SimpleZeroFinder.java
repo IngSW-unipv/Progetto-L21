@@ -7,7 +7,7 @@ import model.functions.FunctionIF;
 
 public class SimpleZeroFinder implements ZeroFinderIF {
 	
-	static double DEFAULT_ALMOST_ZERO = 0.05; //0.25 is as good as zero
+	static double DEFAULT_ALMOST_ZERO = 0.05; //... is as good as zero
 	static double WORSENING_FACTOR = 4;
 	double almostZero;
 	
