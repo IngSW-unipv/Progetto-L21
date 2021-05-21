@@ -1,4 +1,4 @@
-package model;
+package model.core;
 
 /**
  * This is a container-class for an x and a y point.

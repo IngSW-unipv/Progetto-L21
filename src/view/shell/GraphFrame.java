@@ -1,8 +1,10 @@
-package view;
+package view.shell;
 
 import java.awt.*;
 import javax.swing.JFrame;
-import model.Calculator;
+
+import controller.Calculator;
+import view.graph.GraphPanel;
 
 @SuppressWarnings("serial")
 public class GraphFrame extends JFrame {

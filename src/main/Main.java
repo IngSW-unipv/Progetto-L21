@@ -1,14 +1,14 @@
 package main;
 
-import model.Calculator;
-import view.AppFrame;
+import controller.Calculator;
+import view.app.AppFrame;
 
 /**
  * Test the app!
  *
  */
 
-public class AppFrameTester {
+public class Main {
 
 	public static void main(String[] args) {
 

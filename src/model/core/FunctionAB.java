@@ -1,8 +1,9 @@
-package model.functions;
+package model.core;
 
+import java.awt.Color;
 import java.util.ArrayList;
-import model.Coordinate;
-import model.parser.Expression;
+
+import model.critPointFinder.CriticalPointFinder;
 import model.zeroFinder.ZeroFinderBuilder;
 import model.zeroFinder.ZeroFinderIF;
 
@@ -13,11 +14,7 @@ import model.zeroFinder.ZeroFinderIF;
 
 public abstract class FunctionAB implements FunctionIF {
 
-	/**
-	 * expression of this function
-	 */
-	Expression expression;
-
+	
 	
 	/**
 	 * stash the last-calculated bounds and step
@@ -45,6 +42,8 @@ public abstract class FunctionAB implements FunctionIF {
 	 * @return
 	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
+		
+		
 		
 		//check if the samples required are the same as the previous ones, if they are, return the cached samples
 		if(lastLowerBound == lowerBound && lastUpperBound==upperBound && lastStep==step) {
@@ -98,16 +97,9 @@ public abstract class FunctionAB implements FunctionIF {
 	 */
 	@Override
 	public String getExpression() {
-		return expression.toString();
+		return toString();
 	}
 
-
-
-	@Override
-	public double getValue(double x) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
 	
@@ -126,7 +118,35 @@ public abstract class FunctionAB implements FunctionIF {
 		return zeroFinder.getZeros(this);
 	}
 
+
+
+
+	/**
+	 * Compute color from hash that turns expression into an int 
+	 * usable as an rgb code.
+	 */
+	@Override
+	public Color getColor() {
+		
+		String expression = getExpression();
+		
+		int key = 0;
+		for(int i =0; i<expression.length(); i++) {
+			key+=((int)expression.charAt(i));
+		}
+		
+		
+		return new Color( (int)(1000000*(0.3*(double)key))  );
+	}
+
 	
+
+	
+	
+	public ArrayList<Coordinate> getCriticalPoints(){
+		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
+		return criticalPointFinder.getCriticalPoints(this);
+	}
 	
 	
 	

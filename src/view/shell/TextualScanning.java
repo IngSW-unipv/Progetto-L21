@@ -1,14 +1,14 @@
 /**
  * 
  */
-package view;
+package view.shell;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.Calculator;
-import model.functions.FunctionIF;
+import controller.Calculator;
+
 
 /**
  * @author user

@@ -1,8 +1,8 @@
 package main;
 
-import model.Calculator;
-import view.GraphFrame;
-import view.TextualScanning;
+import controller.Calculator;
+import view.shell.GraphFrame;
+import view.shell.TextualScanning;
 
 public class Tester {
 

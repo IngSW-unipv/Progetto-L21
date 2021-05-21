@@ -1,7 +1,7 @@
 /**
  * 
  */
-package model;
+package controller;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package view;
+package view.graph;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -22,9 +22,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import model.Coordinate;
-import model.Observer;
-import model.functions.FunctionIF;
+
+import controller.Observer;
+import model.core.Coordinate;
+import model.core.FunctionIF;
+
 
 @SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
@@ -39,13 +41,15 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	double step = 0.1;
 	Color BG_COLOR =  Color.gray;
 	Color AXES_COLOR = Color.black;
-	Color FUNCTIONS_COLOR = Color.red;
+	//Color FUNCTIONS_COLOR = Color.red;
 	Color ZEROS_COLOR = Color.YELLOW;
+	Color CRITICAL_POINTS_COLOR = Color.BLUE;
 	BasicStroke AXES_STROKE = new BasicStroke(2);
 	BasicStroke FUNCTIONS_STROKE = new BasicStroke(3);
 	private static final int WIDTH = 600;
 	private static final int HEIGHT = 600;
-	boolean HIGHLIGHT_ZEROS = true;
+	boolean HIGHLIGHT_ZEROS = false;
+	boolean HIGHLIGHT_CRITICAL_POINTS = false;
 	
 	
 	
@@ -139,7 +143,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 		//plot the functions in the order they got inserted
 		for(FunctionIF functionOnDisplay : functionsOnDisplay) {
-			plotFunction(functionOnDisplay, g2d, FUNCTIONS_COLOR);
+			plotFunction(functionOnDisplay, g2d);
 		}
 		
 		//plots the zeros of all functions
@@ -148,6 +152,14 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 				plotZeros(functionOnDisplay, g2d);
 			}
 		}
+		
+		//plots the critical points of all functions
+		if(HIGHLIGHT_CRITICAL_POINTS) {
+			for(FunctionIF functionOnDisplay : functionsOnDisplay) {
+				plotCriticalPoints(functionOnDisplay, g2d);
+			}
+		}
+		
 
 		//paints the coordinate that the cursor is hovering on
 		g2d.setColor(Color.black);
@@ -196,7 +208,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @param g2d
 	 * @param functionsColor
 	 */
-	private void plotFunction(FunctionIF function, Graphics2D g2d, Color functionsColor) {
+	private void plotFunction(FunctionIF function, Graphics2D g2d) {
 		
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
@@ -217,7 +229,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		 * set the color, and draw the lines used to approximate
 		 * the graph of the function. 
 		 */
-		g2d.setColor(functionsColor);
+		g2d.setColor(function.getColor());
 		for(int i = 0; i < displayPoints.size()-1; i++) {
 			g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 			g2d.setStroke(FUNCTIONS_STROKE);
@@ -239,6 +251,25 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 			g2d.drawString("("+zero+", "+0+")", p.x, p.y);
 		}
 	}
+	
+	
+	/**
+	 * Plots the critical points of a function.
+	 * @param function
+	 */
+	
+	public void plotCriticalPoints(FunctionIF function, Graphics2D g2d) {
+		g2d.setColor(CRITICAL_POINTS_COLOR);
+		for(Coordinate critPoints : function.getCriticalPoints()) {
+			Point p = cartesianToPixel(critPoints.x, critPoints.y);
+			g2d.drawRect(p.x, p.y, 1, 1);
+			g2d.drawString("("+critPoints.x+", "+critPoints.y+")", p.x, p.y);
+		}
+	}
+	
+	
+	
+	
 	
 
 	/**
@@ -443,6 +474,12 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	public void toggleHighlightZeros() {
 		this.HIGHLIGHT_ZEROS = !HIGHLIGHT_ZEROS;
 		repaint();
+	}
+	
+	
+	public void toggleHighlightCriticalPoints() {
+		this.HIGHLIGHT_CRITICAL_POINTS = !HIGHLIGHT_CRITICAL_POINTS;
+		repaint();	
 	}
 
 	

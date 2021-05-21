@@ -2,8 +2,9 @@ package model.zeroFinder;
 
 import java.util.ArrayList;
 
-import model.Coordinate;
-import model.functions.FunctionIF;
+import model.core.Coordinate;
+import model.core.FunctionIF;
+
 
 public class SimpleZeroFinder implements ZeroFinderIF {
 	

@@ -1,8 +1,10 @@
-package model;
+package controller;
 
 import java.util.ArrayList;
-import model.functions.FunctionIF;
-import model.functions.StackFunction;
+
+import model.core.FunctionIF;
+import parser.Parser;
+
 
 /**
  * This is a controller, that is also Observable.
@@ -57,7 +59,7 @@ public class Calculator implements Observable{
 	
 	
 	/**
-	 * To add a FunctionIF in the List 
+	 * Parse an expression and add the function object
 	 * @param stringExpression
 	 * @return
 	 */
@@ -68,19 +70,39 @@ public class Calculator implements Observable{
 			return null;
 		}
 		
-		//reject any function if max amount is exceeded
-		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
-			return null;
+		//reject function if it's already in the list
+		for(FunctionIF function : functions) {
+			if(function.getExpression().toString().equals(stringExpression)) {
+				return null;
+			}
 		}
 		
-		//create a StackFunction with the given expression.
-		StackFunction f = new StackFunction(stringExpression);
-		this.functions.add(f);
-		ArrayList<Object> a = new ArrayList<Object>();
-		a.add(f);
-		a.add("ADDED");
-		notifyObservers(a);
-		return f;
+		//call the parser and build a function from the string-expression
+		FunctionIF f = Parser.parseAndbuild(stringExpression);
+		
+		return addFunction(f);
+		
+	}
+	
+	
+	/**
+	 * just add a ready-made function object
+	 * @param function
+	 * @return
+	 */
+	public FunctionIF addFunction(FunctionIF function) {
+		        //reject any function if max amount is exceeded
+				if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
+					return null;
+				}
+				
+				//add the function and notify the observers
+				this.functions.add(function);
+				ArrayList<Object> a = new ArrayList<Object>();
+				a.add(function);
+				a.add("ADDED");
+				notifyObservers(a);
+				return function;
 	}
 	
 	

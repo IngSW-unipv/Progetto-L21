@@ -2,7 +2,7 @@ package model.zeroFinder;
 
 import java.util.ArrayList;
 
-import model.functions.FunctionIF;
+import model.core.FunctionIF;
 
 public interface ZeroFinderIF {
 	

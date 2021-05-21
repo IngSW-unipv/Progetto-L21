@@ -1,4 +1,4 @@
-package view;
+package view.app;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
@@ -12,7 +12,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import model.Calculator;
+
+import controller.Calculator;
+import view.graph.GraphPanel;
 
 /**
  * This is a standalone frame that does not rely on the tester shell
@@ -174,7 +176,23 @@ public class AppFrame extends JFrame{
 					graphPanel.toggleHighlightZeros();
 				}				
 			});
-			viewMenu.add(viewZeros);			
+			viewMenu.add(viewZeros);	
+			
+			
+			//make the view critical points item
+			JMenuItem viewCriticalPoints = new JMenuItem("estremanti");
+			viewCriticalPoints.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					graphPanel.toggleHighlightCriticalPoints();
+				}
+				
+			});
+			viewMenu.add(viewCriticalPoints);	
+
+			
+			
 			//>------------VIEW MENU END--------------------<
 			
 			
