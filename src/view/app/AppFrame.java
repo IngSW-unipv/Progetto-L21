@@ -190,8 +190,20 @@ public class AppFrame extends JFrame{
 				
 			});
 			viewMenu.add(viewCriticalPoints);	
-
 			
+			//make the view coordinates by hovering cursor item
+			JMenuItem viewHoveringCoordinates = new JMenuItem("coordinata puntata");
+			viewHoveringCoordinates.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					graphPanel.toggleHoverCoordinates();
+				}
+				
+			});
+			viewMenu.add(viewHoveringCoordinates);
+			
+		
 			
 			//>------------VIEW MENU END--------------------<
 			

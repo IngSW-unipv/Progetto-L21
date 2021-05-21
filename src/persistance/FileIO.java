@@ -21,7 +21,7 @@ public class FileIO {
 			String buf = null;
 			String result = "";
 			while((buf=reader.readLine())!= null) {
-				result+=buf;
+				result+=buf+"\n";
 			}
 			reader.close();
 			return result;

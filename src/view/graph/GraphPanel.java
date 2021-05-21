@@ -26,10 +26,13 @@ import javax.swing.*;
 import controller.Observer;
 import model.core.Coordinate;
 import model.core.FunctionIF;
+import persistance.Module;
+import persistance.ModuleListener;
+import persistance.ModuleManager;
 
 
 @SuppressWarnings("serial")
-public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener{
+public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener, ModuleListener{
 
 
 
@@ -41,7 +44,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	double step = 0.1;
 	Color BG_COLOR =  Color.gray;
 	Color AXES_COLOR = Color.black;
-	//Color FUNCTIONS_COLOR = Color.red;
 	Color ZEROS_COLOR = Color.YELLOW;
 	Color CRITICAL_POINTS_COLOR = Color.BLUE;
 	BasicStroke AXES_STROKE = new BasicStroke(2);
@@ -50,6 +52,14 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	private static final int HEIGHT = 600;
 	boolean HIGHLIGHT_ZEROS = false;
 	boolean HIGHLIGHT_CRITICAL_POINTS = false;
+	boolean HOVER_COORDINATES = true;
+	
+	//this mouse tracker can plot the coordinate that is being hovered over.
+	MouseTracker mouseTracker;
+	
+	
+	//PERSISTANCE MODULES
+	Module graphModule;
 	
 	
 	
@@ -80,6 +90,17 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 		//get a reference to this panel (to be used in separate thread)
 		autoreferenceToGraphPanel = this;
+		
+		
+		//create a mouse tracker, without adding it yet
+		mouseTracker = new MouseTracker(this);
+
+		
+		//start listening to the graph-settings Module
+		graphModule = ModuleManager.getInstance().getModule("graph");
+		graphModule.addListener(this);
+				
+
 	}
 
 
@@ -395,40 +416,6 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	}
 
 
-	/**
-	 * Get the panel's location on the screen. 
-	 * NB: this is the coordinate of the TOP-LEFT corner of the PANEL.
-	 */
-	public Point getPanelLocation() {
-		Point panelLocation = new Point(0,0);
-		try {
-			panelLocation = autoreferenceToGraphPanel.getLocationOnScreen();
-		}catch(IllegalComponentStateException e) {
-
-		}	
-		return panelLocation;
-	}
-
-
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-
-		//get the cursor's position RELATIVE TO THE WHOLE SCREEN
-		Point mouseCoord = MouseInfo.getPointerInfo().getLocation();
-
-		//get the location of the panel
-		Point panelLocation = getPanelLocation();
-
-		//get the position of the cursor RELATIVE TO THE PANEL
-		int mouseOnPanelX = mouseCoord.x - panelLocation.x;
-		int mouseOnPanelY = mouseCoord.y - panelLocation.y;
-		//covert it to the corresponding Cartesian coordinate
-		cursorCartesianCoord = pixelToCartesian(mouseOnPanelX, mouseOnPanelY);
-
-		autoreferenceToGraphPanel.repaint();
-	}
-
-
 
 	//>---------------------------------------<
 	/*
@@ -473,13 +460,22 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 	public void toggleHighlightZeros() {
 		this.HIGHLIGHT_ZEROS = !HIGHLIGHT_ZEROS;
+		graphModule.put("HIGHLIGHT_ZEROS", HIGHLIGHT_ZEROS+"");
 		repaint();
 	}
 	
 	
 	public void toggleHighlightCriticalPoints() {
 		this.HIGHLIGHT_CRITICAL_POINTS = !HIGHLIGHT_CRITICAL_POINTS;
+		graphModule.put("HIGHLIGHT_CRITICAL_POINTS", HIGHLIGHT_CRITICAL_POINTS+"");
 		repaint();	
+	}
+	
+	
+	public void toggleHoverCoordinates() {
+		this.HOVER_COORDINATES = !HOVER_COORDINATES;
+		graphModule.put("HOVER_COORDINATES", HOVER_COORDINATES+"");
+		repaint();
 	}
 
 	
@@ -537,9 +533,68 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	public void keyTyped(KeyEvent arg0) {
 
 	}
+	
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+	}
 	//>-------------------------------------------<
 
 
+
+	
+	
+	@Override
+	public void dealWithModuleUpdate(Module module) {
+		//update everything 
+		for(String chiave : module.getKeyValMap().keySet()) {
+			dealWithSingularUpdate(chiave, module.get(chiave));
+		}
+		
+		//repaint everything.
+		repaint();
+	}
+
+
+
+	@Override
+	public void dealWithSingularUpdate(String key, String value) {
+		switch(key) {
+		
+		case "HIGHLIGHT_ZEROS":
+			if(value.contains("false")) {
+				HIGHLIGHT_ZEROS = false;
+			}else {
+				HIGHLIGHT_ZEROS = true;
+			}
+			return;
+		case "HIGHLIGHT_CRITICAL_POINTS":
+			if(value.contains("false")) {
+				HIGHLIGHT_CRITICAL_POINTS = false;
+			}else {
+				HIGHLIGHT_CRITICAL_POINTS = true;
+			}
+			return;
+		case "HOVER_COORDINATES":
+			if(value.contains("true")) {
+				addMouseMotionListener(mouseTracker);
+			}else {
+				removeMouseMotionListener(mouseTracker);
+			}
+			return;
+			
+		
+		
+		}
+		
+	}
+
+
+
+
+		
+
+	
+	
 
 
 

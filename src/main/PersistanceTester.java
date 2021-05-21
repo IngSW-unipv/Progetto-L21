@@ -1,17 +1,15 @@
 package main;
 
 import persistance.Module;
+import persistance.ModuleManager;
 
 public class PersistanceTester {
 
 	public static void main(String[] args) {
 		
-		Module module=  new Module("graph");
-		module.create();
+		Module module = ModuleManager.getInstance().getModule("graph");
 		
-		//module.put("key", "value");
-		
-		System.out.println(module.get("key"));
+		System.out.println(module.getKeyValMap());
 		
 	}
 

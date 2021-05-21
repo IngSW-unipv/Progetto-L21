@@ -14,11 +14,11 @@ public class TextFile extends File {
 	}
 	
 	
-	public void write(String text) {
+	public synchronized void write(String text) {
 		FileIO.writeFile(this.getPath(), text);
 	}
 	
-	public void create() {
+	public synchronized void create() {
 		try {
 			this.createNewFile();
 		} catch (IOException e) {
