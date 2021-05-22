@@ -24,9 +24,9 @@ import javax.swing.*;
 import controller.Observer;
 import model.core.Coordinate;
 import model.core.FunctionIF;
-import persistance.Module;
-import persistance.ModuleListener;
-import persistance.ModuleManager;
+import persistence.Module;
+import persistence.ModuleListener;
+import persistence.ModuleManager;
 
 
 @SuppressWarnings("serial")

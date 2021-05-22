@@ -19,7 +19,7 @@ import javax.swing.Popup;
 import controller.Calculator;
 import controller.Observer;
 import model.core.FunctionIF;
-import persistance.ModuleManager;
+import persistence.ModuleManager;
 
 
 public class InsertedFunctionsPanel extends JPanel implements Observer{

@@ -17,8 +17,8 @@ import model.operators.Power;
 import model.operators.Product;
 import model.operators.Subtraction;
 import model.operators.Sum;
-import persistance.Module;
-import persistance.ModuleManager;
+import persistence.Module;
+import persistence.ModuleManager;
 
 public class Builder {
 	

@@ -1,7 +1,7 @@
 package main;
 
-import persistance.Module;
-import persistance.ModuleManager;
+import persistence.Module;
+import persistence.ModuleManager;
 
 public class PersistanceTester {
 

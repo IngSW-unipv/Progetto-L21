@@ -8,9 +8,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controller.Calculator;
-import persistance.Module;
-import persistance.ModuleListener;
-import persistance.ModuleManager;
+import persistence.Module;
+import persistence.ModuleListener;
+import persistence.ModuleManager;
 
 /**
  * This menu lets the user pick a saved function from the customFunctions module.

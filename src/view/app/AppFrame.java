@@ -14,9 +14,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controller.Calculator;
-import persistance.Module;
-import persistance.ModuleListener;
-import persistance.ModuleManager;
+import persistence.Module;
+import persistence.ModuleListener;
+import persistence.ModuleManager;
 import view.app.insertedFunctionsPanel.InsertedFunctionsPanel;
 import view.graph.GraphPanel;
 

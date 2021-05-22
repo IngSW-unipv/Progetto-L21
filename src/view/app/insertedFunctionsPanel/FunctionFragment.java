@@ -15,8 +15,7 @@ import javax.swing.JPopupMenu;
 
 import controller.Calculator;
 import model.core.FunctionIF;
-import persistance.ModuleManager;
-//import view.app.insertedFunctionsPanel.InsertedFunctionsPanel.FragmentsPopupMenu;
+import persistence.ModuleManager;
 
 /**
  * Each plotted function gets to have a FunctionFragment that
