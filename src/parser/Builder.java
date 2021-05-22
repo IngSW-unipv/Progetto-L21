@@ -16,6 +16,8 @@ import model.operators.Power;
 import model.operators.Product;
 import model.operators.Subtraction;
 import model.operators.Sum;
+import persistance.Module;
+import persistance.ModuleManager;
 
 public class Builder {
 	
@@ -23,11 +25,6 @@ public class Builder {
 	 * these are the supported operators' literals
 	 */
 	static String[] OPERATORS = new String[]{"+", "-", "*", "/", "^"};
-	
-	/**
-	 * these are the supported functions' literals
-	 */
-	static String[] FUNCTIONS = new String[] {"sin", "cos", "ln", "log"};
 	
 	
 	/**
@@ -77,6 +74,8 @@ public class Builder {
 		altStack.clear();
 		
 		FunctionIF oggettone = null;
+		
+		
 		for(String token : postfixListOfTokens) {
 			oggettone = build(token);
 		}
@@ -97,6 +96,7 @@ public class Builder {
 	 * @return
 	 */
 	private static FunctionIF build(String token) {
+		
 		
 		//if it's x
 		if(token.toLowerCase().equals("x")) {
@@ -119,12 +119,10 @@ public class Builder {
 		}
 		
 		//if it's the beginning of a function
-		if(isFunction(token)) {
+		FunctionIF newFunction;
+		if((newFunction = buildFunction(token))!=null) {
 			//switch to altStack
 			currentStack = altStack;
-			//build the function
-			FunctionIF newFunction = buildFunction(token);
-			//push it onto the functionsStack
 			functionsStack.push(newFunction);
 		}
 		
@@ -208,28 +206,6 @@ public class Builder {
 	}
 	
 	
-	/**
-	 * Check if a token represents the beginning of a supported 
-	 * function's  call.
-	 * 
-	 * @param token
-	 * @return
-	 */
-	private static boolean isFunction(String token) {
-		for(String function : FUNCTIONS) {
-			if(token.toLowerCase().equals(function)) {
-				return true;
-			}
-		}
-		
-		//general logarithm
-        if(token.contains("log")) {
-			return true;
-		}
-		
-		
-		return false;
-	}
 	
 	/**
 	 * Check if a token represents the end of a function.
@@ -277,8 +253,22 @@ public class Builder {
 		}
 		
 		
+		//try building a stored custom function identified by its name
+		return buildSavedFunction(function);
 		
-		//no match found
+		//if no match was found, this method returns null.
+	}
+	
+	
+	
+	//build a saved function from the customFunctions module
+	private static FunctionIF buildSavedFunction(String name) {
+		Module functionsModule = ModuleManager.getInstance().getModule("customFunctions");
+		for(String functionName : functionsModule.getKeyValMap().keySet()) {
+			if(functionName.equals(name)) {
+				return Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+			}
+		}
 		return null;
 	}
 	

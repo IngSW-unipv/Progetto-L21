@@ -59,6 +59,7 @@ public class Parser {
 		//parse a given expression to obtain a postfix list of tokens
 		ArrayList<String> postfixList = parsePostfixList(expression);
 		
+		
 		//build the composite function object out of the list of tokens
 		FunctionIF oggettone = Builder.build(postfixList);
 		
@@ -97,6 +98,7 @@ public class Parser {
 			
 			postfixList.add(token.toString());
 		}
+		
 		
 		//return a postfix list of tokens that is compatible with the conventions required by the rest of the project.
 		return postfixList;
