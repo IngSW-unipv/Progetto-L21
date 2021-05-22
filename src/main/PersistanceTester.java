@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
@@ -57,6 +59,9 @@ public class PersistanceTester {
 	 * 7) removeListener(ModuleListener moduleListener) : removes
 	 * a ModuleListener from a Module.
 	 * 
+	 * 8) getListeners(): Returns a list of all of the current listeners of this Module.
+
+	 * 
 	 * 
 	 * METHODS OF MODULEMANAGER:
 	 * 
@@ -70,6 +75,11 @@ public class PersistanceTester {
 	 * will also load/create-and-load the Module. In case 
 	 * it had to be created, any new Module will be empty, 
 	 * of course.
+	 * 
+	 * getModules(): Returns a list of all of the loaded Modules.
+	 * Can be used for debugging purposes, and
+	 * to determine a posteriori what Modules are being 
+	 * created and used in a project.
 	 * 
 	 * 
 	 * METHODS OF MODULELISTENER:
@@ -124,8 +134,35 @@ public class PersistanceTester {
 		System.out.println(myNewModule.get("myFileReference"));
 		System.out.println("--------------");
 		
-
 		
+		//add a listener to the module
+		myNewModule.addListener(new ModuleListener() {
+			@Override
+			public void dealWithModuleUpdate(Module moduleThatGotUpdated) {	}
+
+			@Override
+			public void dealWithSingularUpdate(String key, String value) {}
+			
+			@Override
+			public String toString(){
+				return "AnonymousListener";
+			}
+			
+		});
+		
+		
+		//get a list of all of the Modules currenly in use 
+		System.out.println("All of the Modules:");
+		ArrayList<Module> modules = ModuleManager.getInstance().getModules();
+		System.out.println(modules);
+		System.out.println("------------");
+		
+		
+		//for each Module, get every one of its listeners
+		System.out.println("listeners of each Module:");
+		for(Module modulo : modules) {
+			System.out.println(modulo+": "+modulo.getListeners());
+		}
 		
 	}
 

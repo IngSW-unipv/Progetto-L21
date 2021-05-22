@@ -185,6 +185,15 @@ public class Module extends TextFile {
 	}
     
 	
+	/**
+	 * Returns a list of all of the current listeners of this Module.
+	 * @return
+	 */
+	public ArrayList<ModuleListener> getListeners() {
+		return listenersList;
+	}
+	
+	
 	
 	
 	

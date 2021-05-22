@@ -1,6 +1,7 @@
 package persistence;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -69,6 +70,18 @@ public class ModuleManager {
 		}
 		
 		return module;
+	}
+	
+	
+	/**
+	 * Returns a list of all of the loaded Modules.
+	 * Can be used for debugging purposes, and
+	 * to determine a posteriori what Modules are being 
+	 * created and used in a project.
+	 * @return
+	 */
+	public ArrayList<Module> getModules(){
+		return new ArrayList<Module>(loadedModulesMap.values());
 	}
 	
 	
