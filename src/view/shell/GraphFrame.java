@@ -8,10 +8,13 @@ import view.graph.GraphPanel;
 
 @SuppressWarnings("serial")
 public class GraphFrame extends JFrame {
+	
+	Calculator c;
 
 	public GraphFrame(Calculator controller) {
+		this.c = controller;
 		GraphPanel g = new GraphPanel();
-		controller.addObserver(g);
+		c.addObserver(g);
 		
 		
 		this.addKeyListener(g);

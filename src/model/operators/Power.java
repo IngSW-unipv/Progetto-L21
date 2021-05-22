@@ -2,15 +2,8 @@ package model.operators;
 
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
-import model.functions.Logarithm;
 import model.functions.NaturalLogarithm;
-import model.numbers.Constant;
 
-/**
- * TODO: FIX DIFFERENTIATION
- * 
- *
- */
 
 public class Power extends BinaryFunction {
 

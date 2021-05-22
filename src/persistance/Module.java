@@ -3,13 +3,8 @@ package persistance;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import controller.Observable;
-import controller.Observer;
 
 /**
  * A (persistence/settings) Module is basically a 

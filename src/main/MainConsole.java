@@ -4,7 +4,7 @@ import controller.Calculator;
 import view.shell.GraphFrame;
 import view.shell.TextualScanning;
 
-public class Tester {
+public class MainConsole {
 
 	/**
 	 * @param args

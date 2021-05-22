@@ -29,10 +29,10 @@ import controller.Calculator;
  */
 public class TextualScanning {
 
-	/**
-	 * 
-	 */
+	Calculator c ;
+	
 	public TextualScanning(Calculator c) {
+		this.c=c;
 		try {
 			getExpression(c);
 		} catch (IllegalStateException e) {

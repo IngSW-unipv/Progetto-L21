@@ -1,7 +1,5 @@
 package persistance;
 
-import controller.Observer;
-
 public interface ModuleListener{
 
 	public void dealWithModuleUpdate(Module module);
