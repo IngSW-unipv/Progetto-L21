@@ -31,33 +31,33 @@ public class Builder {
 	/**
 	 * This token signifies the end of a function.
 	 */
-	public final static String END_OF_FUNCTION = "END_OF_FUNCTION";
+	public static final String END_OF_FUNCTION = "END_OF_FUNCTION";
 	
 	
 	/**
 	 * 	this stack keeps the last two generated operands, so that 
 	 *  an operator can be applied to them after they've been built.
 	 */
-	private static Stack<FunctionIF> mainStack = new Stack<>();
+	private Stack<FunctionIF> mainStack = new Stack<>();
 	
 	/**
 	 * this is a stack of function-objects to keep track
 	 * of recursive calls.
 	 */
-	private static Stack<FunctionIF> functionsStack = new Stack<>();
+	private Stack<FunctionIF> functionsStack = new Stack<>();
 	
 	/**
 	 * this is an alternative stack to keep track
 	 * of the argument of functions
 	 */
-	private static Stack<FunctionIF> altStack = new Stack<>();
+	private Stack<FunctionIF> altStack = new Stack<>();
 	
 	
 	/**
 	 * this is a reference to a stack that switches 
 	 * between mainStack and altStack. 
 	 */
-	private static Stack<FunctionIF> currentStack = mainStack;
+	private Stack<FunctionIF> currentStack = mainStack;
 	
 	
 	
@@ -69,7 +69,7 @@ public class Builder {
 	 * @param postfixListOfTokens
 	 * @return
 	 */
-	public static FunctionIF build(ArrayList<String> postfixListOfTokens) {
+	public FunctionIF build(ArrayList<String> postfixListOfTokens) {
 		mainStack.clear();
 		functionsStack.clear();
 		altStack.clear();
@@ -96,7 +96,7 @@ public class Builder {
 	 * @param token
 	 * @return
 	 */
-	private static FunctionIF build(String token) {
+	private FunctionIF build(String token) {
 		
 		
 		//if it's x
@@ -173,7 +173,7 @@ public class Builder {
 	 * @param operator
 	 * @return
 	 */
-	private static FunctionIF buildOperator(String operator) {
+	private FunctionIF buildOperator(String operator) {
 	
 		//pop the operands from the stack.
 		FunctionIF firstOperand = currentStack.pop();
@@ -213,7 +213,7 @@ public class Builder {
 	 * @param token
 	 * @return
 	 */
-	private static boolean isEndOfFunction(String token) {
+	private boolean isEndOfFunction(String token) {
 		if(token.equals(END_OF_FUNCTION)) {
 			return true;
 		}
@@ -264,10 +264,14 @@ public class Builder {
 	
 	//build a saved function from the customFunctions module
 	private static FunctionIF buildSavedFunction(String name) {
+		//get the customFunctions module
 		Module functionsModule = ModuleManager.getInstance().getModule("customFunctions");
+		//check if "name" is in customFunctions
 		for(String functionName : functionsModule.getKeyValMap().keySet()) {
 			if(functionName.equals(name)) {
+				//parse and build the stored expression
 				FunctionIF mask = Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+				//...then make a UnaryFunction out of it through the UnaryMask 
 				return new UnaryMask(name, mask, null);
 			}
 		}
