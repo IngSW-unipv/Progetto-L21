@@ -9,6 +9,7 @@ import model.functions.Cosine;
 import model.functions.Logarithm;
 import model.functions.NaturalLogarithm;
 import model.functions.Sine;
+import model.functions.UnaryMask;
 import model.numbers.Constant;
 import model.numbers.Variable;
 import model.operators.Division;
@@ -266,7 +267,8 @@ public class Builder {
 		Module functionsModule = ModuleManager.getInstance().getModule("customFunctions");
 		for(String functionName : functionsModule.getKeyValMap().keySet()) {
 			if(functionName.equals(name)) {
-				return Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+				FunctionIF mask = Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+				return new UnaryMask(name, mask, null);
 			}
 		}
 		return null;

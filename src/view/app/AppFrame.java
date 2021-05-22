@@ -14,6 +14,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controller.Calculator;
+import persistance.Module;
+import persistance.ModuleListener;
+import persistance.ModuleManager;
+import view.app.insertedFunctionsPanel.InsertedFunctionsPanel;
 import view.graph.GraphPanel;
 
 /**
@@ -158,8 +162,15 @@ public class AppFrame extends JFrame{
 				}
 			});
 			
+			//add the saved functions selector menu
+			JMenu savedFunctionsMenu = new SavedFunctionsMenu(controller);
+			
+			
 			//add the items to the addMenu menu
 			addMenu.add(addFunctionItem);
+			//add the saved functions menu 
+			addMenu.add(savedFunctionsMenu);
+			
 			//>------------ADD MENU END--------------------<
 
 			

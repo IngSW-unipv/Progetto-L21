@@ -416,6 +416,13 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 	//>---------------------------------------<
+	
+	/**
+	 * TODO: se siete venuti qui per questo, le coordinate
+	 * col cursore confliggono con il dragging del mouse.
+	 * 
+	 */
+	
 	/*
 	 * These two methods are used to implement a simple
 	 * move-by-dragging the mouse on the graph functionality.
@@ -435,6 +442,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	public void mouseDragged(MouseEvent arg0) {
 		int distanceMovedX = arg0.getX()- initialMousePosition.x;
 		int distanceMovedY = arg0.getY()- initialMousePosition.y;
+		System.out.println("cicicici");
 		//TODO: Dynamic calibration. (Fix this magic number):
 		this.panHorizontally(distanceMovedX/30);
 		this.panVerically(-distanceMovedY/30);

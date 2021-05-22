@@ -60,7 +60,7 @@ public class Module extends TextFile {
 		//push changes
 		write(text);
 		
-		//notify listeners of this module
+		//notify listeners of this module's change
 		notifyModuleListeners(key, value);
 		
 	}
@@ -100,6 +100,9 @@ public class Module extends TextFile {
 		}
 		String newText = read().replace(key+" : "+value+"\n", "");
 		write(newText);
+		
+		//notify listeners of this module's change
+		notifyModuleListeners(key, null);
 	}
 
 	
