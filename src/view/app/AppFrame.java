@@ -149,7 +149,7 @@ public class AppFrame extends JFrame{
 			//make the "add" menu
 			JMenu addMenu = new JMenu("Aggiungi");
 			//make the "add function" menu item
-			JMenuItem addFunctionItem = new JMenuItem("Funzione");
+			JMenuItem addFunctionItem = new JMenuItem("Nuova funzione");
 			//the addFunctionItem calls the addFunctionProcedure()
 			addFunctionItem.addActionListener(new ActionListener() {
 				@Override

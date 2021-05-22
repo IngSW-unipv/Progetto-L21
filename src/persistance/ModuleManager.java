@@ -39,7 +39,23 @@ public class ModuleManager {
 	
 	
 	public Module getModule(String name) {
-		return loadedModulesMap.get(name);
+		
+		Module module = loadedModulesMap.get(name);
+		
+		//if the module in question is not loaded yet:
+		if(module==null) {
+			
+			//load the Module:
+			module = new Module(name);
+			loadedModulesMap.put(name, module);
+			
+			//if the module in question doesn't exist on the disk, create a new empty Module. 
+			if(!module.exists()) {
+				module.create();
+			}
+		}
+		
+		return module;
 	}
 	
 	
