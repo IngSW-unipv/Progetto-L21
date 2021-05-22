@@ -149,8 +149,12 @@ public abstract class FunctionAB implements FunctionIF {
 	}
 	
 	
-	
-	
+	@Override
+	public boolean equals(FunctionIF f) {
+		System.out.println(f.getExpression());
+		System.out.println(this.getExpression());
+		return f.getExpression().equals(this.getExpression()); 
+	}
 
 
 }

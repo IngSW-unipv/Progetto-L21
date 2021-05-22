@@ -6,7 +6,7 @@ import model.core.FunctionIF;
 public class Sum extends BinaryFunction {
 
 	public Sum(FunctionIF leftOperand, FunctionIF rightOperand) {
-		super(leftOperand, rightOperand);
+		super(leftOperand, rightOperand);			
 	}
 
 	@Override
@@ -23,8 +23,6 @@ public class Sum extends BinaryFunction {
 	public String toString() {
 		return "("+leftOperand+" + "+rightOperand+")";
 	}
-
-	
 
 	
 	

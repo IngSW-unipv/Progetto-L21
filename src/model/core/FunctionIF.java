@@ -64,6 +64,12 @@ public interface FunctionIF {
  	 */
  	public Color getColor();
 	
+ 	/**
+ 	 * 
+ 	 * @param f
+ 	 * @return
+ 	 */
+ 	public boolean equals(FunctionIF f);
  	
 
 }
