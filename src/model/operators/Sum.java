@@ -21,7 +21,7 @@ public class Sum extends BinaryFunction {
 
 	@Override
 	public String toString() {
-		return leftOperand+" + "+rightOperand;
+		return "("+leftOperand+" + "+rightOperand+")";
 	}
 
 	

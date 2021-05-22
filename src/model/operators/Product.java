@@ -22,7 +22,7 @@ public class Product extends BinaryFunction {
 	
 	@Override
 	public String toString() {
-		return leftOperand+"*"+rightOperand;
+		return "("+leftOperand+"*"+rightOperand+")";
 	}
 
 	
