@@ -102,18 +102,27 @@ public class PersistanceTester {
 		
 		//try loading a NEW module dynamically
 		Module myNewModule = ModuleManager.getInstance().getModule("myNewModule");
+		System.out.println(myNewModule.getPath()+" was created and loaded.");
+		System.out.println("---------------------");
+		
+		
 		//add a key-val pair to it:
 		myNewModule.put("ciao mondo!", "hello world!");
 		//print the value:
 		System.out.println(myNewModule.get("ciao mondo!"));
+		System.out.println("---------------");
 		
 		//add a reference to the Module file itself as a value
 		myNewModule.put("myFileReference", myNewModule);
 		//print out the new key-val map for myNewModule
+		System.out.println("key-val map for "+myNewModule.getName()+":");
 		System.out.println(myNewModule.getKeyValMap());
-		//get the contents of the referenced file
-		System.out.println(myNewModule.get("myFileReference"));
+		System.out.println("----------------");
 		
+		//get the contents of the referenced file
+		System.out.println("contents of the Module's file:");
+		System.out.println(myNewModule.get("myFileReference"));
+		System.out.println("--------------");
 		
 
 		

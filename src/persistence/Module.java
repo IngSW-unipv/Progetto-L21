@@ -36,7 +36,9 @@ public class Module extends TextFile {
 	}
 	
 	/**
-	 * Sets or re-sets a key-value pair.
+	 * inserts a key-value pair in the module. 
+	 * If the added key was already in the Module,
+	 * its value gets OVERWRITTEN!
 	 * @param key
 	 * @param value
 	 */
@@ -83,7 +85,9 @@ public class Module extends TextFile {
 	
 	
 	/**
-	 * Returns the value of a key. Returns null if key doesn't exist.
+	 * Returns the value associated to a key, null if not found.
+	 * In case the value is a referenced file, it returns 
+	 * the contents of that referenced file.
 	 * @param key
 	 * @return
 	 */
@@ -116,7 +120,7 @@ public class Module extends TextFile {
 	
 	
 	/**
-	 * Removes existing key
+	 * Removes a key and its associated value.
 	 * @param key
 	 */
 	public void remove(String key) {
@@ -139,16 +143,30 @@ public class Module extends TextFile {
 		}
 	}
 	
+	
+	/**
+	 * adds a ModuleListener to this Module.
+	 * @param moduleListener
+	 */
 	public void addListener(ModuleListener moduleListener) {
 		listenersList.add(moduleListener);
 		moduleListener.dealWithModuleUpdate(this);
 	}
 	
+	/**
+	 * removes a ModuleListener from this Module.
+	 * @param moduleListener
+	 */
     public void removeListener(ModuleListener moduleListener) {
 		listenersList.remove(moduleListener);
 	}
 	
-	
+    
+    /**
+     * returns a HashMap of key-values, that can be easily read 
+     * through the usual HashMap.keySet() method.
+     * @return
+     */
 	public HashMap<String, String> getKeyValMap(){
 		HashMap<String, String> map = new HashMap<String, String>();
 		

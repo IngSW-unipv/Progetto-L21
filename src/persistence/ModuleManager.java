@@ -29,6 +29,10 @@ public class ModuleManager {
 		}
 	}
 	
+	/**
+	 * gets the static instance of ModuleManager.
+	 * @return
+	 */
 	public static ModuleManager getInstance() {
 		if(instance==null) {
 			instance = new ModuleManager();
@@ -37,7 +41,16 @@ public class ModuleManager {
 	}
 	
 	
-	
+	/**
+	 * Gets a Module by its name.
+	 * In case it wasn't loaded, or it didn't exists, getModule
+	 * will also load/create-and-load the Module. In case 
+	 * it had to be created, any new Module will be empty, 
+	 * of course.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public Module getModule(String name) {
 		
 		Module module = loadedModulesMap.get(name);
