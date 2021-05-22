@@ -67,6 +67,22 @@ public class Module extends TextFile {
 	
 	
 	/**
+	 * Reference a WHOLE TEXT FILE as the value associated to a key.
+	 * 
+	 * get(String key), if invoked on a key associated to a file,
+	 * will return the whole text-contents of that file.
+	 * 
+	 * @overload
+	 * @param key
+	 * @param referencedFile
+	 */
+	public void put(String key, File referencedFile) {
+		put(key, "contentsOf("+referencedFile.getPath()+")");
+	}
+	
+	
+	
+	/**
 	 * Returns the value of a key. Returns null if key doesn't exist.
 	 * @param key
 	 * @return
@@ -82,9 +98,19 @@ public class Module extends TextFile {
 			Matcher matcher = pattern.matcher(text);
 			matcher.find();
 			
-			return matcher.group(1);
+			//get the value
+			value = matcher.group(1);
+			
+			//check if value is just a plain value, or it's actually a reference to the contents of a file
+			if(value.contains("contentsOf(")) {
+				String filePath = value.replace("contentsOf(", "").replace(")", "").trim();
+				//try reading the file and returning its text-contents
+				return FileIO.readFile(filePath);
+			}
+			
 			
 		}catch(Exception e) {/*do nothing*/}
+		
 		return value;
 	}
 	
@@ -129,11 +155,13 @@ public class Module extends TextFile {
 		try {
 			String[] lines = read().split("\n");
 			for(String line : lines) {
-				map.put(line.split(" : ")[0], line.split(" : ")[1]);
+				String key = line.split(" : ")[0];
+				map.put(key, get(key));
 			}
 		}catch(Exception e) {
 			
 		}
+		
 		
 		return map;
 	}
