@@ -32,6 +32,11 @@ public class GraphKeyListener implements KeyListener {
 	 * 
 	 * CTRL && H: return home (ie:
 	 * default perspective on the graph)
+	 * 
+	 * CTRL && P: plot a new function on the graph.
+	 * 
+	 * CTRL && E: export a snapshot of the current graph.
+	 * 
 	 */
 	
 	@Override
@@ -65,6 +70,18 @@ public class GraphKeyListener implements KeyListener {
 		case KeyEvent.VK_LEFT:
 			graphPanel.panHorizontally(-1);
 			break;		
+		case KeyEvent.VK_P:
+			if(arg0.isControlDown()) {
+				graphPanel.addFunctionProcedure();
+			}
+			break;
+		case KeyEvent.VK_E:
+			if(arg0.isControlDown()) {
+				graphPanel.saveSnapshotProcedure();
+			}
+			break;
+			
+			
 		}
 		
 	}
