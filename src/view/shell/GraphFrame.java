@@ -17,10 +17,10 @@ public class GraphFrame extends JFrame {
 		c.addObserver(g);
 		
 		
-		this.addKeyListener(g);
-		this.addMouseMotionListener(g);
-		this.addMouseListener(g);
-		this.addMouseWheelListener(g);
+		this.addKeyListener(g.getKeyListener());
+		//this.addMouseListener(g);
+		//this.addMouseMotionListener(g);
+		//this.addMouseWheelListener(g);
 		this.setFocusable(true);
 		this.add(g);
 		

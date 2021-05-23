@@ -27,10 +27,13 @@ import model.core.FunctionIF;
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
+import view.graph.ioListeners.GraphKeyListener;
+import view.graph.ioListeners.HoveringCoordsMouseTracker;
+import view.graph.ioListeners.MovePanelWithMouseListener;
 
 
 @SuppressWarnings("serial")
-public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMotionListener, MouseWheelListener, MouseListener, ModuleListener{
+public class GraphPanel extends JPanel implements Observer, ModuleListener{
 
 
 
@@ -52,14 +55,18 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	boolean HIGHLIGHT_CRITICAL_POINTS = false;
 	boolean HOVER_COORDINATES = true;
 	
-	//this mouse tracker can plot the coordinate that is being hovered over.
-	MouseTracker hoveringCoordsTracker;
 	
+	//this graph's keylistsner
+	public GraphKeyListener keyListener;
+	
+	//this mouse tracker can plot the coordinate that is being hovered over.
+	HoveringCoordsMouseTracker hoveringCoordsTracker;
+	
+	//mouse tracker for mouse movement 
+	MovePanelWithMouseListener movePanelWithMouseListener;
 	
 	//PERSISTANCE MODULES
 	Module graphModule;
-	
-	
 	
 	
 
@@ -81,6 +88,9 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 
 
+
+
+
 	public GraphPanel() {
 
 		//set this panel's size
@@ -91,8 +101,22 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 		
 		//create a mouse tracker, without adding it yet
-		hoveringCoordsTracker = new MouseTracker(this);
+		hoveringCoordsTracker = new HoveringCoordsMouseTracker(this);
 
+		
+		//create a mouse tracker for the mouse-based movement
+		movePanelWithMouseListener = new MovePanelWithMouseListener(this);
+		this.addMouseListener(movePanelWithMouseListener);
+		this.addMouseMotionListener(movePanelWithMouseListener);
+		this.addMouseWheelListener(movePanelWithMouseListener);
+		
+		
+		//add the keylistsner to the graph
+		keyListener = new GraphKeyListener(this);
+		this.addKeyListener(keyListener);
+		
+		
+		
 		
 		//start listening to the graph-settings Module
 		graphModule = ModuleManager.getInstance().getModule("graph");
@@ -150,6 +174,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	@Override
 	public void paint(Graphics arg0) {
 
+		
 		//cast the Graphics obj to a Graphics2D obj
 		Graphics2D g2d = (Graphics2D)arg0;
 
@@ -302,7 +327,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	 * @param amount
 	 */
 
-	private void zoom(double amount) {
+	public void zoom(double amount) {
 		xMin+=amount;
 		yMin+=amount;
 
@@ -316,7 +341,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	/**
 	 * move around sideways on the graph
 	 */
-	private void panHorizontally(double amount) {
+	public void panHorizontally(double amount) {
 		xMin+=amount;
 		xMax+=amount;
 		repaint();
@@ -325,7 +350,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	/**
 	 * 	move around vertically on the graph
 	 */
-	private void panVerically(double amount) {
+	public void panVerically(double amount) {
 		yMin+=amount;
 		yMax+=amount;
 		repaint();
@@ -334,7 +359,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	/**
 	 * Reset the graph's perspective to default.
 	 */
-	private void backHome() {
+	public void backHome() {
 		xMin = -20;
 		xMax = 20;
 		yMin = -18;
@@ -366,100 +391,12 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	}
 
 
-	/**
-	 * implements a few keyPressed actions, of which:
-	 * 
-	 * CTRL && +/- zoom in/out, 
-	 * 
-	 * CTRL && [arrow key]: pan left-right/up-down, 
-	 * 
-	 * CTRL && H: return home (ie:
-	 * default perspective on the graph)
-	 */
-	@Override
-	public void keyPressed(KeyEvent arg0) {
 
-
-		switch(arg0.getKeyCode()) {
-		case KeyEvent.VK_EQUALS:
-			if(arg0.isControlDown()) {
-				zoom(1);
-			}
-			break;
-		case KeyEvent.VK_MINUS:
-			if(arg0.isControlDown()) {
-				zoom(-1);
-			}
-			break;
-		case KeyEvent.VK_H:
-			if(arg0.isControlDown()) {
-				backHome();
-			}
-			break;
-		case KeyEvent.VK_UP:
-			panVerically(1);
-			break;
-		case KeyEvent.VK_DOWN:
-			panVerically(-1);
-			break;
-		case KeyEvent.VK_RIGHT:
-			panHorizontally(1);
-			break;
-		case KeyEvent.VK_LEFT:
-			panHorizontally(-1);
-			break;		
-		}
-
-
-	}
-
-
-
-	//>---------------------------------------<
 	
-	/**
-	 * TODO: se siete venuti qui per questo, le coordinate
-	 * col cursore confliggono con il dragging del mouse.
-	 * 
-	 */
+
+
+
 	
-	/*
-	 * These two methods are used to implement a simple
-	 * move-by-dragging the mouse on the graph functionality.
-	 */
-
-	Point initialMousePosition = new Point(1,1);
-
-	//get the mouse's initial position and store it
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		initialMousePosition = arg0.getPoint();
-	}
-
-	//calculate the distance that the mouse was dragged for,
-	//and based on that, pan the graph.
-	@Override
-	public void mouseDragged(MouseEvent arg0) {
-		int distanceMovedX = arg0.getX()- initialMousePosition.x;
-		int distanceMovedY = arg0.getY()- initialMousePosition.y;
-		System.out.println("cicicici");
-		//TODO: Dynamic calibration. (Fix this magic number):
-		this.panHorizontally(distanceMovedX/30);
-		this.panVerically(-distanceMovedY/30);
-	}
-	//>------------------------------------------------<
-
-
-
-	/**
-	 * Make use of the mouse's scroll-wheel to 
-	 * zoom in on the graph.
-	 */
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent arg0) {
-		this.zoom(arg0.getWheelRotation()*(-1));
-	}
-
 	
 	
 	//>-----------SET PREFRERENCES---------<//
@@ -510,44 +447,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	
 	
 	
-	
 
-
-	//>-----CURRENTLY UNIMPLEMENTED IF METHODS--------<
-	@Override
-	public void mouseReleased(MouseEvent arg0) {		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-
-	}
-	
-	@Override
-	public void mouseMoved(MouseEvent arg0) {
-	}
-	//>-------------------------------------------<
-
-
-
-	
 	
 	@Override
 	public void dealWithModuleUpdate(Module module) {
@@ -596,6 +496,26 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 
 
 
+	public KeyListener getKeyListener() {
+		return keyListener;
+	}
+
+	
+	public MouseListener getMouseListener() {
+		return movePanelWithMouseListener;
+	}
+
+
+
+
+	public Coordinate getCursorCartesianCoord() {
+		return cursorCartesianCoord;
+	}
+
+
+	public void setCursorCartesianCoord(Coordinate cursorCartesianCoord) {
+		this.cursorCartesianCoord = cursorCartesianCoord;
+	}
 
 		
 

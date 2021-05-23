@@ -2,21 +2,10 @@ package view.app;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 import controller.Calculator;
-import persistence.Module;
-import persistence.ModuleListener;
-import persistence.ModuleManager;
 import view.app.insertedFunctionsPanel.InsertedFunctionsPanel;
 import view.app.menuBar.AppMenuBar;
 import view.graph.GraphPanel;
@@ -54,10 +43,10 @@ public class AppFrame extends JFrame{
 		controller.addObserver(graphPanel);
 		
 		//The graph panel has to have access to a bunch of I/O stuff...
-		this.addKeyListener(graphPanel);
-		this.addMouseMotionListener(graphPanel);
-		this.addMouseListener(graphPanel);
-		this.addMouseWheelListener(graphPanel);
+		this.addKeyListener(graphPanel.getKeyListener());
+		//this.addMouseMotionListener(graphPanel);
+	    this.addMouseListener(graphPanel.getMouseListener());
+		//this.addMouseWheelListener(graphPanel);
 		this.setFocusable(true);
 		
 		

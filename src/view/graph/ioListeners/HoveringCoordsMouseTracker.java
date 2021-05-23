@@ -1,16 +1,31 @@
-package view.graph;
+package view.graph.ioListeners;
 
 import java.awt.IllegalComponentStateException;
+
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-public class MouseTracker implements MouseMotionListener {
+import view.graph.GraphPanel;
+
+
+/**
+ * This is a mouse listener that tracks the coordinate pointed
+ * to by the cursor at any given time.
+ * 
+ * It triggers the GraphPanel's repaint() method whenever
+ * the coordinate in question changes. (ie: whenever
+ * the cursor moves).
+ * 
+ *
+ */
+
+public class HoveringCoordsMouseTracker implements MouseMotionListener {
 	
 	GraphPanel panelToBeTracked;
 	
-	public MouseTracker(GraphPanel panelToBeTracked) {
+	public HoveringCoordsMouseTracker(GraphPanel panelToBeTracked) {
 		this.panelToBeTracked = panelToBeTracked;
 	}
 	
@@ -43,7 +58,7 @@ public class MouseTracker implements MouseMotionListener {
 		int mouseOnPanelX = mouseCoord.x - panelLocation.x;
 		int mouseOnPanelY = mouseCoord.y - panelLocation.y;
 		//convert it to the corresponding Cartesian coordinate
-		panelToBeTracked.cursorCartesianCoord = panelToBeTracked.pixelToCartesian(mouseOnPanelX, mouseOnPanelY);
+		panelToBeTracked.setCursorCartesianCoord(panelToBeTracked.pixelToCartesian(mouseOnPanelX, mouseOnPanelY));
 
 		panelToBeTracked.repaint();
 	}
