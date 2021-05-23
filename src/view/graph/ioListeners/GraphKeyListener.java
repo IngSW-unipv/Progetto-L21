@@ -37,6 +37,10 @@ public class GraphKeyListener implements KeyListener {
 	 * 
 	 * CTRL && E: export a snapshot of the current graph.
 	 * 
+	 * CTRL && X: view critical points. (eXtremanti)
+	 * 
+	 * CTRL && Z: view Zeros.
+	 * 
 	 */
 	
 	@Override
@@ -80,6 +84,17 @@ public class GraphKeyListener implements KeyListener {
 				graphPanel.saveSnapshotProcedure();
 			}
 			break;
+		case KeyEvent.VK_X:
+			if(arg0.isControlDown()) {
+				graphPanel.toggleHighlightCriticalPoints();
+			}
+			break;
+		case KeyEvent.VK_Z:
+			if(arg0.isControlDown()) {
+				graphPanel.toggleHighlightZeros();
+			}
+			break;	
+			
 			
 			
 		}

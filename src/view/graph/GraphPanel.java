@@ -84,14 +84,12 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 
 	/**
 	 * this is the (Cartesian) coordinate pointed to by the cursor on screen
-	 * it's constantly kept up to date by the HoveringCoordinatesThread
+	 * it's constantly kept up to date if hoveringCoordsTracker is enabled.
 	 */
 	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 
 
 	Calculator controller;
-
-
 
 	public GraphPanel(Calculator controller) {
 		
