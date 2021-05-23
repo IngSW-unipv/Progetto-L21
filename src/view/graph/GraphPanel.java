@@ -53,7 +53,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 	boolean HOVER_COORDINATES = true;
 	
 	//this mouse tracker can plot the coordinate that is being hovered over.
-	MouseTracker mouseTracker;
+	MouseTracker hoveringCoordsTracker;
 	
 	
 	//PERSISTANCE MODULES
@@ -91,7 +91,7 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 		
 		
 		//create a mouse tracker, without adding it yet
-		mouseTracker = new MouseTracker(this);
+		hoveringCoordsTracker = new MouseTracker(this);
 
 		
 		//start listening to the graph-settings Module
@@ -582,9 +582,9 @@ public class GraphPanel extends JPanel implements Observer, KeyListener, MouseMo
 			return;
 		case "HOVER_COORDINATES":
 			if(value.contains("true")) {
-				addMouseMotionListener(mouseTracker);
+				addMouseMotionListener(hoveringCoordsTracker);
 			}else {
-				removeMouseMotionListener(mouseTracker);
+				removeMouseMotionListener(hoveringCoordsTracker);
 			}
 			return;
 			

@@ -2,6 +2,7 @@ package model.operators;
 
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
+import model.numbers.Constant;
 
 public class Product extends BinaryFunction {
 

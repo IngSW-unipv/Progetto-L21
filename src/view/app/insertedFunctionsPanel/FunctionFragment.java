@@ -58,7 +58,7 @@ public class FunctionFragment extends JPanel implements MouseListener{
 		//make a new derive button
 		deriveButton = new JButton("d/dx");
 		//make a new popup menu for this fragment
-		popupMenu = new FragmentsPopupMenu(function);
+		popupMenu = new FragmentsPopupMenu(function,controller);
 
 		
 		//add buttons and label
@@ -96,6 +96,7 @@ public class FunctionFragment extends JPanel implements MouseListener{
 		popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
+	//>------UNIMPLEMENTED METHODS----------------<
 	@Override
 	public void mouseEntered(MouseEvent e) {			
 	}
@@ -111,29 +112,33 @@ public class FunctionFragment extends JPanel implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {			
 	}
+	//>-----------END UNIMPLEMENTED METHODS----------------<
 
 }
 
 
 
+
+
+//>----------CLASS: FRAGMENTSPOPUPMENU-------------------//<
 /**
  * This popup menu makes up for the lack of space on the 
- * displayed functions' panel, and provides a few more 
- * options on each function, such as "save".
- *
+ * fragment. Providing more options to be applied on 
+ * a single function, such as "save".
  */
 
 class FragmentsPopupMenu extends JPopupMenu{
 	
 	FunctionIF function;
+	Calculator controller;
 	
-	public FragmentsPopupMenu(FunctionIF function) {
+	public FragmentsPopupMenu(FunctionIF function, Calculator controller) {
 		//set the function to be manipulated 
 		this.function = function;
+		this.controller = controller;
 		
-		//add and set the "save" item
+		//set the "save" item
         JMenuItem saveItem = new JMenuItem("salva");
-		this.add(saveItem);
 		saveItem.addActionListener(new ActionListener() {
 
 			@Override
@@ -144,10 +149,27 @@ class FragmentsPopupMenu extends JPopupMenu{
 				}
 			}
 		});
-	}
-	
-}
+		
+		//set the remove button
+        JMenuItem removeFromGraphItem = new JMenuItem("rimuovi");
+        removeFromGraphItem.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.removeFunction(function);
+			}
+        	
+        });
+		
+        
+        //add all of the buttons to the popup menu
+		this.add(saveItem);
+		this.add(removeFromGraphItem);
+		
+		
+	}
+}
+//>---------- END FRAGMENTSPOPUPMENU-------------------//<
 
 
 

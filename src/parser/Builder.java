@@ -119,6 +119,7 @@ public class Builder {
 			return buildOperator(token);
 		}
 		
+		
 		//if it's the beginning of a function
 		FunctionIF newFunction;
 		if((newFunction = buildFunction(token))!=null) {

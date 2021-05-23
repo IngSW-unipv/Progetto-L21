@@ -1,4 +1,4 @@
-package view.app;
+package view.app.menuBar.menus.addMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

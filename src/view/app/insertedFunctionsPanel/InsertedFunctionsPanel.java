@@ -21,6 +21,18 @@ import controller.Observer;
 import model.core.FunctionIF;
 import persistence.ModuleManager;
 
+/**
+ * The InsertedFunctionsPanel is the space on the screen
+ * where all of the currently plotted functions are shown.
+ * 
+ * InsertedFunctionsPanel contains a FunctionFragment FOR EACH
+ * function that is being displayed.
+ * 
+ * InsertedFunctionsPanel is an Observer of the Calculator
+ * controller, so it creates/deletes FunctionFragments 
+ * automatically whenever they're needed/not needed anymore.
+ *
+ */
 
 public class InsertedFunctionsPanel extends JPanel implements Observer{
 
