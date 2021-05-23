@@ -39,8 +39,7 @@ public class AppFrame extends JFrame{
 		this.controller = controller;
 		
 		//create a new GraphPanel that listens to the controller
-		graphPanel = new GraphPanel();
-		controller.addObserver(graphPanel);
+		graphPanel = new GraphPanel(controller);
 		
 		//The graph panel has to have access to a bunch of I/O stuff...
 		this.addKeyListener(graphPanel.getKeyListener());

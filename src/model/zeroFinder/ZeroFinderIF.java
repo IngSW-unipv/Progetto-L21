@@ -2,6 +2,7 @@ package model.zeroFinder;
 
 import java.util.ArrayList;
 
+import model.core.Coordinate;
 import model.core.FunctionIF;
 
 public interface ZeroFinderIF {
@@ -11,7 +12,7 @@ public interface ZeroFinderIF {
 	 * @param function
 	 * @return
 	 */
-	public ArrayList<Double> getZeros(FunctionIF function);
+	public ArrayList<Coordinate> getZeros(FunctionIF function);
 	
 	/**
 	 * For the purpose of approximation, set a number close enough to zero, that can be considered as good as zero.

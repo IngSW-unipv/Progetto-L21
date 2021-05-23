@@ -107,7 +107,7 @@ public abstract class FunctionAB implements FunctionIF {
 	 * get the zeros (or part of the zeros) of this function. 
 	 */
 	@Override
-	public ArrayList<Double> getZeros() {
+	public ArrayList<Coordinate> getZeros() {
 
 		//make a new zero finder if this function's zero finder is null
 		if(zeroFinder==null) {

@@ -12,8 +12,8 @@ public class CriticalPointFinder implements CriticalPointFinderIF {
 		FunctionIF derivative = function.getDerivative();
 		ArrayList<Coordinate> criticalPoints = new ArrayList<Coordinate>();
 		
-		for(Double zeroOfDerivative : derivative.getZeros()) {
-			criticalPoints.add(new Coordinate(zeroOfDerivative, function.getValue(zeroOfDerivative)));
+		for(Coordinate criticalPoint : derivative.getZeros()) {
+			criticalPoints.add(new Coordinate(criticalPoint.x, function.getValue(criticalPoint.x)));
 		}
 		
 		return criticalPoints;

@@ -8,25 +8,29 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import controller.Calculator;
+import view.graph.GraphPanel;
 
 public class AddMenu extends JMenu{
 
 	Calculator controller;
+	GraphPanel graphPanel;
 
-	public AddMenu(Calculator controller) {
+	public AddMenu(Calculator controller, GraphPanel graphPanel) {
 
 		//set the title
 		super("Aggiungi");
 		//set the controller
 		this.controller = controller;
-
+		//set the graph panel
+		this.graphPanel = graphPanel;
+		
 		//make the "add function" menu item
 		JMenuItem addFunctionItem = new JMenuItem("Nuova funzione");
 		//the addFunctionItem calls the addFunctionProcedure()
 		addFunctionItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				addFunctionProcedure();
+				graphPanel.addFunctionProcedure();
 			}
 		});
 
@@ -41,19 +45,7 @@ public class AddMenu extends JMenu{
 
 	}
 
-	/**
-	 * Prompts the user to input an expression, then passes it to the controller
-	 */
-
-	private void addFunctionProcedure() {
-		String expression = JOptionPane.showInputDialog(this,"Inserisci una funzione:");
-		if(expression==null) {
-			return;
-		}
-		controller.addFunction(expression);
-	}
-
-
+	
 
 
 

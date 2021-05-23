@@ -24,7 +24,7 @@ public class ExportMenu extends JMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {					
-				saveSnapshotProcedure();
+				graphPanel.saveSnapshotProcedure();
 			}
 
 		});
@@ -32,23 +32,6 @@ public class ExportMenu extends JMenu {
 	}
 
 	
-	/**
-	 * Prompts the user to select a location for a snapshot of the graph.
-	 */
-
-	private void saveSnapshotProcedure() {
-		//make a new file chooser
-		JFileChooser fileChooser = new JFileChooser();
-		//set the default file name
-		fileChooser.setSelectedFile(new File("snapshot.png"));
-		//launch the file chooser and get the user's response
-		int response = fileChooser.showOpenDialog(this);
-		//if response is affirmative, save snapshot to user-provided location
-		if(response == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			graphPanel.takeSnapshot(file);
-		}
-	}
-
+	
 
 }

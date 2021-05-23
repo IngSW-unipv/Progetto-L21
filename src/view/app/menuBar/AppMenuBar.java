@@ -24,7 +24,7 @@ public class AppMenuBar extends JMenuBar{
 
 		
 		//create the menus
-		AddMenu addMenu = new AddMenu(controller);
+		AddMenu addMenu = new AddMenu(controller, graphPanel);
 		ViewMenu viewMenu = new ViewMenu(graphPanel);
 		ExportMenu exportMenu = new ExportMenu(graphPanel);
 

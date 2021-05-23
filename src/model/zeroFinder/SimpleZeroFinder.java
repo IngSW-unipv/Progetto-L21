@@ -24,10 +24,10 @@ public class SimpleZeroFinder implements ZeroFinderIF {
 	
 	
 	@Override
-	public ArrayList<Double> getZeros(FunctionIF function) {
+	public ArrayList<Coordinate> getZeros(FunctionIF function) {
 		
 		//tries finding zeros with the default precision (almostZero)
-		ArrayList<Double> results = findZerosFromCoordinates(function, almostZero);
+		ArrayList<Coordinate> results = findZerosFromCoordinates(function, almostZero);
 		
 		//if no zeros were found that way, lower (worsen :-( ) the precision by a factor of WORSENING_FACTOR
 		if(results.size()==0) {
@@ -47,11 +47,11 @@ public class SimpleZeroFinder implements ZeroFinderIF {
 	 * @param almostZero
 	 * @return
 	 */
-	private ArrayList<Double> findZerosFromCoordinates(FunctionIF function, double almostZero) {
-		ArrayList<Double> results = new ArrayList<Double>();
+	private ArrayList<Coordinate> findZerosFromCoordinates(FunctionIF function, double almostZero) {
+		ArrayList<Coordinate> results = new ArrayList<Coordinate>();
 		for(Coordinate coord : function.getSamples()) {
 			if(Math.abs(coord.y)<=almostZero) {
-				results.add(coord.x);
+				results.add(new Coordinate(coord.x, 0) );
 			}
 		}
 		return results;

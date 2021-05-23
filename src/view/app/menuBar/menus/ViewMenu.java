@@ -1,8 +1,10 @@
 package view.app.menuBar.menus;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
@@ -51,8 +53,25 @@ public class ViewMenu extends JMenu {
 
 		});
 		this.add(viewHoveringCoordinates);
+		
+		
+		//make the bg-color selection item
+		JMenuItem setBgColor = new JMenuItem("colore sfondo");
+		setBgColor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				graphPanel.setBackgroundColorProcedure();
+				
+			}
+			
+		});
+		this.add(setBgColor);
+		
 
 	}
+
+	
 
 
 

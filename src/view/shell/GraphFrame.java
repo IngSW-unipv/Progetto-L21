@@ -13,7 +13,7 @@ public class GraphFrame extends JFrame {
 
 	public GraphFrame(Calculator controller) {
 		this.c = controller;
-		GraphPanel g = new GraphPanel();
+		GraphPanel g = new GraphPanel(controller);
 		c.addObserver(g);
 		
 		

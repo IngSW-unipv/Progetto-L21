@@ -49,7 +49,7 @@ public interface FunctionIF {
 	public String getExpression(); 
 	
 	/** * returns the zeros/roots of this function */ 
-	public ArrayList<Double> getZeros();
+	public ArrayList<Coordinate> getZeros();
 	
 	/**
 	 * returns the critical/stationary points of this function. 

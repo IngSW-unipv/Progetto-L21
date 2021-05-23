@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import controller.Calculator;
 import controller.Observer;
 import model.core.Coordinate;
 import model.core.FunctionIF;
@@ -88,10 +89,14 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 
 
+	Calculator controller;
 
 
 
-	public GraphPanel() {
+	public GraphPanel(Calculator controller) {
+		
+		this.controller = controller;
+		controller.addObserver(this);
 
 		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -117,10 +122,11 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		
 		
 		
-		
 		//start listening to the graph-settings Module
 		graphModule = ModuleManager.getInstance().getModule("graph");
 		graphModule.addListener(this);
+		
+		
 				
 
 	}
@@ -289,11 +295,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	
 	public void plotZeros(FunctionIF function, Graphics2D g2d) {
 		g2d.setColor(ZEROS_COLOR);
-		for(Double zero : function.getZeros()) {
-			Point p = cartesianToPixel(zero, 0);
-			g2d.drawRect(p.x, p.y, 1, 1);
-			g2d.drawString("("+zero+", "+0+")", p.x, p.y);
-		}
+		plotPoints(function.getZeros(), g2d);
 	}
 	
 	
@@ -304,14 +306,22 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	
 	public void plotCriticalPoints(FunctionIF function, Graphics2D g2d) {
 		g2d.setColor(CRITICAL_POINTS_COLOR);
-		for(Coordinate critPoints : function.getCriticalPoints()) {
+		plotPoints(function.getCriticalPoints(), g2d);
+	}
+	
+	
+	/**
+	 * Plots a list of Coordinates on the graph.
+	 * @param coords
+	 * @param g2d
+	 */
+	public void plotPoints(ArrayList<Coordinate> coords, Graphics2D g2d) {
+		for(Coordinate critPoints : coords) {
 			Point p = cartesianToPixel(critPoints.x, critPoints.y);
 			g2d.drawRect(p.x, p.y, 1, 1);
 			g2d.drawString("("+critPoints.x+", "+critPoints.y+")", p.x, p.y);
 		}
 	}
-	
-	
 	
 	
 	
@@ -420,6 +430,12 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		graphModule.put("HOVER_COORDINATES", HOVER_COORDINATES+"");
 		repaint();
 	}
+	
+	public void setBackgroundColor(Color color) {
+		this.BG_COLOR = color;
+		graphModule.put("BACKGROUND_COLOR", BG_COLOR.getRGB()+"");
+		repaint();
+	}
 
 	
 	//>-------------------------------<//
@@ -487,6 +503,10 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 				removeMouseMotionListener(hoveringCoordsTracker);
 			}
 			return;
+		case "BACKGROUND_COLOR":
+			int colorInt = Integer.parseInt(value);
+			BG_COLOR = new Color(colorInt);
+			break;
 			
 		
 		
@@ -505,9 +525,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		return movePanelWithMouseListener;
 	}
 
-
-
-
 	public Coordinate getCursorCartesianCoord() {
 		return cursorCartesianCoord;
 	}
@@ -520,6 +537,51 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		
 
 	
+	//>--INTERACTIVE PROCEDURES-----------------------<//
+	
+	/**
+	 * Prompts the user to select the background color.
+	 */
+	
+	public void setBackgroundColorProcedure() {
+		Color chosenColor = JColorChooser.showDialog(null, "Seleziona il colore di sfondo", null);
+		if(chosenColor==null) {
+			return;
+		}
+		setBackgroundColor(chosenColor);
+	}
+	
+	/**
+	 * Prompts the user to input an expression, then passes it to the controller
+	 */
+
+	public void addFunctionProcedure() {
+		String expression = JOptionPane.showInputDialog(this,"Inserisci una funzione:");
+		if(expression==null) {
+			return;
+		}
+		controller.addFunction(expression);
+	}
+
+	/**
+	 * Prompts the user to select a location for a snapshot of the graph.
+	 */
+
+	public void saveSnapshotProcedure() {
+		//make a new file chooser
+		JFileChooser fileChooser = new JFileChooser();
+		//set the default file name
+		fileChooser.setSelectedFile(new File("snapshot.png"));
+		//launch the file chooser and get the user's response
+		int response = fileChooser.showOpenDialog(this);
+		//if response is affirmative, save snapshot to user-provided location
+		if(response == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			takeSnapshot(file);
+		}
+	}
+
+
 	
 
 
