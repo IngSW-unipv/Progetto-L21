@@ -456,6 +456,12 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		graphModule.put("BACKGROUND_COLOR", BG_COLOR.getRGB()+"");
 		repaint();
 	}
+	
+	public void setAxesColor(Color color) {
+		this.AXES_COLOR = color;
+		graphModule.put("AXES_COLOR", AXES_COLOR.getRGB()+"");
+		repaint();
+	}
 	//>---------END SET PERSISTENT PREFRERENCES-----------------<//
 	
 	
@@ -504,9 +510,11 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			int colorInt = Integer.parseInt(value);
 			BG_COLOR = new Color(colorInt);
 			break;
-		
+		case "AXES_COLOR":
+			int axesColorInt = Integer.parseInt(value);
+			AXES_COLOR = new Color(axesColorInt);
+			break;
 		}
-		
 	}
 	//>---END HANDLE PERSISTENCE LISTENING-------------------------<
 	
@@ -521,12 +529,27 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	 */
 	
 	public void setBackgroundColorProcedure() {
-		Color chosenColor = JColorChooser.showDialog(null, "Seleziona il colore di sfondo", null);
+		System.out.println("hello");
+		Color chosenColor = JColorChooser.showDialog(this, "Seleziona il colore di sfondo", null);
 		if(chosenColor==null) {
 			return;
 		}
 		setBackgroundColor(chosenColor);
 	}
+	
+	
+	/**
+	 * Prompts the user to select the color of the axes.
+	 */
+	
+	public void setAxesColorProcedure() {
+		Color color = JColorChooser.showDialog(this, "Seleziona il colore degli assi", null);
+		if(color==null) {
+			return;
+		}
+		setAxesColor(color);
+	}
+	
 	
 	/**
 	 * Prompts the user to input an expression, then passes it to the controller

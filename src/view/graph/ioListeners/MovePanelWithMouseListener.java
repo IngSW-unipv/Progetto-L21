@@ -45,7 +45,6 @@ public class MovePanelWithMouseListener implements MouseMotionListener, MouseLis
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("kskdkdskd");
 		initialMousePosition = e.getPoint();
 
 	}

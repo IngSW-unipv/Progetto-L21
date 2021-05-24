@@ -55,10 +55,15 @@ public class ViewMenu extends JMenu {
 		this.add(viewHoveringCoordinates);
 		
 		
+		//make a new sub-menu for color-related stuff
+		JMenu chromaticsMenu = new JMenu("opz. cromatiche");
+		this.add(chromaticsMenu);
+		
+		
 		//make the bg-color selection item
 		JMenuItem setBgColor = new JMenuItem("colore sfondo");
 		setBgColor.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				graphPanel.setBackgroundColorProcedure();
@@ -66,8 +71,22 @@ public class ViewMenu extends JMenu {
 			}
 			
 		});
-		this.add(setBgColor);
 		
+		chromaticsMenu.add(setBgColor);
+		
+		//make the axes-color selection item
+		JMenuItem setAxesColor = new JMenuItem("colore assi");
+		setAxesColor.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				graphPanel.setAxesColorProcedure();
+				
+			}
+			
+		});
+		
+		chromaticsMenu.add(setAxesColor);
 
 	}
 
