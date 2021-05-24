@@ -41,11 +41,8 @@ public class AppFrame extends JFrame{
 		//create a new GraphPanel that listens to the controller
 		graphPanel = new GraphPanel(controller);
 		
-		//The graph panel has to have access to a bunch of I/O stuff...
+		//The graph panel has to have access to the keyboard
 		this.addKeyListener(graphPanel.getKeyListener());
-		//this.addMouseMotionListener(graphPanel);
-	    this.addMouseListener(graphPanel.getMouseListener());
-		//this.addMouseWheelListener(graphPanel);
 		this.setFocusable(true);
 		
 		

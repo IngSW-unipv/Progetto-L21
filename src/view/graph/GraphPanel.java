@@ -37,8 +37,7 @@ import view.graph.ioListeners.MovePanelWithMouseListener;
 public class GraphPanel extends JPanel implements Observer, ModuleListener{
 
 
-
-	//(for now) hardcoded parameters for the graph 
+	//internal parameters of the graph 
 	double xMin = -20;
 	double xMax = 20;
 	double yMin = -20;
@@ -69,27 +68,26 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	//PERSISTANCE MODULES
 	Module graphModule;
 	
-	
 
 	/**
-	 * this list is to store functions to be plotted cumulatively
-	 * on the same instance of the graph.
+	 * the controller that this GraphPanel listens to.
+	 */
+	Calculator controller;
+	
+	/**
+	 * stores the functions to be plotted cumulatively (by order of insertion) on the same instance of the graph.
 	 */
 	ArrayList<FunctionIF> functionsOnDisplay = new ArrayList<FunctionIF>();
 
-	/**
-	 * this is a reference to this panel (to be used in separate thread)
-	 */
-	GraphPanel autoreferenceToGraphPanel;
 
 	/**
-	 * this is the (Cartesian) coordinate pointed to by the cursor on screen
-	 * it's constantly kept up to date if hoveringCoordsTracker is enabled.
+	 * Needed 'cuz this Panel's container needs to add this Panel's KeyListener
+	 * @return
 	 */
-	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
-
-
-	Calculator controller;
+	public KeyListener getKeyListener() {
+		return keyListener;
+	}
+	
 
 	public GraphPanel(Calculator controller) {
 		
@@ -98,15 +96,10 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 
 		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
-		//get a reference to this panel (to be used in separate thread)
-		autoreferenceToGraphPanel = this;
-		
 		
 		//create a mouse tracker, without adding it yet
 		hoveringCoordsTracker = new HoveringCoordsMouseTracker(this);
 
-		
 		//create a mouse tracker for the mouse-based movement
 		movePanelWithMouseListener = new MovePanelWithMouseListener(this);
 		this.addMouseListener(movePanelWithMouseListener);
@@ -118,18 +111,34 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		keyListener = new GraphKeyListener(this);
 		this.addKeyListener(keyListener);
 		
-		
-		
 		//start listening to the graph-settings Module
 		graphModule = ModuleManager.getInstance().getModule("graph");
 		graphModule.addListener(this);
-		
-		
-				
-
 	}
 
+	
 
+	
+	/**
+	 * auto updates the status of the graph based on what happens to the 
+	 * Calculator. ie: adds or removes plotted functions.
+	 */
+	@Override
+	public void update(ArrayList<Object> message) {
+
+		switch((String)message.get(1)) {
+		case "ADDED":
+			functionsOnDisplay.add((FunctionIF)message.get(0));
+			repaint();
+			break;
+
+		case "DELETED":
+			functionsOnDisplay.remove((FunctionIF)message.get(0));
+			repaint();
+			break;
+		}
+	}
+	
 
 	/**
 	 * Convert Cartesian point to pixel point
@@ -209,13 +218,18 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 		
 
-		//paints the coordinate that the cursor is hovering on
-		g2d.setColor(Color.black);
-		Point p = cartesianToPixel(cursorCartesianCoord.x, cursorCartesianCoord.y);
-		g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
-		
+		if(HOVER_COORDINATES) {
+			//paints the coordinate that the cursor is hovering on
+			g2d.setColor(Color.black);
+			Coordinate cursorCartesianCoord = hoveringCoordsTracker.getCursorCartesianCoordinate();
+			Point p = cartesianToPixel(cursorCartesianCoord.x, cursorCartesianCoord.y);
+			g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
+		}
 		
 	}
+	
+	
+	
 
 	/**
 	 * Plots the axes.
@@ -324,6 +338,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	
 	
 
+	//>-------------IN-GRAPH MOTION------------------------<
 	/**
 	 * zoom in on the graph (amount > 0), by shrinking the 2 intervals 
 	 * (vertical and horizontal), thus drawing the function in a smaller
@@ -374,41 +389,48 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		yMax = 18;
 		repaint();
 	}
+	//>--------------END IN-GRAPH MOTION------------------------<
 
 
+	
 
-
+	
 	/**
-	 * auto updates the status of the graph based on what happens to the 
-	 * Calculator. ie: adds or removes plotted functions.
+	 * Save a snapshot of the graph as an image.
 	 */
-	@Override
-	public void update(ArrayList<Object> message) {
-
-		switch((String)message.get(1)) {
-		case "ADDED":
-			functionsOnDisplay.add((FunctionIF)message.get(0));
-			repaint();
-			break;
-
-		case "DELETED":
-			functionsOnDisplay.remove((FunctionIF)message.get(0));
-			repaint();
-			break;
+	public void takeSnapshot(File file) {
+		//create a new buffered image
+		BufferedImage snapshot = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB); 
+		//get the graphics object of the buffered image to draw on
+		Graphics2D g = (Graphics2D) snapshot.getGraphics();
+		//print the panel's contents on the image
+		this.print(g);
+		//save the image to a user-defined location
+		try {
+			ImageIO.write(snapshot, "png", file);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
+	
+	
+	
 
-
-
+	
+	
+	
+	
+	
 	
 
 
 
 	
-	
-	
-	//>-----------SET PREFRERENCES---------<//
 
+	
+	
+
+	//>-----------SET PERSISTENT PREFRERENCES--------------<//
 	public void toggleHighlightZeros() {
 		this.HIGHLIGHT_ZEROS = !HIGHLIGHT_ZEROS;
 		graphModule.put("HIGHLIGHT_ZEROS", HIGHLIGHT_ZEROS+"");
@@ -434,34 +456,13 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		graphModule.put("BACKGROUND_COLOR", BG_COLOR.getRGB()+"");
 		repaint();
 	}
-
-	
-	//>-------------------------------<//
-	
-	
-	
-	
-	/**
-	 * Save a snapshot of the graph as an image.
-	 */
-	public void takeSnapshot(File file) {
-		//create a new buffered image
-		BufferedImage snapshot = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_RGB); 
-		//get the graphics object of the buffered image to draw on
-		Graphics2D g = (Graphics2D) snapshot.getGraphics();
-		//print the panel's contents on the image
-		this.print(g);
-		//save the image to a user-defined location
-		try {
-			ImageIO.write(snapshot, "png", file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	//>---------END SET PERSISTENT PREFRERENCES-----------------<//
 	
 	
 	
 
+
+	//>---HANDLE PERSISTENCE LISTENING-------------------------<
 	
 	@Override
 	public void dealWithModuleUpdate(Module module) {
@@ -473,8 +474,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		//repaint everything.
 		repaint();
 	}
-
-
 
 	@Override
 	public void dealWithSingularUpdate(String key, String value) {
@@ -505,35 +504,15 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			int colorInt = Integer.parseInt(value);
 			BG_COLOR = new Color(colorInt);
 			break;
-			
-		
 		
 		}
 		
 	}
-
-
-
-	public KeyListener getKeyListener() {
-		return keyListener;
-	}
-
+	//>---END HANDLE PERSISTENCE LISTENING-------------------------<
 	
-	public MouseListener getMouseListener() {
-		return movePanelWithMouseListener;
-	}
-
-	public Coordinate getCursorCartesianCoord() {
-		return cursorCartesianCoord;
-	}
-
-
-	public void setCursorCartesianCoord(Coordinate cursorCartesianCoord) {
-		this.cursorCartesianCoord = cursorCartesianCoord;
-	}
-
-		
-
+	
+	
+	
 	
 	//>--INTERACTIVE PROCEDURES-----------------------<//
 	
@@ -578,6 +557,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			takeSnapshot(file);
 		}
 	}
+	//>--END INTERACTIVE PROCEDURES-----------------------<//
 
 
 	

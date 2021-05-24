@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+import model.core.Coordinate;
 import view.graph.GraphPanel;
 
 
@@ -24,6 +25,9 @@ import view.graph.GraphPanel;
 public class HoveringCoordsMouseTracker implements MouseMotionListener {
 	
 	GraphPanel panelToBeTracked;
+	
+	
+	volatile Coordinate cursorCartesianCoord;
 	
 	public HoveringCoordsMouseTracker(GraphPanel panelToBeTracked) {
 		this.panelToBeTracked = panelToBeTracked;
@@ -58,11 +62,20 @@ public class HoveringCoordsMouseTracker implements MouseMotionListener {
 		int mouseOnPanelX = mouseCoord.x - panelLocation.x;
 		int mouseOnPanelY = mouseCoord.y - panelLocation.y;
 		//convert it to the corresponding Cartesian coordinate
-		panelToBeTracked.setCursorCartesianCoord(panelToBeTracked.pixelToCartesian(mouseOnPanelX, mouseOnPanelY));
+		cursorCartesianCoord = panelToBeTracked.pixelToCartesian(mouseOnPanelX, mouseOnPanelY);
 
 		panelToBeTracked.repaint();
 	}
 
+	/**
+	 * Returns the coordinate pointed to by the cursor.
+	 * To be called by the GraphPanel.
+	 * @return
+	 */
+	public Coordinate getCursorCartesianCoordinate() {
+		return cursorCartesianCoord;
+	}
+	
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
