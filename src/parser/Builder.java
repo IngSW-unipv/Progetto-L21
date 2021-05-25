@@ -9,6 +9,7 @@ import model.functions.Cosine;
 import model.functions.Logarithm;
 import model.functions.NaturalLogarithm;
 import model.functions.Sine;
+import model.functions.Tangent;
 import model.functions.UnaryMask;
 import model.numbers.Constant;
 import model.numbers.Variable;
@@ -107,7 +108,7 @@ public class Builder {
 		}
 		
 		//if it's a constant
-		if(token.trim().matches("\\d+")) {
+		if(token.trim().matches("-*\\d+")) {
 			Constant constant = new Constant(Double.parseDouble(token.trim()));
 			currentStack.push(constant);
 			return constant;
@@ -244,6 +245,10 @@ public class Builder {
 		case "ln":
 			NaturalLogarithm natLog = new NaturalLogarithm(null);
 			return natLog;
+			
+		case "tan":
+			Tangent tan = new Tangent(null);
+			return tan;	
 		
 		}
 		
@@ -271,7 +276,12 @@ public class Builder {
 		for(String functionName : functionsModule.getKeyValMap().keySet()) {
 			if(functionName.equals(name)) {
 				//parse and build the stored expression
-				FunctionIF mask = Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+				FunctionIF mask;
+				try {
+					mask = Parser.parseAndbuild(functionsModule.getKeyValMap().get(name));
+				} catch (SyntaxException e) {
+					return null;
+				}
 				//...then make a UnaryFunction out of it through the UnaryMask 
 				return new UnaryMask(name, mask, null);
 			}

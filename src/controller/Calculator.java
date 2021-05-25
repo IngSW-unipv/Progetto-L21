@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.core.FunctionIF;
 import parser.Parser;
+import parser.SyntaxException;
 
 
 /**
@@ -70,17 +71,24 @@ public class Calculator implements Observable{
 			return null;
 		}
 		
-		//reject function if it's already in the list
-		for(FunctionIF function : functions) {
-			if(function.getExpression().toString().equals(stringExpression)) {
-				return null;
-			}
-		}
-		
 		//call the parser and build a function from the string-expression
-		FunctionIF f = Parser.parseAndbuild(stringExpression);
-		
-		return addFunction(f);
+				FunctionIF f = null;
+				try {
+					f = Parser.parseAndbuild(stringExpression);
+					//reject function if it's already in the list
+					for(FunctionIF function : functions) {
+						if(function.getExpression().toLowerCase().equals(f.getExpression().toLowerCase())) {
+							return null;
+						}
+					}
+					return addFunction(f);
+
+				} catch (SyntaxException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+				}
+				
+		return null;
 		
 	}
 	
@@ -95,13 +103,12 @@ public class Calculator implements Observable{
 				if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
 					return null;
 				}
-				
-				//add the function and notify the observers
 				this.functions.add(function);
 				ArrayList<Object> a = new ArrayList<Object>();
 				a.add(function);
 				a.add("ADDED");
 				notifyObservers(a);
+				
 				return function;
 	}
 	

@@ -529,7 +529,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	 */
 	
 	public void setBackgroundColorProcedure() {
-		System.out.println("hello");
+	
 		Color chosenColor = JColorChooser.showDialog(this, "Seleziona il colore di sfondo", null);
 		if(chosenColor==null) {
 			return;

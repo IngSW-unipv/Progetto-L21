@@ -33,7 +33,7 @@ public class TextualScanning {
 	
 	public TextualScanning(Calculator c) {
 		this.c=c;
-		try {
+			try {
 			getExpression(c);
 		} catch (IllegalStateException e) {
 			System.out.println("Non hai inserito la Keyword PLOT davanti alla funzione");

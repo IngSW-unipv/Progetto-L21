@@ -17,7 +17,7 @@ public class MainApp {
 
 		//start the app!
 		new AppFrame(calculator);
-
+		
 	}
 
 }

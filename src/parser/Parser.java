@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.regex.Pattern;
 
@@ -52,9 +53,10 @@ public class Parser {
 	 * 
 	 * @param expression
 	 * @return
+	 * @throws SyntaxException 
 	 */
 	
-    public static FunctionIF parseAndbuild(String expression) {
+    public static FunctionIF parseAndbuild(String expression) throws SyntaxException {
 		
 		//parse a given expression to obtain a postfix list of tokens
 		ArrayList<String> postfixList = parsePostfixList(expression);
@@ -63,7 +65,17 @@ public class Parser {
 		Builder builder = new Builder();
 		
 		//build the composite function object out of the list of tokens
-		FunctionIF oggettone = builder.build(postfixList);
+		
+		FunctionIF oggettone;
+		
+		try {
+			oggettone = builder.build(postfixList);
+		} catch (EmptyStackException e) {
+			throw new SyntaxException();
+		}
+		
+		if(oggettone == null)
+			throw new SyntaxException();
 		
 		return oggettone;
 	}

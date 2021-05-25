@@ -75,7 +75,7 @@ public class FunctionFragment extends JPanel implements MouseListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				//tell the controller to remove the function
-				controller.removeFunction(function.getExpression().toString());
+				controller.removeFunction(function);
 			}
 		});
 		
