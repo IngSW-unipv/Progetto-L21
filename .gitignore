@@ -26,3 +26,4 @@ hs_err_pid*
 
 # local app-settings 
 modules/
+modules/graph
