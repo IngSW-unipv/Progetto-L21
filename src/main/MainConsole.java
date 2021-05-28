@@ -11,9 +11,6 @@ public class MainConsole {
 	 */
 	public static void main(String[] args) {
 
-		//StackFunction f = new StackFunction("tan(x)"); 
-		//GESTIRE QUESTO CASO, NON ESATTAMENTE NULLO, x = pigreco 
-
 		Calculator c = new Calculator();
 		GraphFrame g = new GraphFrame(c);
 //		FunctionIF f = c.addFunction("x^2+1");
