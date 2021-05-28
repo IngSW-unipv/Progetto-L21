@@ -1,14 +1,15 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * NOT READY FOR FUNCTIONS YET
+ * NOT READY FOR FUNCTIONS YET, ONLY WORKS ON PLONOMIALS.
  * 
- * 
+ *  
  * Takes a postfix list of tokens and spits out a sum of 
  * powers of x in its simplest form.  
  * 
@@ -18,16 +19,14 @@ import java.util.regex.Pattern;
 public class Simplifier {
 
 
-	int[] coefficients;
+
+	HashMap<Integer, Integer> coefficients;
 	Stack<String> operands;
 
 
 	public Simplifier() {
 		operands = new Stack<String>();
-		coefficients = new int[100];
-		for(int i=0; i<coefficients.length; i++) {
-			coefficients[i] = 0;
-		}
+		coefficients = new HashMap<>();
 	}
 
 
@@ -45,45 +44,54 @@ public class Simplifier {
 
 		//for each addendum in the expanded expression...
 		for(String addendum : expandedExpression.split("\\+")) {
+
 			
 			//get the degree of the addendum
 			int degree = getDegree(addendum.trim());
 			
 			//get the coefficient of the addendum
 			int coeff = (int)getCoefficient(addendum.trim());
-			
+
 			//update the coefficient of that degree
-			coefficients[degree]+=coeff;
+			//coefficients[degree]+=coeff;
+			Integer oldCoeff;
+
+			oldCoeff = coefficients.get(degree);
+			if(oldCoeff==null) {
+				oldCoeff = 0;
+			}
+
+			coefficients.put(degree, oldCoeff+coeff);
 		}
 
 
 		//re-construct the simplified expression in a pretty form:
 		String result = "";
-		for(int i =0; i<coefficients.length; i++) {
+		for(int degree : coefficients.keySet()) {
 			
-			if(coefficients[i]!=0) {
+			int coeff = coefficients.get(degree);
 
-				
-				
-				String coeffString = coefficients[i]+"*";
 
-				if(coefficients[i]==1) {
+			if(coeff!=0) {
+				String coeffString = coeff+"*";
+
+				if(coeff==1) {
 					coeffString="";
 				}
 
 
-				if(i==0) {
-					result+=coefficients[i]+" + ";
+				if(degree==0) {
+					result+=coeff+" + ";
 					continue;
 				}
 
-				if(i==1) {
+				if(degree==1) {
 					result+=coeffString+"x"+" + ";
 					continue;
 				}
 
 
-				result+=coeffString+"x^"+i+" + ";
+				result+=coeffString+"x^"+degree+" + ";
 			}
 		}
 
@@ -140,15 +148,13 @@ public class Simplifier {
 				return result.substring(0, result.length()-2);
 			}
 
-
-
-
 			return firstOperand+"*"+secondOperand;
 		case "/":
 			String res = "";
 			try {
-				for(String addendum : firstOperand.split("\\+")) {
-					res+= addendum+"/"+secondOperand +" + ";
+				for(String addendum : secondOperand.split("\\+")) {
+					
+					res+= addendum+"/"+firstOperand +" + ";
 				}
 				return res.substring(0, res.length()-2);
 			}catch(Exception e) {
@@ -253,6 +259,9 @@ public class Simplifier {
 
 
 	private String expand(ArrayList<String> postfixList) {
+
+
+
 		//this is the expression you get when you perform the operations in order and keep expanding everytime
 		String expandedExpression = "";
 
@@ -283,10 +292,10 @@ public class Simplifier {
 	 */
 
 	public static void main(String args[]) {
-		
-		ArrayList<String> postfix = Parser.parsePostfixList("x+1");
+
+		ArrayList<String> postfix = Parser.parsePostfixList("x*x*x*(x+2) +1 + (x +1)*x");
 		String simplified = new Simplifier().simplifyExpression(postfix);
-		System.out.println(simplified);
+		System.out.println("simplified: "+simplified);
 
 	}
 
