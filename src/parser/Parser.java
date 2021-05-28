@@ -71,6 +71,18 @@ public class Parser {
 		
 		try {
 			oggettone = builder.build(postfixList);
+			
+			/*
+			postfixList = parsePostfixList(oggettone.toString());
+			String simplifiedExpression = new Simplifier().simplifyExpression(postfixList);
+			
+			System.out.println(simplifiedExpression);
+			
+			postfixList = parsePostfixList(simplifiedExpression);
+			
+			oggettone = builder.build(postfixList);
+			*/
+			
 		} catch (EmptyStackException e) {
 			throw new SyntaxException();
 		}

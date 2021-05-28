@@ -60,8 +60,11 @@ public class Simplifier {
 		//re-construct the simplified expression in a pretty form:
 		String result = "";
 		for(int i =0; i<coefficients.length; i++) {
+			
 			if(coefficients[i]!=0) {
 
+				
+				
 				String coeffString = coefficients[i]+"*";
 
 				if(coefficients[i]==1) {
@@ -70,7 +73,7 @@ public class Simplifier {
 
 
 				if(i==0) {
-					result+=coeffString+" + ";
+					result+=coefficients[i]+" + ";
 					continue;
 				}
 
@@ -281,7 +284,7 @@ public class Simplifier {
 
 	public static void main(String args[]) {
 		
-		ArrayList<String> postfix = Parser.parsePostfixList("(-1+x+3)*x");
+		ArrayList<String> postfix = Parser.parsePostfixList("x+1");
 		String simplified = new Simplifier().simplifyExpression(postfix);
 		System.out.println(simplified);
 
