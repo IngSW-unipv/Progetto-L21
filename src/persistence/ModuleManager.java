@@ -11,25 +11,33 @@ import java.util.HashMap;
  *
  */
 public class ModuleManager {
-	
+
 	private static ModuleManager instance = null;
-	
+
 	private static String PATH_TO_MODULES_DIR = Module.PATH_TO_MODULES_DIR;
-	
+
 	private HashMap<String, Module> loadedModulesMap;
-	
-	
+
+
 	private ModuleManager() {
 		//create a new map in RAM
 		loadedModulesMap=  new HashMap<String, Module>();
-		
+
+		//create the module directory in case it doesn't exist yet
+		File modulesDir = new File(PATH_TO_MODULES_DIR);
+		if(!modulesDir.exists()) {
+			modulesDir.mkdir();
+		}
+
+
+
 		//assuming NO new Modules are gonna get created 
 		//during runtime, you can load everything at the beginning.
 		for(File file : new File(PATH_TO_MODULES_DIR).listFiles()) {
 			loadedModulesMap.put(file.getName(), new Module(file.getName()));
 		}
 	}
-	
+
 	/**
 	 * gets the static instance of ModuleManager.
 	 * @return
@@ -40,8 +48,8 @@ public class ModuleManager {
 		}
 		return instance;
 	}
-	
-	
+
+
 	/**
 	 * Gets a Module by its name.
 	 * In case it wasn't loaded, or it didn't exists, getModule
@@ -53,26 +61,28 @@ public class ModuleManager {
 	 * @return
 	 */
 	public Module getModule(String name) {
-		
+
+
+
 		Module module = loadedModulesMap.get(name);
-		
+
 		//if the module in question is not loaded yet:
 		if(module==null) {
-			
+
 			//load the Module:
 			module = new Module(name);
 			loadedModulesMap.put(name, module);
-			
+
 			//if the module in question doesn't exist on the disk, create a new empty Module. 
 			if(!module.exists()) {
 				module.create();
 			}
 		}
-		
+
 		return module;
 	}
-	
-	
+
+
 	/**
 	 * Returns a list of all of the loaded Modules.
 	 * Can be used for debugging purposes, and
@@ -83,14 +93,14 @@ public class ModuleManager {
 	public ArrayList<Module> getModules(){
 		return new ArrayList<Module>(loadedModulesMap.values());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 
 }
