@@ -6,10 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.print.DocFlavor.URL;
 import javax.swing.*;
 
-import javafx.scene.image.Image;
 import view.graph.GraphPanel;
 
 public class HelpMenu extends JMenu {

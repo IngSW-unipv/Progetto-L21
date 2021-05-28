@@ -3,6 +3,7 @@ package parser;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import org.scijava.parsington.ExpressionParser;
@@ -114,9 +115,20 @@ public class Parser {
 		}
 		
 		
+		//test this method without side-effects
+		//String simplifiedExpression = new Simplifier().simplifyExpression(postfixList);
+		
+		
 		//return a postfix list of tokens that is compatible with the conventions required by the rest of the project.
 		return postfixList;
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

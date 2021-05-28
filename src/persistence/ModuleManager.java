@@ -19,7 +19,7 @@ public class ModuleManager {
 	private HashMap<String, Module> loadedModulesMap;
 	
 	
-	public ModuleManager() {
+	private ModuleManager() {
 		//create a new map in RAM
 		loadedModulesMap=  new HashMap<String, Module>();
 		
