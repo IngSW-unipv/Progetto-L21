@@ -6,8 +6,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * NOT READY FOR FUNCTIONS YET
+ * 
+ * 
  * Takes a postfix list of tokens and spits out a sum of 
  * powers of x in its simplest form.  
+ * 
  * 
  */
 

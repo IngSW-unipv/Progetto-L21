@@ -23,16 +23,14 @@ public class ModuleManager {
 		//create a new map in RAM
 		loadedModulesMap=  new HashMap<String, Module>();
 
-		//create the module directory in case it doesn't exist yet
+		//create the modules directory in case it doesn't exist yet
 		File modulesDir = new File(PATH_TO_MODULES_DIR);
 		if(!modulesDir.exists()) {
 			modulesDir.mkdir();
 		}
 
 
-
-		//assuming NO new Modules are gonna get created 
-		//during runtime, you can load everything at the beginning.
+		//load the modules that are present at launch-time
 		for(File file : new File(PATH_TO_MODULES_DIR).listFiles()) {
 			loadedModulesMap.put(file.getName(), new Module(file.getName()));
 		}
