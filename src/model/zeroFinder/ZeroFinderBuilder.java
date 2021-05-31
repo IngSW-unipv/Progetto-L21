@@ -18,6 +18,8 @@ public class ZeroFinderBuilder {
 		switch(type) {
 		case "simple":
 			return new SimpleZeroFinder();
+		case "bisection":
+			return new BisectionZeroFinder();
 		}
 		
 		

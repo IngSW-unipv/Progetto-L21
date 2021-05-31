@@ -47,7 +47,7 @@ public class SimpleZeroFinder implements ZeroFinderIF {
 	 * @param almostZero
 	 * @return
 	 */
-	private ArrayList<Coordinate> findZerosFromCoordinates(FunctionIF function, double almostZero) {
+	protected ArrayList<Coordinate> findZerosFromCoordinates(FunctionIF function, double almostZero) {
 		ArrayList<Coordinate> results = new ArrayList<Coordinate>();
 		for(Coordinate coord : function.getSamples()) {
 			if(Math.abs(coord.y)<=almostZero) {

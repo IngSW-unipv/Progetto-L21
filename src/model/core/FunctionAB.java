@@ -111,7 +111,7 @@ public abstract class FunctionAB implements FunctionIF {
 
 		//make a new zero finder if this function's zero finder is null
 		if(zeroFinder==null) {
-			zeroFinder = ZeroFinderBuilder.getZeroFinder("simple");
+			zeroFinder = ZeroFinderBuilder.getZeroFinder("bisection");
 		}
 		
 		//get and return this function's zeros

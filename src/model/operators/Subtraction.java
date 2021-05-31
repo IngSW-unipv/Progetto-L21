@@ -16,7 +16,7 @@ public class Subtraction extends BinaryFunction {
 
 	@Override
 	public FunctionIF getDerivative() {
-		return new Subtraction(leftOperand, rightOperand);
+		return new Subtraction(leftOperand.getDerivative(), rightOperand.getDerivative());
 	}
 	
 	@Override
