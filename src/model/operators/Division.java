@@ -19,7 +19,12 @@ public class Division extends BinaryFunction {
 
 	@Override
 	public double getValue(double x) {
-		return leftOperand.getValue(x)/rightOperand.getValue(x);
+		double a = leftOperand.getValue(x)/rightOperand.getValue(x);
+		if (a >= 1E10) {
+			System.out.println("hello");
+			return Double.NaN;
+		}
+		return a;
 	}
 
 	@Override

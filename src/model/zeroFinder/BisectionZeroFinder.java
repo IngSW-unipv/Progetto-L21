@@ -7,7 +7,7 @@ import model.core.FunctionIF;
 /*
  * Find the zeros of function using the Bisection Algoritm
  */
-public class BisectionZeroFinder extends SimpleZeroFinder implements ZeroFinderIF {
+public class BisectionZeroFinder extends SimpleZeroFinder {
 
 	HashMap<Double,Coordinate> finalResult;
 	SimpleZeroFinder simple;
@@ -24,7 +24,8 @@ public class BisectionZeroFinder extends SimpleZeroFinder implements ZeroFinderI
 
 		//tries finding zeros with the default precision (almostZero)
 		ArrayList<Coordinate> results = simple.findZerosFromCoordinates(function, super.almostZero);
-
+		
+		//functions has no zeros
 		if(results.size()==0) {
 			return new ArrayList<Coordinate>(finalResult.values());
 		}
@@ -95,9 +96,5 @@ public class BisectionZeroFinder extends SimpleZeroFinder implements ZeroFinderI
 		return new Coordinate(x1, 0);
 	}
 
-	@Override
-	public void setMargin(double almostZero) {
-		super.setMargin(almostZero);
-	}
 
 }
