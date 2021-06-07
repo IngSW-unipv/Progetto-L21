@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -54,26 +55,26 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	boolean HIGHLIGHT_ZEROS = false;
 	boolean HIGHLIGHT_CRITICAL_POINTS = false;
 	boolean HOVER_COORDINATES = true;
-	
-	
+
+
 	//this graph's keylistsner
 	public GraphKeyListener keyListener;
-	
+
 	//this mouse tracker can plot the coordinate that is being hovered over.
 	HoveringCoordsMouseTracker hoveringCoordsTracker;
-	
+
 	//mouse tracker for mouse movement 
 	MovePanelWithMouseListener movePanelWithMouseListener;
-	
+
 	//PERSISTANCE MODULES
 	Module graphModule;
-	
+
 
 	/**
 	 * the controller that this GraphPanel listens to.
 	 */
 	Calculator controller;
-	
+
 	/**
 	 * stores the functions to be plotted cumulatively (by order of insertion) on the same instance of the graph.
 	 */
@@ -87,16 +88,16 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	public KeyListener getKeyListener() {
 		return keyListener;
 	}
-	
+
 
 	public GraphPanel(Calculator controller) {
-		
+
 		this.controller = controller;
 		controller.addObserver(this);
 
 		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		
+
 		//create a mouse tracker, without adding it yet
 		hoveringCoordsTracker = new HoveringCoordsMouseTracker(this);
 
@@ -105,20 +106,20 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		this.addMouseListener(movePanelWithMouseListener);
 		this.addMouseMotionListener(movePanelWithMouseListener);
 		this.addMouseWheelListener(movePanelWithMouseListener);
-		
-		
+
+
 		//add the keylistsner to the graph
 		keyListener = new GraphKeyListener(this);
 		this.addKeyListener(keyListener);
-		
+
 		//start listening to the graph-settings Module
 		graphModule = ModuleManager.getInstance().getModule("graph");
 		graphModule.addListener(this);
 	}
 
-	
 
-	
+
+
 	/**
 	 * auto updates the status of the graph based on what happens to the 
 	 * Calculator. ie: adds or removes plotted functions.
@@ -138,7 +139,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			break;
 		}
 	}
-	
+
 
 	/**
 	 * Convert Cartesian point to pixel point
@@ -187,7 +188,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	@Override
 	public void paint(Graphics arg0) {
 
-		
+
 		//cast the Graphics obj to a Graphics2D obj
 		Graphics2D g2d = (Graphics2D)arg0;
 
@@ -202,21 +203,21 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		for(FunctionIF functionOnDisplay : functionsOnDisplay) {
 			plotFunction(functionOnDisplay, g2d);
 		}
-		
+
 		//plots the zeros of all functions
 		if(HIGHLIGHT_ZEROS) {
 			for(FunctionIF functionOnDisplay : functionsOnDisplay) {
 				plotZeros(functionOnDisplay, g2d);
 			}
 		}
-		
+
 		//plots the critical points of all functions
 		if(HIGHLIGHT_CRITICAL_POINTS) {
 			for(FunctionIF functionOnDisplay : functionsOnDisplay) {
 				plotCriticalPoints(functionOnDisplay, g2d);
 			}
 		}
-		
+
 
 		if(HOVER_COORDINATES) {
 			//paints the coordinate that the cursor is hovering on
@@ -225,11 +226,11 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			Point p = cartesianToPixel(cursorCartesianCoord.x, cursorCartesianCoord.y);
 			g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
 		}
-		
+
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Plots the axes.
@@ -237,26 +238,26 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	 */
 	private void drawAxes(Graphics g)  {
 		Graphics2D g2d = (Graphics2D)g;
-		
+
 		//set axis color
 		g.setColor(AXES_COLOR);
 
 		//set axis thickness
 		g2d.setStroke(AXES_STROKE);
-	
+
 		Point p1, p2;
-		
+
 		//draw xAxis
 		p1 = cartesianToPixel(xMin, 0);
 		p2 = cartesianToPixel(xMax, 0);
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);
-		
-		
+
+
 		//draw yAxis
 		p1 = cartesianToPixel(0, yMin);
 		p2 = cartesianToPixel(0, yMax);
 		g.drawLine(p1.x, p1.y, p2.x, p2.y);
-		
+
 
 	}
 
@@ -271,7 +272,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	 * @param functionsColor
 	 */
 	private void plotFunction(FunctionIF function, Graphics2D g2d) {
-		
+
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
 		try {
@@ -293,35 +294,53 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		 */
 		g2d.setColor(function.getColor());
 		for(int i = 0; i < displayPoints.size()-1; i++) {
+
+			//calculate the approx. slope
+			int slope = (displayPoints.get(i+1).y-displayPoints.get(i).y)/(displayPoints.get(i+1).x - displayPoints.get(i).x);
+
+			//if the slope is greater than or equal to a threshold, don't join two consecutive points
+			if(Math.abs(slope)>=300) {
+
+				//Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+				//g2d.setStroke(dashed);
+				//g2d.setColor(Color.pink);
+				//g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
+
+				continue;
+			}
+
+			g2d.setColor(function.getColor());
+			g2d.setStroke(this.FUNCTIONS_STROKE);
+			
 			g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 			g2d.setStroke(FUNCTIONS_STROKE);
 		}
 
 	}
-	
-	
+
+
 	/**
 	 * Plots the zeros of a function.
 	 * @param function
 	 */
-	
+
 	public void plotZeros(FunctionIF function, Graphics2D g2d) {
 		g2d.setColor(ZEROS_COLOR);
 		plotPoints(function.getZeros(), g2d);
 	}
-	
-	
+
+
 	/**
 	 * Plots the critical points of a function.
 	 * @param function
 	 */
-	
+
 	public void plotCriticalPoints(FunctionIF function, Graphics2D g2d) {
 		g2d.setColor(CRITICAL_POINTS_COLOR);
 		plotPoints(function.getCriticalPoints(), g2d);
 	}
-	
-	
+
+
 	/**
 	 * Plots a list of Coordinates on the graph.
 	 * @param coords
@@ -334,9 +353,9 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			g2d.drawString("("+critPoints.x+", "+critPoints.y+")", p.x, p.y);
 		}
 	}
-	
-	
-	
+
+
+
 
 	//>-------------IN-GRAPH MOTION------------------------<
 	/**
@@ -392,9 +411,9 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	//>--------------END IN-GRAPH MOTION------------------------<
 
 
-	
 
-	
+
+
 	/**
 	 * Save a snapshot of the graph as an image.
 	 */
@@ -412,23 +431,23 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
 
 
 
-	
 
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//>-----------SET PERSISTENT PREFRERENCES--------------<//
 	public void toggleHighlightZeros() {
@@ -436,47 +455,47 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		graphModule.put("HIGHLIGHT_ZEROS", HIGHLIGHT_ZEROS+"");
 		repaint();
 	}
-	
-	
+
+
 	public void toggleHighlightCriticalPoints() {
 		this.HIGHLIGHT_CRITICAL_POINTS = !HIGHLIGHT_CRITICAL_POINTS;
 		graphModule.put("HIGHLIGHT_CRITICAL_POINTS", HIGHLIGHT_CRITICAL_POINTS+"");
 		repaint();	
 	}
-	
-	
+
+
 	public void toggleHoverCoordinates() {
 		this.HOVER_COORDINATES = !HOVER_COORDINATES;
 		graphModule.put("HOVER_COORDINATES", HOVER_COORDINATES+"");
 		repaint();
 	}
-	
+
 	public void setBackgroundColor(Color color) {
 		this.BG_COLOR = color;
 		graphModule.put("BACKGROUND_COLOR", BG_COLOR.getRGB()+"");
 		repaint();
 	}
-	
+
 	public void setAxesColor(Color color) {
 		this.AXES_COLOR = color;
 		graphModule.put("AXES_COLOR", AXES_COLOR.getRGB()+"");
 		repaint();
 	}
 	//>---------END SET PERSISTENT PREFRERENCES-----------------<//
-	
-	
-	
+
+
+
 
 
 	//>---HANDLE PERSISTENCE LISTENING-------------------------<
-	
+
 	@Override
 	public void dealWithModuleUpdate(Module module) {
 		//update everything 
 		for(String chiave : module.getKeyValMap().keySet()) {
 			dealWithSingularUpdate(chiave, module.get(chiave));
 		}
-		
+
 		//repaint everything.
 		repaint();
 	}
@@ -484,7 +503,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	@Override
 	public void dealWithSingularUpdate(String key, String value) {
 		switch(key) {
-		
+
 		case "HIGHLIGHT_ZEROS":
 			if(value.contains("false")) {
 				HIGHLIGHT_ZEROS = false;
@@ -517,31 +536,31 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 	}
 	//>---END HANDLE PERSISTENCE LISTENING-------------------------<
-	
-	
-	
-	
-	
+
+
+
+
+
 	//>--INTERACTIVE PROCEDURES-----------------------<//
-	
+
 	/**
 	 * Prompts the user to select the background color.
 	 */
-	
+
 	public void setBackgroundColorProcedure() {
-	
+
 		Color chosenColor = JColorChooser.showDialog(this, "Seleziona il colore di sfondo", null);
 		if(chosenColor==null) {
 			return;
 		}
 		setBackgroundColor(chosenColor);
 	}
-	
-	
+
+
 	/**
 	 * Prompts the user to select the color of the axes.
 	 */
-	
+
 	public void setAxesColorProcedure() {
 		Color color = JColorChooser.showDialog(this, "Seleziona il colore degli assi", null);
 		if(color==null) {
@@ -549,8 +568,8 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 		setAxesColor(color);
 	}
-	
-	
+
+
 	/**
 	 * Prompts the user to input an expression, then passes it to the controller
 	 */
@@ -583,7 +602,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	//>--END INTERACTIVE PROCEDURES-----------------------<//
 
 
-	
+
 
 
 

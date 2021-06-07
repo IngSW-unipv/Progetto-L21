@@ -80,6 +80,7 @@ public class Builder {
 		
 		for(String token : postfixListOfTokens) {
 			oggettone = build(token);
+			
 		}
 		return oggettone;
 	}
