@@ -34,6 +34,7 @@ public class TextualScanning {
 	public TextualScanning(Calculator c) {
 		this.c=c;
 			try {
+			printShell();
 			getExpression(c);
 		} catch (IllegalStateException e) {
 			System.out.println("Non hai inserito la Keyword PLOT davanti alla funzione");
@@ -42,12 +43,17 @@ public class TextualScanning {
 	}
 
 	
+	private void printShell() {
+		System.out.println("\t\tWelcome - Progetto L21 - UniPv");
+		System.out.println("Introduci funzione desiderata, preceduta dalla Keyword PLOT: ");
+	}
+
+
 	public void getExpression(Calculator c) {
 		Scanner scan = new Scanner(System.in);
 		while(true) {
-			System.out.println("Introduci funzione desiderata, preceduta dalla Keyword PLOT: ");
 			String command = scan.nextLine();
-			
+		
 			//try finding the pattern (Anything)WHITESPACE(Anything)
 			Matcher matcher = Pattern.compile("(.*?)\\s+(.*?)").matcher(command);
 			matcher.find();
@@ -61,6 +67,11 @@ public class TextualScanning {
 			case "DEL":
 				c.removeFunction(command.toUpperCase().replace("DEL", "").trim());
 				break;
+			//case "DERIV":
+				/*
+				 * implementare stampa della derivata da console
+				 * c.getDerivative(String expr) è abbozzato
+				 */
 			}
 		
 	

@@ -65,31 +65,31 @@ public class Calculator implements Observable{
 	 * @return
 	 */
 	public FunctionIF addFunction(String stringExpression) {
-		
+
 		//reject empty expressions
 		if(stringExpression.trim().isEmpty()) {
 			return null;
 		}
-		
-		//call the parser and build a function from the string-expression
-				FunctionIF f = null;
-				try {
-					f = Parser.parseAndbuild(stringExpression);
-					//reject function if it's already in the list
-					for(FunctionIF function : functions) {
-						if(function.getExpression().toLowerCase().equals(f.getExpression().toLowerCase())) {
-							return null;
-						}
-					}
-					return addFunction(f);
 
-				} catch (SyntaxException e) {
-					// TODO Auto-generated catch block
-					//e.printStackTrace();
+		//call the parser and build a function from the string-expression
+		FunctionIF f = null;
+		try {
+			f = Parser.parseAndbuild(stringExpression);
+			//reject function if it's already in the list
+			for(FunctionIF function : functions) {
+				if(function.getExpression().toLowerCase().equals(f.getExpression().toLowerCase())) {
+					return null;
 				}
-				
+			}
+			return addFunction(f);
+
+		} catch (SyntaxException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+
 		return null;
-		
+
 	}
 	
 	
@@ -103,6 +103,7 @@ public class Calculator implements Observable{
 				if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
 					return null;
 				}
+				
 				this.functions.add(function);
 				ArrayList<Object> a = new ArrayList<Object>();
 				a.add(function);
@@ -118,7 +119,6 @@ public class Calculator implements Observable{
 	 * @param f
 	 */
 	public void removeFunction(FunctionIF f) {
-		
 		this.functions.remove(f);
 		ArrayList<Object> a = new ArrayList<Object>();
 		a.add(f);
@@ -141,13 +141,18 @@ public class Calculator implements Observable{
 	 * Remove a FunctionIF by its expression
 	 */
 	public void removeFunction(String expression) {
+		
 		for(int i=0; i< functions.size(); i++) {
-			if(functions.get(i).getExpression().equals(expression)) {
+			if(functions.get(i).getExpression().toUpperCase().equals(expression)) {
 				removeFunction(functions.get(i));
 			}
 		}
 	}
 	
+	public void getDerivative(String expression) {
+		this.addFunction(expression);
+		
+	}
 	
 
 	/**
