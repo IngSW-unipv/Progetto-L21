@@ -58,6 +58,10 @@ public class Parser {
 	 */
 	
     public static FunctionIF parseAndbuild(String expression) throws SyntaxException {
+		//reject empty expressions
+		if(expression.trim().isEmpty()) {
+			return null;
+		}
 		
 		//parse a given expression to obtain a postfix list of tokens
 		ArrayList<String> postfixList = parsePostfixList(expression);

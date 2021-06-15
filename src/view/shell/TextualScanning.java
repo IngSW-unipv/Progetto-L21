@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import controller.Calculator;
+import view.help.AboutFrame;
+import view.help.WelcomeFrame;
 
 
 /**
@@ -33,19 +35,15 @@ public class TextualScanning {
 	
 	public TextualScanning(Calculator c) {
 		this.c=c;
-			try {
-			printShell();
-			getExpression(c);
-		} catch (IllegalStateException e) {
-			System.out.println("Non hai inserito la Keyword PLOT davanti alla funzione");
-			getExpression(c);
-		}
+		printShell();
+		getExpression(c);
 	}
 
 	
 	private void printShell() {
 		System.out.println("\t\tWelcome - Progetto L21 - UniPv");
-		System.out.println("Introduci funzione desiderata, preceduta dalla Keyword PLOT: ");
+		new WelcomeFrame();
+		System.out.println("Insert the expression:");
 	}
 
 
@@ -58,6 +56,11 @@ public class TextualScanning {
 			Matcher matcher = Pattern.compile("(.*?)\\s+(.*?)").matcher(command);
 			matcher.find();
 			
+			/**
+			 * String firstArgument = command.split("\\s+")[0].toUpperCase().trim();
+		     * String secondArgument = command.split("\\s+")[1].trim()
+			 */
+			
 			//get the first part (The command), and run a switch on it
 			switch(matcher.group(1).toUpperCase()) {
 			
@@ -67,11 +70,13 @@ public class TextualScanning {
 			case "DEL":
 				c.removeFunction(command.toUpperCase().replace("DEL", "").trim());
 				break;
-			//case "DERIV":
-				/*
-				 * implementare stampa della derivata da console
-				 * c.getDerivative(String expr) è abbozzato
-				 */
+			case "DERIV":
+				c.addFunction(c.buildFunction(command.toUpperCase().replace("DERIV", "").trim()).getDerivative());
+				break;
+			/*case "HELP": // sistemare con le regex con ricevere l'help
+				System.out.println(matcher.group(1).toUpperCase());
+				new AboutFrame();
+				break;*/
 			}
 		
 	

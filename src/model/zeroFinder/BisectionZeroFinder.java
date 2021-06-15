@@ -33,12 +33,8 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 		int indexZeros = 0;
 		int i = 0;
 
-		/*for (Coordinate c : results) {
-			zeroStrange(c);
-		}*/
 
 		for (Coordinate c : results) {
-			//zeroStrange(c);
 			// find the "count"
 			for(i = 0; i < function.getSamples().size(); i++) {
 				double x = c.x;

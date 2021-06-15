@@ -9,6 +9,8 @@ import java.io.IOException;
 import javax.swing.*;
 
 import view.graph.GraphPanel;
+import view.help.AboutFrame;
+import view.help.WelcomeFrame;
 
 public class HelpMenu extends JMenu {
 	
@@ -23,20 +25,7 @@ public class HelpMenu extends JMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {					
-				JFrame dialog = new JFrame("Welcome");
-				dialog.setIconImage(Toolkit.getDefaultToolkit().getImage("./images/welcome.JPG"));
-		        dialog.getContentPane().add(Box.createRigidArea(new Dimension(300, 300)));
-		        dialog.pack();
-			    dialog.setLocationByPlatform(true);
-			    dialog.setVisible(true);
-			    dialog.setLocationRelativeTo(null);
-			    JEditorPane display = new JEditorPane();
-			    try {
-					display.setPage("file:./HtmlFiles/WelcomeHTML.html");
-				} catch (IOException e) {
-					System.out.println("errore url");
-				}
-			    dialog.add(new JScrollPane(display));
+				WelcomeFrame wFrame = new WelcomeFrame();
 			}
 			
 		});
@@ -46,20 +35,7 @@ public class HelpMenu extends JMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {					
-				JFrame dialog = new JFrame("Help");
-				dialog.setIconImage(Toolkit.getDefaultToolkit().getImage("./images/help.JPG"));
-		        dialog.getContentPane().add(Box.createRigidArea(new Dimension(350, 300)));
-		        dialog.pack();
-			    dialog.setLocationByPlatform(true);
-			    dialog.setVisible(true);
-			    dialog.setLocationRelativeTo(null);
-			    JEditorPane display = new JEditorPane();
-			    try {
-					display.setPage("file:./HtmlFiles/HelpHTML.html");
-				} catch (IOException e) {
-					System.out.println("errore url");
-				}
-			    dialog.add(new JScrollPane(display));
+				AboutFrame aFrame = new AboutFrame();
 			}
 			
 		});
