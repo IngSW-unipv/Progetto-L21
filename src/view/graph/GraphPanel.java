@@ -132,11 +132,15 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			functionsOnDisplay.add((FunctionIF)message.get(0));
 			repaint();
 			break;
-
 		case "DELETED":
 			functionsOnDisplay.remove((FunctionIF)message.get(0));
 			repaint();
 			break;
+		case "SYNTAX_ERROR":
+			reinsertFunctionProcedure();
+			break;
+
+
 		}
 	}
 
@@ -311,7 +315,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 
 			g2d.setColor(function.getColor());
 			g2d.setStroke(this.FUNCTIONS_STROKE);
-			
+
 			g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 			g2d.setStroke(FUNCTIONS_STROKE);
 		}
@@ -574,13 +578,32 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	 * Prompts the user to input an expression, then passes it to the controller
 	 */
 
-	public void addFunctionProcedure() {
-		String expression = JOptionPane.showInputDialog(this,"Inserisci una funzione:");
+	public void addFunctionProcedure(String message) {
+		String expression = JOptionPane.showInputDialog(this,  message);
 		if(expression==null) {
 			return;
 		}
 		controller.addFunction(expression);
 	}
+
+	/**
+	 * Default add function procedure
+	 */
+	public void addFunctionProcedure() {
+		String message = "Inserisci una funzione:";
+		addFunctionProcedure(message);
+	}
+
+
+	/**
+	 * Prompt the user to re-insert the function 
+	 */
+	public void reinsertFunctionProcedure() {
+		String message = "Sintassi errata! Re-inserisci:";
+		addFunctionProcedure(message);
+	}
+
+
 
 	/**
 	 * Prompts the user to select a location for a snapshot of the graph.

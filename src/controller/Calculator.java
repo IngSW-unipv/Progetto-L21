@@ -30,35 +30,35 @@ import parser.SyntaxException;
  */
 
 public class Calculator implements Observable{
-	
+
 	/**
 	 * List of FunctionIFs inserted by user
 	 */
 	private ArrayList<FunctionIF> functions;
-	
-	
+
+
 	/**
-	*Due to performance issues, we thought it might be a good
-	*idea to limit the tot number of simultaneously 
-	*plottable functions. Eventually the user may change 
-	*this amount, at their own RAM card's risk.
-	*/
+	 *Due to performance issues, we thought it might be a good
+	 *idea to limit the tot number of simultaneously 
+	 *plottable functions. Eventually the user may change 
+	 *this amount, at their own RAM card's risk.
+	 */
 	int MAX_INSERTABLE_FUNCTIONS  = 3;
-	
+
 
 	/**
 	 * List of Observers observing this Calculator.
 	 */
 	private ArrayList<Observer> observers;
-	
-	
+
+
 	public Calculator() {
-		
+
 		this.functions = new ArrayList<FunctionIF>();
 		this.observers = new ArrayList<Observer>();
 	}
-	
-	
+
+
 	/**
 	 * Parse an expression and add the function object
 	 * @param stringExpression
@@ -67,6 +67,11 @@ public class Calculator implements Observable{
 	public FunctionIF addFunction(String stringExpression) {
 
 		FunctionIF f = buildFunction(stringExpression);
+
+		//reject null functions 
+		if(f==null) {
+			return null;
+		}
 		
 		//reject function if it's already in the list
 		for(FunctionIF function : functions) {
@@ -77,31 +82,32 @@ public class Calculator implements Observable{
 		return addFunction(f);
 
 	}
-	
-	
+
+
 	/**
 	 * just add a ready-made function object
 	 * @param function
 	 * @return
 	 */
 	public FunctionIF addFunction(FunctionIF function) {
-		        //reject any function if max amount is exceeded
-				if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
-					return null;
-				}
-				if (function == null) {
-					return null;
-				}
-				this.functions.add(function);
-				ArrayList<Object> a = new ArrayList<Object>();
-				a.add(function);
-				a.add("ADDED");
-				notifyObservers(a);
-				
-				return function;
+		//reject any function if max amount is exceeded
+		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
+			return null;
+		}
+		//reject null functions
+		if (function == null) {
+			return null;
+		}
+		this.functions.add(function);
+		ArrayList<Object> a = new ArrayList<Object>();
+		a.add(function);
+		a.add("ADDED");
+		notifyObservers(a);
+
+		return function;
 	}
-	
-	
+
+
 	/**
 	 * Remove a FunctionIF from the list
 	 * @param f
@@ -113,35 +119,35 @@ public class Calculator implements Observable{
 		a.add("DELETED");
 		notifyObservers(a);
 	}
-	
+
 	/**
 	 * @overload
 	 * Remove a FunctionIF by its index
 	 */
-    public void removeFunction(int index) {
+	public void removeFunction(int index) {
 		ArrayList<Object> a = new ArrayList<Object>();
 		removeFunction(functions.get(index));
 	}
-    
-    
-    /**
+
+
+	/**
 	 * @overload
 	 * Remove a FunctionIF by its expression
 	 */
 	public void removeFunction(String expression) {
-		
+
 		for(int i=0; i< functions.size(); i++) {
 			if(functions.get(i).getExpression().toUpperCase().equals(expression)) {
 				removeFunction(functions.get(i));
 			}
 		}
 	}
-	
-//	public void Derivative(String expression) {
-//		this.addFunction(expression);
-//		
-//	}
-	
+
+	//	public void Derivative(String expression) {
+	//		this.addFunction(expression);
+	//		
+	//	}
+
 
 	/**
 	 * add an observer to this Calculator.s
@@ -149,17 +155,17 @@ public class Calculator implements Observable{
 	@Override
 	public void addObserver(Observer observer) {
 		this.observers.add(observer);
-		
+
 	}
 
-	
+
 	/**
 	 * remove an observer from this Calculator.s
 	 */
 	@Override
 	public void removeObserver(Observer observer) {
 		this.observers.remove(observer);
-		
+
 	}
 
 	/**
@@ -171,7 +177,7 @@ public class Calculator implements Observable{
 			observer.update(message);
 		}
 	}
-	
+
 	/**
 	 * To build a functionIF from a String
 	 * @throws SyntaxException 
@@ -183,10 +189,14 @@ public class Calculator implements Observable{
 		try {
 			f = Parser.parseAndbuild(stringExpression);
 		} catch (SyntaxException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			//notify all of the observers that the expression entered was not valid:
+			ArrayList<Object> messages = new ArrayList<Object>();
+			messages.add(null);
+			messages.add("SYNTAX_ERROR");
+			notifyObservers(messages);
+			
 		}
 		return f;
 	}
-	
+
 }
