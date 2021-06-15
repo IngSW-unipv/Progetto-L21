@@ -188,7 +188,7 @@ public class Calculator implements Observable{
 		FunctionIF f = null;
 		try {
 			f = Parser.parseAndbuild(stringExpression);
-		} catch (SyntaxException e) {
+		} catch (SyntaxException | IllegalArgumentException e) {
 			//notify all of the observers that the expression entered was not valid:
 			ArrayList<Object> messages = new ArrayList<Object>();
 			messages.add(null);
