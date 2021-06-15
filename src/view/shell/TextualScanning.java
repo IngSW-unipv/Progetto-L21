@@ -23,27 +23,30 @@ import view.help.WelcomeFrame;
  * 
  * del [expression]: removes all of the functions with a given expression.
  * 
+ * der [expression]: derives the expression and plots the derivative.
  * 
- * NB: all of these operations rely on the Calculator (controller) 
+ * help: displays the help dialog-box.
+ * 
+ * 
+ * NB: all the add/remove operations rely on the Calculator (controller) 
  * adding a function to its list, and notifying the Observer
  * (GraphPanel) of the change.
- *
  */
 public class TextualScanning {
 
 	Calculator c ;
-	
+
 	public TextualScanning(Calculator c) {
 		this.c=c;
 		printShell();
 		getExpression(c);
 	}
 
-	
+
 	private void printShell() {
 		System.out.println("\t\tWelcome - Progetto L21 - UniPv");
 		new WelcomeFrame();
-		System.out.println("Insert the expression:");
+		System.out.println("Insert the keyword 'PLOT' followed by the requested expression.");
 	}
 
 
@@ -51,38 +54,34 @@ public class TextualScanning {
 		Scanner scan = new Scanner(System.in);
 		while(true) {
 			String command = scan.nextLine();
-		
-			//try finding the pattern (Anything)WHITESPACE(Anything)
-			Matcher matcher = Pattern.compile("(.*?)\\s+(.*?)").matcher(command);
-			matcher.find();
-			
-			/**
-			 * String firstArgument = command.split("\\s+")[0].toUpperCase().trim();
-		     * String secondArgument = command.split("\\s+")[1].trim()
-			 */
-			
+
+			//that is: the command-name.
+			String firstArgument = command.split("\\s+")[0];
+
+			//everything that comes after the first argument (could be nothing at all)
+			String secondArgument = command.replace(firstArgument, "").trim().toUpperCase();
+
 			//get the first part (The command), and run a switch on it
-			switch(matcher.group(1).toUpperCase()) {
-			
+			switch(firstArgument.toUpperCase().trim()) {
+
 			case "PLOT":
-				c.addFunction(command.toUpperCase().replace("PLOT", "").trim());
+				c.addFunction(secondArgument);
 				break;
 			case "DEL":
-				c.removeFunction(command.toUpperCase().replace("DEL", "").trim());
+				c.removeFunction(secondArgument);
 				break;
 			case "DERIV":
-				c.addFunction(c.buildFunction(command.toUpperCase().replace("DERIV", "").trim()).getDerivative());
+				c.addFunction(c.buildFunction(secondArgument).getDerivative());
 				break;
-			/*case "HELP": // sistemare con le regex con ricevere l'help
-				System.out.println(matcher.group(1).toUpperCase());
+			case "HELP": 
 				new AboutFrame();
-				break;*/
+				break;
 			}
-		
-	
+
+
 		}
-		
-		
+
+
 	}
 
 }
