@@ -57,6 +57,14 @@ public interface FunctionIF {
 	 */
  	public ArrayList<Coordinate> getCriticalPoints();
  	
+ 	
+ 	
+ 	/**
+ 	 * Returns a simplified version of this FunctionIF object.
+ 	 * @return
+ 	 */
+ 	public FunctionIF getSimplified();
+ 	
 	
 	/**
  	 * Get the color of this function from a hash based on its expression.

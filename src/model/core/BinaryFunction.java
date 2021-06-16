@@ -1,5 +1,7 @@
 package model.core;
 
+
+
 /**
  * A BinaryFunction takes in two FunctionIFs as operands.
  * 
@@ -14,15 +16,25 @@ package model.core;
  */
 
 public abstract class BinaryFunction extends FunctionAB {
-	
+
 	protected FunctionIF leftOperand;
 	protected FunctionIF rightOperand;
-	
+
 	public BinaryFunction(FunctionIF leftOperand, FunctionIF rightOperand) {
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;
 	}
 
-	
-	
+
+	@Override
+	public FunctionIF getSimplified() {
+		this.leftOperand = leftOperand.getSimplified();
+		this.rightOperand = rightOperand.getSimplified(); 
+		return this;
+	}
+
+
+
+
+
 }

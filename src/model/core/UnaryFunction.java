@@ -22,5 +22,12 @@ public abstract class UnaryFunction extends FunctionAB {
 	}
 	
 	
+	@Override
+	public FunctionIF getSimplified() {
+		operand = operand.getSimplified();
+		return this;
+	}
+	
+	
 	
 }

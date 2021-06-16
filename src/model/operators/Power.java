@@ -31,7 +31,7 @@ public class Power extends BinaryFunction {
 	 */
 	@Override
 	public FunctionIF getDerivative() {
-		return new Product((new Power(leftOperand, rightOperand)), new Sum(OperatorFactory.buildOperator("*",rightOperand.getDerivative(), new NaturalLogarithm(leftOperand)), new Division(new Product(rightOperand, leftOperand.getDerivative()), leftOperand)));
+		return new Product((new Power(leftOperand, rightOperand)), new Sum((new Product(rightOperand.getDerivative(), new NaturalLogarithm(leftOperand))), new Division(new Product(rightOperand, leftOperand.getDerivative()), leftOperand)));
 	}
 	
 	

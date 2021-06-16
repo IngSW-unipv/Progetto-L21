@@ -26,6 +26,38 @@ public class Product extends BinaryFunction {
 		return "("+leftOperand+"*"+rightOperand+")";
 	}
 
+	@Override
+	public FunctionIF getSimplified() {
+		
+		//simplify the operarands recursively
+		leftOperand = leftOperand.getSimplified();
+		rightOperand = rightOperand.getSimplified();
+		
+		
+		
+		if(leftOperand instanceof Constant && rightOperand instanceof Constant) {
+			return new Constant(leftOperand.getValue(0)*rightOperand.getValue(0));
+		}
+		
+		if(leftOperand.equals(new Constant(0)) || rightOperand.equals(new Constant(0))) {
+			return new Constant(0);
+		}
+		
+		if(leftOperand.equals(new Constant(1))) {
+			return rightOperand;
+		}
+		
+		if(rightOperand.equals(new Constant(1))) {
+			return leftOperand;
+		}
+		
+		
+		return this;
+	}
+	
+	
+	
+
 	
 
 }

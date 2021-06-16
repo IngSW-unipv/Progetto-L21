@@ -154,5 +154,11 @@ public abstract class FunctionAB implements FunctionIF {
 		return f.getExpression().equals(this.getExpression()); 
 	}
 
+	
+	@Override
+	public FunctionIF getSimplified() {
+		return this;
+	}
+	
 
 }

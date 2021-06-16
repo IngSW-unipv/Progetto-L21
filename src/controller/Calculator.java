@@ -79,6 +79,7 @@ public class Calculator implements Observable{
 				return null;
 			}
 		}
+		
 		return addFunction(f);
 
 	}
@@ -98,6 +99,12 @@ public class Calculator implements Observable{
 		if (function == null) {
 			return null;
 		}
+		
+		
+		//simplify the function before adding it
+		function = function.getSimplified();
+		
+		//add the function to this Calculator
 		this.functions.add(function);
 		ArrayList<Object> a = new ArrayList<Object>();
 		a.add(function);
@@ -188,7 +195,7 @@ public class Calculator implements Observable{
 		FunctionIF f = null;
 		try {
 			f = Parser.parseAndbuild(stringExpression);
-		} catch (SyntaxException | IllegalArgumentException e) {
+		} catch (SyntaxException | IllegalArgumentException |ArithmeticException e) {
 			//notify all of the observers that the expression entered was not valid:
 			ArrayList<Object> messages = new ArrayList<Object>();
 			messages.add(null);
