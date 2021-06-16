@@ -305,10 +305,10 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			//if the slope is greater than or equal to a threshold, don't join two consecutive points
 			if(Math.abs(slope)>=300) {
 
-				//Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-				//g2d.setStroke(dashed);
-				//g2d.setColor(Color.pink);
-				//g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
+//				Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+//				g2d.setStroke(dashed);
+//				g2d.setColor(Color.pink);
+//				g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
 
 				continue;
 			}
@@ -357,7 +357,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			g2d.drawString("("+critPoints.x+", "+critPoints.y+")", p.x, p.y);
 		}
 	}
-
 
 
 
@@ -414,10 +413,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	}
 	//>--------------END IN-GRAPH MOTION------------------------<
 
-
-
-
-
 	/**
 	 * Save a snapshot of the graph as an image.
 	 */
@@ -435,22 +430,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 			e.printStackTrace();
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	//>-----------SET PERSISTENT PREFRERENCES--------------<//
@@ -486,10 +465,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		repaint();
 	}
 	//>---------END SET PERSISTENT PREFRERENCES-----------------<//
-
-
-
-
 
 	//>---HANDLE PERSISTENCE LISTENING-------------------------<
 
@@ -540,10 +515,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 	}
 	//>---END HANDLE PERSISTENCE LISTENING-------------------------<
-
-
-
-
 
 	//>--INTERACTIVE PROCEDURES-----------------------<//
 
@@ -623,14 +594,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 	}
 	//>--END INTERACTIVE PROCEDURES-----------------------<//
-
-
-
-
-
-
-
-
 
 
 
