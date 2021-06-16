@@ -16,7 +16,7 @@ public class AboutFrame extends JFrame {
 	public AboutFrame() {
 		super("Help");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("./images/help.JPG"));
-        getContentPane().add(Box.createRigidArea(new Dimension(350, 300)));
+        getContentPane().add(Box.createRigidArea(new Dimension(400, 300)));
         pack();
 	    setLocationByPlatform(true);
 	    setVisible(true);
