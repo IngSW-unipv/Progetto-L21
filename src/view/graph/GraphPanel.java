@@ -139,6 +139,9 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		case "SYNTAX_ERROR":
 			reinsertFunctionProcedure();
 			break;
+		case "INSERTED_MAX":
+			JOptionPane.showMessageDialog(this, "Max numero di funzioni inseribili: "+message.get(2));
+			break;
 
 
 		}

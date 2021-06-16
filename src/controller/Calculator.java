@@ -93,6 +93,12 @@ public class Calculator implements Observable{
 	public FunctionIF addFunction(FunctionIF function) {
 		//reject any function if max amount is exceeded
 		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
+			ArrayList<Object> a = new ArrayList<Object>();
+			a.add(null);
+			a.add("INSERTED_MAX");
+			a.add(MAX_INSERTABLE_FUNCTIONS);
+			notifyObservers(a);
+			
 			return null;
 		}
 		//reject null functions
