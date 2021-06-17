@@ -142,6 +142,9 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		case "INSERTED_MAX":
 			JOptionPane.showMessageDialog(this, "Max numero di funzioni inseribili: "+message.get(2));
 			break;
+		case "ARITHMETIC_ERROR":
+			this.addFunctionProcedure("Errore di aritmetica! Re-inserisci:");
+			break;
 
 
 		}
