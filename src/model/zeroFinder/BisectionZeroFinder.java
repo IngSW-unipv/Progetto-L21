@@ -5,12 +5,11 @@ import java.util.HashMap;
 import model.core.Coordinate;
 import model.core.FunctionIF;
 /*
- * Find the zeros of function using the Bisection Algoritm
+ * Find the zeros of function using the Bisection Algorithm
  */
 public class BisectionZeroFinder extends SimpleZeroFinder {
 
 	HashMap<Double,Coordinate> finalResult;
-	SimpleZeroFinder simple;
 
 	public BisectionZeroFinder() {
 		super();
@@ -20,12 +19,11 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 	public ArrayList<Coordinate> getZeros(FunctionIF function) {
 
 		finalResult = new HashMap<Double,Coordinate>();
-		simple = new SimpleZeroFinder();
 
 		//tries finding zeros with the default precision (almostZero)
-		ArrayList<Coordinate> results = simple.findZerosFromCoordinates(function, super.almostZero);
+		ArrayList<Coordinate> results = super.findZerosFromCoordinates(function, super.almostZero);
 		
-		//functions has no zeros
+		//function has no zeros
 		if(results.size()==0) {
 			return new ArrayList<Coordinate>(finalResult.values());
 		}
@@ -50,7 +48,6 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 			}
 
 			for(i = indexZeros; i < function.getSamples().size(); i++) {
-				//zeroStrange(function.getSamples().get(i));
 				if((function.getSamples().get(i).y)*(function.getSamples().get(indexZeros-1).y)<0) {
 					Coordinate d = bisectionMetod(function, function.getSamples().get(i).x, function.getSamples().get(indexZeros-1).x);
 					finalResult.put(d.x, d);

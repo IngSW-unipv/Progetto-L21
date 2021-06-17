@@ -58,6 +58,8 @@ public class SimpleZeroFinder implements ZeroFinderIF {
 	}
 	
 	
+	
+	
 	/**
 	 * For the purpose of approximation, set a number close enough to zero, that can be considered as good as zero.
 	 * @param almostZero

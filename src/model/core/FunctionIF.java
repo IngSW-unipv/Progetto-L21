@@ -53,10 +53,16 @@ public interface FunctionIF {
 	
 	/**
 	 * returns the critical/stationary points of this function. 
+	 * (In the default interval).
 	 * @return
 	 */
  	public ArrayList<Coordinate> getCriticalPoints();
  	
+ 	
+ 	/**
+ 	 * returns the critical/stationary points of a function in an interval. 	
+ 	 */
+ 	//public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound);
  	
  	
  	/**
