@@ -41,8 +41,6 @@ public class GraphKeyListener implements KeyListener {
 	 * 
 	 * CTRL && Z: view Zeros.
 	 * 
-	 * CTRL && C: clears the graph.
-	 * 
 	 */
 	
 	@Override
@@ -96,11 +94,6 @@ public class GraphKeyListener implements KeyListener {
 				graphPanel.toggleHighlightZeros();
 			}
 			break;	
-		case KeyEvent.VK_C:
-			if(arg0.isControlDown()) {
-				graphPanel.clearGraph();
-			}
-			break;
 			
 			
 			

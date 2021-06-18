@@ -59,7 +59,8 @@ public abstract class FunctionAB implements FunctionIF {
 			//check if value is outside of the domain
 			double y = getValue(i);
 			if(!Double.isNaN(y)) {
-				//add a coordinate only if its y is in the domain (to avoid straight lines for intervals outside of the domain)
+				//add a coordinate only if its y is in the domain
+				//(to avoid straight lines for intervals outside of the domain)
 				coordinatesList.add(new Coordinate(i, y));
 			}
 		}
@@ -138,16 +139,24 @@ public abstract class FunctionAB implements FunctionIF {
 		return new Color( (int)(1000000*(0.3*(double)key))  );
 	}
 
+	
 
+	
+	
 	public ArrayList<Coordinate> getCriticalPoints(){
 		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
 		return criticalPointFinder.getCriticalPoints(this);
 	}
 	
 	
+	
+	
+	
+	
+	
 	@Override
 	public boolean equals(FunctionIF f) {
-		return f.getExpression().toLowerCase().equals(this.getExpression().toLowerCase()); 
+		return f.getExpression().equals(this.getExpression()); 
 	}
 
 	

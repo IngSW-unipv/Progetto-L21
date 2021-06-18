@@ -98,16 +98,9 @@ public class AppFrame extends JFrame{
 	
 	
 	
-	
-	
 
 	
 
-	
-	
-	
-	
-	
 
 	
 	

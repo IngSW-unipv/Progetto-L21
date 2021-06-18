@@ -12,7 +12,7 @@ public class MainConsole {
 	public static void main(String[] args) {
 
 		Calculator c = new Calculator();
-		//GraphFrame g = new GraphFrame(c);
+		GraphFrame g = new GraphFrame(c);
 //		FunctionIF f = c.addFunction("x^2+1");
 //		FunctionIF f2 = c.addFunction("sin(x)");
 		TextualScanning t = new TextualScanning(c);

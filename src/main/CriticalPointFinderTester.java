@@ -1,4 +1,4 @@
-package tests;
+package main;
 
 import model.core.FunctionIF;
 import parser.Parser;
