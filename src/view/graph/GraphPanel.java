@@ -6,14 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Stroke;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,9 +14,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import controller.Calculator;
-import controller.Observer;
+import controller.CalculatorListener;
+import controller.ErrorCodes;
 import model.core.Coordinate;
 import model.core.FunctionIF;
 import persistence.Module;
@@ -35,7 +28,7 @@ import view.graph.ioListeners.MovePanelWithMouseListener;
 
 
 @SuppressWarnings("serial")
-public class GraphPanel extends JPanel implements Observer, ModuleListener{
+public class GraphPanel extends JPanel implements ModuleListener, CalculatorListener{
 
 
 	//internal parameters of the graph 
@@ -93,7 +86,7 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	public GraphPanel(Calculator controller) {
 
 		this.controller = controller;
-		controller.addObserver(this);
+		controller.addListener(this);
 
 		//set this panel's size
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -117,39 +110,36 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		graphModule.addListener(this);
 	}
 
-
-
-
-	/**
-	 * auto updates the status of the graph based on what happens to the 
-	 * Calculator. ie: adds or removes plotted functions.
-	 */
+	
 	@Override
-	public void update(ArrayList<Object> message) {
-
-		switch((String)message.get(1)) {
-		case "ADDED":
-			functionsOnDisplay.add((FunctionIF)message.get(0));
-			repaint();
-			break;
-		case "DELETED":
-			functionsOnDisplay.remove((FunctionIF)message.get(0));
-			repaint();
-			break;
-		case "SYNTAX_ERROR":
-			reinsertFunctionProcedure();
-			break;
-		case "INSERTED_MAX":
-			JOptionPane.showMessageDialog(this, "Max numero di funzioni inseribili: "+message.get(2));
-			break;
-		case "ARITHMETIC_ERROR":
-			this.addFunctionProcedure("Errore di aritmetica! Re-inserisci:");
-			break;
-
-
-		}
+	public void onFunctionAdded(FunctionIF function) {
+		functionsOnDisplay.add(function);
+		repaint();
 	}
 
+
+	@Override
+	public void onFunctionRemoved(FunctionIF function) {
+		functionsOnDisplay.remove(function);
+		repaint();
+	}
+
+
+	@Override
+	public void onError(ErrorCodes errorCode, String message) {
+		switch(errorCode) {
+		case FUNCTIONS_LIMIT_REACHED:
+			JOptionPane.showMessageDialog(this, message);
+			break;
+		case ARITHMETIC_ERROR:
+			addFunctionProcedure(message);
+			break;
+		case SYNTAX_ERROR:
+			addFunctionProcedure(message);
+			break;
+		}
+	}
+	
 
 	/**
 	 * Convert Cartesian point to pixel point
@@ -419,6 +409,19 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 	}
 	//>--------------END IN-GRAPH MOTION------------------------<
 
+	
+	
+	
+	/**
+	 * clears the graph
+	 */
+	public void clearGraph() {
+		controller.removeAll();
+	}
+	
+	
+	
+	
 	/**
 	 * Save a snapshot of the graph as an image.
 	 */
@@ -571,17 +574,6 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		addFunctionProcedure(message);
 	}
 
-
-	/**
-	 * Prompt the user to re-insert the function 
-	 */
-	public void reinsertFunctionProcedure() {
-		String message = "Sintassi errata! Re-inserisci:";
-		addFunctionProcedure(message);
-	}
-
-
-
 	/**
 	 * Prompts the user to select a location for a snapshot of the graph.
 	 */
@@ -600,6 +592,9 @@ public class GraphPanel extends JPanel implements Observer, ModuleListener{
 		}
 	}
 	//>--END INTERACTIVE PROCEDURES-----------------------<//
+
+
+	
 
 
 

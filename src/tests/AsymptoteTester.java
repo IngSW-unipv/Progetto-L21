@@ -1,4 +1,4 @@
-package main;
+package tests;
 
 import model.core.Coordinate;
 import model.core.FunctionIF;

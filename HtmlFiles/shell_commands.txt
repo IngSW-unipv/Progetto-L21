@@ -1,0 +1,10 @@
+help-sh: displays these shell help instructions.
+plot [expression]: plots a new function on the graph.
+del [expression]: removes all of the functions with a given expression.
+deriv [expression]: derives the expression and plots the derivative. 
+help: displays the help dialog-box.
+hdls: de/activates the 'headless' mode (headless mode disables graph-frame popups).
+show: opens up the graph-frame if it was hidden.
+smpl [expression]: attempts to simplify an expression.s
+eval [expression]: evaluates a constant expression. 
+exit: terminates the program

@@ -1,25 +1,12 @@
 package view.app.insertedFunctionsPanel;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.Popup;
-
 import controller.Calculator;
-import controller.Observer;
+import controller.CalculatorListener;
+import controller.ErrorCodes;
 import model.core.FunctionIF;
-import persistence.ModuleManager;
 
 /**
  * The InsertedFunctionsPanel is the space on the screen
@@ -34,7 +21,7 @@ import persistence.ModuleManager;
  *
  */
 
-public class InsertedFunctionsPanel extends JPanel implements Observer{
+public class InsertedFunctionsPanel extends JPanel implements CalculatorListener{
 
 
 	//Keeps track of fragments. One fragment for each plotted function.
@@ -46,35 +33,28 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 	public InsertedFunctionsPanel(Calculator controller) {
 		this.controller = controller;
 		//add this panel as an observer to the controller
-		controller.addObserver(this);
+		controller.addListener(this);
 		//make a new fragment map
 		functionFragmentsMap = new HashMap<String, FunctionFragment>();
 	}
 
 
-
-	/**
-	 * The update method here adds/removes FunctionFragments
-	 * based on inserted/removed functions.
-	 */
 	@Override
-	public void update(ArrayList<Object> message) {
-
-		//get the expression of the function added/removed
-		FunctionIF function = ((FunctionIF)message.get(0));
-
-		switch((String)message.get(1)) {
-		case "ADDED":
-			//add a new function fragment for a new function
-			addFunctionFragment(function);
-			break;
-		case "DELETED":
-			//remove no longer needed fragment of deleted function
-			removeFunctionFragment(function);
-			break;
-		}
+	public void onFunctionAdded(FunctionIF function) {
+		//add a new function fragment for a new function
+		addFunctionFragment(function);
 	}
 
+	@Override
+	public void onFunctionRemoved(FunctionIF function) {
+		//remove no longer needed fragment of deleted function
+		removeFunctionFragment(function);
+	}
+
+	@Override
+	public void onError(ErrorCodes errorCode, String message) {
+		//does nothing about it for now
+	}
 
 
 	/**
@@ -100,6 +80,11 @@ public class InsertedFunctionsPanel extends JPanel implements Observer{
 		this.repaint();
 		this.revalidate();
 	}
+
+
+
+
+
 
 
 
