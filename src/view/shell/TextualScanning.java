@@ -8,80 +8,161 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import controller.Calculator;
+import controller.CalculatorListener;
+import controller.ErrorCodes;
+import model.core.FunctionIF;
+import persistence.FileIO;
 import view.help.AboutFrame;
 import view.help.WelcomeFrame;
 
 
 /**
- * @author user
  * 
- * This is a simple command shell, meant for testing purposes.
+ * The command shell can be used to plot functions on a graph-frame,
+ * or to test some other functionalities of the system.
  * 
- * commands:
+ * For a list of all of the commands, go to HtmlFiles/shell_commands.txt
  * 
- * add [expression]: plots a new function on the graph 
- * 
- * del [expression]: removes all of the functions with a given expression.
- * 
- * der [expression]: derives the expression and plots the derivative.
- * 
- * help: displays the help dialog-box.
- * 
- * 
- * NB: all the add/remove operations rely on the Calculator (controller) 
- * adding a function to its list, and notifying the Observer
- * (GraphPanel) of the change.
  */
-public class TextualScanning {
 
-	Calculator c ;
+public class TextualScanning implements CalculatorListener{
 
+	/**
+	 * The controller.
+	 */
+	Calculator controller;
+
+	/**
+	 * A simple container for the GraphPanel
+	 */
+	GraphFrame graphFrame;
+
+	/**
+	 * If the "headless" flag is on, the graphframe will not be called to the foreground.
+	 */
+	boolean headlessFlag;
+	
+	
 	public TextualScanning(Calculator c) {
-		this.c=c;
-		printShell();
-		getExpression(c);
+		this.controller=c;
+		this.graphFrame = new GraphFrame(c);
+		c.addListener(this);
+		printWelcome();
+		mainLoop(c);
 	}
 
 
-	private void printShell() {
+	/**
+	 * Prints a welcome message on the shell.
+	 */
+	private void printWelcome() {
 		System.out.println("\t\tWelcome - Progetto L21 - UniPv");
 		new WelcomeFrame();
-		System.out.println("Insert the keyword 'PLOT' followed by the requested expression.");
+		System.out.println("Type 'help-sh' for a list of the available commands:");
 	}
 
 
-	public void getExpression(Calculator c) {
-		Scanner scan = new Scanner(System.in);
+	/**
+	 * Contains the main shell-loop.
+	 * @param calculator
+	 */
+	public void mainLoop(Calculator calculator) {
+		Scanner scanner = new Scanner(System.in);
+
 		while(true) {
-			String command = scan.nextLine();
+			//get the next line of user input.
+			String command = scanner.nextLine();
 
 			//that is: the command-name.
 			String firstArgument = command.split("\\s+")[0];
 
 			//everything that comes after the first argument (could be nothing at all)
-			String secondArgument = command.replace(firstArgument, "").trim().toUpperCase();
+			String secondArgument = command.replace(firstArgument, "").trim();
 
-			//get the first part (The command), and run a switch on it
-			switch(firstArgument.toUpperCase().trim()) {
-
-			case "PLOT":
-				c.addFunction(secondArgument);
-				break;
-			case "DEL":
-				c.removeFunction(secondArgument);
-				break;
-			case "DERIV":
-				c.addFunction(c.buildFunction(secondArgument).getDerivative());
-				break;
-			case "HELP": 
-				new AboutFrame();
-				break;
-			}
-
-
+			//run the command
+			runCommand(firstArgument, secondArgument);
 		}
-
-
 	}
+
+
+
+	/**
+	 * Execute a shell command.
+	 * @param firstArgument
+	 * @param secondArgument
+	 */
+	public void runCommand(String firstArgument, String secondArgument) {
+
+		switch(firstArgument.toUpperCase().trim()) {
+
+		case "PLOT":
+			controller.addFunction(secondArgument);
+			break;
+		case "DEL":
+			if(secondArgument.equals("*")) {
+				controller.removeAll();
+			}
+			controller.removeFunction(secondArgument);
+			break;
+		case "DERIV":
+			try {
+				FunctionIF derivative = controller.buildFunction(secondArgument).getDerivative();
+				System.out.println(derivative.getSimplified().getExpression());
+				controller.addFunction(derivative);
+			}catch(NullPointerException e) {
+				System.out.println("ERROR: invalid expression.");
+			}
+			break;
+		case "HELP": 
+			new AboutFrame();
+			break;
+		case "HELP-SH":
+			System.out.println(FileIO.readFile("HtmlFiles/shell_commands.txt"));
+			break;
+		case "HDLS":
+			this.headlessFlag =!headlessFlag; 
+			break;
+		case "SHOW":
+			graphFrame.setVisible(true);
+			break;
+		case "SMPL":
+			FunctionIF function = controller.buildFunction(secondArgument).getSimplified();
+			System.out.println(function.getExpression());
+			break;
+		case "EVAL":
+			function = controller.buildFunction(secondArgument).getSimplified();
+			System.out.println(function.getValue(0));
+			break;
+		case "EXIT":
+			System.exit(0);
+			break;
+		default:
+			System.out.println("ERROR: '"+firstArgument+"' not recognzied as a command!\nEnter 'help-sh' for a list of all valid commands.");
+			break;
+			
+		}
+	}
+
+
+	@Override
+	public void onFunctionAdded(FunctionIF function) {
+		if(!headlessFlag) {
+			graphFrame.setVisible(true);
+		}
+	}
+
+	@Override
+	public void onFunctionRemoved(FunctionIF function) {
+		if(!headlessFlag) {
+			graphFrame.setVisible(true);
+		}
+	}
+
+	@Override
+	public void onError(ErrorCodes errorCode, String message) {
+		System.out.println(errorCode+": "+message);
+	}
+
+
 
 }
