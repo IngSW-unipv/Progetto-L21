@@ -14,26 +14,26 @@ import model.zeroFinder.ZeroFinderIF;
 
 public abstract class FunctionAB implements FunctionIF {
 
-	
-	
+
+
 	/**
 	 * stash the last-calculated bounds and step
 	 */
 	double lastLowerBound, lastUpperBound, lastStep;
-	
+
 	/**
 	 * store the last-computed samples
 	 */
 	ArrayList<Coordinate> cachedSamples;
-	
-	
+
+
 	/**
 	 * this function's zerofinder
 	 */
 	ZeroFinderIF zeroFinder;
-	
-	
-	
+
+
+
 	/**
 	 * Computes samples of this function from lowerBound to upperBound with a given step 
 	 * @param lowerBound
@@ -42,20 +42,20 @@ public abstract class FunctionAB implements FunctionIF {
 	 * @return
 	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
-		
-		
-		
+
+
+
 		//check if the samples required are the same as the previous ones, if they are, return the cached samples
 		if(lastLowerBound == lowerBound && lastUpperBound==upperBound && lastStep==step) {
 			return cachedSamples;
 		}
-		
-		
+
+
 		ArrayList<Coordinate> coordinatesList = new ArrayList<Coordinate>();
-		
+
 		double i;
 		for(i = lowerBound; i <= upperBound; i+=step) {
-			
+
 			//check if value is outside of the domain
 			double y = getValue(i);
 			if(!Double.isNaN(y)) {
@@ -63,12 +63,12 @@ public abstract class FunctionAB implements FunctionIF {
 				coordinatesList.add(new Coordinate(i, y));
 			}
 		}
-		
+
 		// Do an extra iteration to correct for floating point excess
 		if ( ((int)step) != step )
 			coordinatesList.add(new Coordinate(i, getValue(i)));
-		
-		
+
+
 		lastLowerBound = lowerBound;
 		lastUpperBound =upperBound;
 		lastStep =step;
@@ -76,7 +76,7 @@ public abstract class FunctionAB implements FunctionIF {
 		return coordinatesList;
 	}
 
-	
+
 
 	/**
 	 * Returns the last-computed coordinates. If no coordinates were computed yet, returns default interval.
@@ -88,8 +88,8 @@ public abstract class FunctionAB implements FunctionIF {
 		}
 		return cachedSamples;
 	}
-	
-	
+
+
 	/**
 	 * returns the expression of this function
 	 * @return
@@ -101,7 +101,7 @@ public abstract class FunctionAB implements FunctionIF {
 
 
 
-	
+
 	/**
 	 * get the zeros (or part of the zeros) of this function. 
 	 */
@@ -112,10 +112,28 @@ public abstract class FunctionAB implements FunctionIF {
 		if(zeroFinder==null) {
 			zeroFinder = ZeroFinderBuilder.getZeroFinder("bisection");
 		}
-		
+
 		//get and return this function's zeros
 		return zeroFinder.getZeros(this);
 	}
+
+	@Override
+	public ArrayList<Coordinate> getZeros(double lowerBound, double upperBound) {
+
+		//make a new zero finder if this function's zero finder is null
+		if(zeroFinder==null) {
+			zeroFinder = ZeroFinderBuilder.getZeroFinder("bisection");
+		}
+
+		//get and return this function's zeros
+		return zeroFinder.getZeros(this, lowerBound, upperBound);
+	}
+
+
+
+
+
+
 
 
 
@@ -126,15 +144,15 @@ public abstract class FunctionAB implements FunctionIF {
 	 */
 	@Override
 	public Color getColor() {
-		
+
 		String expression = getExpression();
-		
+
 		int key = 0;
 		for(int i =0; i<expression.length(); i++) {
 			key+=((int)expression.charAt(i));
 		}
-		
-		
+
+
 		return new Color( (int)(1000000*(0.3*(double)key))  );
 	}
 
@@ -143,22 +161,31 @@ public abstract class FunctionAB implements FunctionIF {
 		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
 		return criticalPointFinder.getCriticalPoints(this);
 	}
-	
-	
+
+
+	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound){
+		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
+		return criticalPointFinder.getCriticalPoints(this, lowerBound, upperBound);		
+	}
+
+
 	@Override
 	public boolean equals(FunctionIF f) {
 		return f.getExpression().toLowerCase().equals(this.getExpression().toLowerCase()); 
 	}
 
-	
+
 	@Override
 	public FunctionIF getSimplified() {
 		return this;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 
 }

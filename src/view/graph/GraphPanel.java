@@ -337,7 +337,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 
 	public void plotCriticalPoints(FunctionIF function, Graphics2D g2d) {
 		g2d.setColor(CRITICAL_POINTS_COLOR);
-		plotPoints(function.getCriticalPoints(), g2d);
+		plotPoints(function.getCriticalPoints(xMin, xMax), g2d);
 	}
 
 

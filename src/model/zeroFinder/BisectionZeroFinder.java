@@ -16,13 +16,29 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 	}
 
 	@Override
+	public ArrayList<Coordinate> getZeros(FunctionIF function, double lowerBound, double upperBound) {
+
+		finalResult = new HashMap<Double,Coordinate>();
+		//tries finding zeros with the default precision (almostZero)
+		ArrayList<Coordinate> results = super.getZeros(function, lowerBound,  upperBound);
+		return applyMethod(function, results);
+
+	}
+
+	@Override
 	public ArrayList<Coordinate> getZeros(FunctionIF function) {
 
 		finalResult = new HashMap<Double,Coordinate>();
+		ArrayList<Coordinate> results =  super.getZeros(function);
+		return applyMethod(function, results);
 
-		//tries finding zeros with the default precision (almostZero)
-		ArrayList<Coordinate> results = super.findZerosFromCoordinates(function, super.almostZero);
-		
+	}
+
+
+
+
+	public ArrayList<Coordinate> applyMethod(FunctionIF function, ArrayList<Coordinate> results){
+
 		//function has no zeros
 		if(results.size()==0) {
 			return new ArrayList<Coordinate>(finalResult.values());
@@ -58,6 +74,7 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 		return new ArrayList<Coordinate>(finalResult.values());
 	}
 
+
 	/*
 	 * The Bisection Algoritm: consists of repeatedly bisecting the interval defined by these values 
 	 * and then selecting the subinterval in which the function changes sign, and therefore must 
@@ -65,16 +82,16 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 	 */
 	private Coordinate bisectionMetod(FunctionIF f, double x1, double x2){
 		double xm, fx1, fx2, fxm;
-		
+
 		fx1 = f.getValue(x1);
-		
+
 		fx2 = f.getValue(x2);
-		
+
 
 		while(Math.abs((x2-x1)) > 1.0E-7) {
-			
+
 			xm = (x2+x1)/2;
-			
+
 			fxm = f.getValue(xm);
 			if (fxm * fx1 >= 0) {
 				x1 = xm;
@@ -88,6 +105,11 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 
 		return new Coordinate(x1, 0);
 	}
+
+
+
+
+
 
 
 }

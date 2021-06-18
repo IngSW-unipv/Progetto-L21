@@ -8,11 +8,23 @@ import model.core.FunctionIF;
 public interface ZeroFinderIF {
 	
 	/**
-	 * Computes all/or almost all of the zeros of a function.
+	 * Computes the zeros of a function in its current interval.
 	 * @param function
 	 * @return
 	 */
 	public ArrayList<Coordinate> getZeros(FunctionIF function);
+	
+	
+	/**
+	 * Computes the zeroes of a function in an interval.
+	 * @param function
+	 * @param lowerBound
+	 * @param upperBound
+	 * @return
+	 */
+	
+	public ArrayList<Coordinate> getZeros(FunctionIF function, double lowerBound, double upperBound);
+	
 	
 	/**
 	 * For the purpose of approximation, set a number close enough to zero, that can be considered as good as zero.

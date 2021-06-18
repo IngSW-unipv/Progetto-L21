@@ -51,6 +51,9 @@ public interface FunctionIF {
 	/** * returns the zeros/roots of this function */ 
 	public ArrayList<Coordinate> getZeros();
 	
+	/** * returns the zeros/roots of this function */ 
+	public ArrayList<Coordinate> getZeros(double lowerBound, double upperBound);
+	
 	/**
 	 * returns the critical/stationary points of this function. 
 	 * (In the default interval).
@@ -59,10 +62,12 @@ public interface FunctionIF {
  	public ArrayList<Coordinate> getCriticalPoints();
  	
  	
+ 	
+ 	
  	/**
  	 * returns the critical/stationary points of a function in an interval. 	
  	 */
- 	//public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound);
+ 	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound);
  	
  	
  	/**
