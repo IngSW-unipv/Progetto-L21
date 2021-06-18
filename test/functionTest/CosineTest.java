@@ -4,7 +4,6 @@
 package functionTest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.logging.Logger;
 import org.junit.*;
 
@@ -17,7 +16,7 @@ import parser.SyntaxException;
  * @author Angelo
  *
  */
-class CosineTest {
+public class CosineTest {
 	private static final double DELTA = 1e-15;
 	private Logger logger = Logger.getLogger("loggerTest");
 	private static int countTest;
@@ -25,12 +24,12 @@ class CosineTest {
 	@BeforeClass
 	public static void startTestUnit() {
 		countTest = 0;
-		System.out.println("START TEST UNIT CALLED " + CosineTest.class.getSimpleName());
+		System.out.println("START TEST UNIT CALLED " + CosineTest.class.getSimpleName() + "\n");
 	}
 	
 	@Before
-	public static void startTest() {
-		System.out.println("Start test number " + countTest++);
+	public void startTest() {
+		System.out.println("Start test number " + ++countTest );
 	}
 	
 	/**
@@ -38,23 +37,29 @@ class CosineTest {
 	 * @throws SyntaxException 
 	 */
 	@Test
-	void testGetValue() throws SyntaxException {
+	public void testGetValue() throws SyntaxException {
 		FunctionIF o = Parser.parseAndbuild("x");
 		Cosine cos = new Cosine(o);
+		logger.info("Running scenario cos(0) = 1");
 		assertEquals("Result ", 1, cos.getValue(0), DELTA); 
 	}
 
 	/**
 	 * Test method for {@link model.functions.Cosine#getDerivative()}.
+	 * @throws SyntaxException 
 	 */
 	@Test
-	void testGetDerivative() {
-		fail("Not yet implemented");
+	public void testGetDerivative() throws SyntaxException {
+		FunctionIF o = Parser.parseAndbuild("x");
+		Cosine cos = new Cosine(o);
+		FunctionIF derivate = Parser.parseAndbuild("sin(x)*-1");
+		logger.info("Running scenario derivative of cos(x)");
+		assertEquals("Result ", derivate.toString(), cos.getDerivative().getSimplified().toString()); 
 	}
 	
 	@After
-	public static void endTest() {
-		System.out.println("End test number " + countTest);
+	public void endTest() {
+		System.out.println("End test number " + countTest + "\n");
 	}
 
 	@AfterClass
