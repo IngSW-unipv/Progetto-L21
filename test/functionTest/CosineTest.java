@@ -1,6 +1,3 @@
-/**
- * 
- */
 package functionTest;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +21,7 @@ public class CosineTest {
 	@BeforeClass
 	public static void startTestUnit() {
 		countTest = 0;
-		System.out.println("START TEST UNIT CALLED " + CosineTest.class.getSimpleName() + "\n");
+		System.out.println("START UNIT TEST CALLED " + CosineTest.class.getSimpleName() + "\n");
 	}
 	
 	@Before
@@ -64,6 +61,6 @@ public class CosineTest {
 
 	@AfterClass
 	public static void endTestUnit() {
-		System.out.println("END TEST UNIT " + CosineTest.class.getSimpleName());
+		System.out.println("END UNIT TEST " + CosineTest.class.getSimpleName());
 	}
 }
