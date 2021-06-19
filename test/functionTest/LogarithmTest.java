@@ -12,7 +12,6 @@ import org.junit.Test;
 
 import model.core.FunctionIF;
 import model.functions.Logarithm;
-import model.functions.NaturalLogarithm;
 import parser.Parser;
 import parser.SyntaxException;
 
