@@ -109,7 +109,7 @@ public class Builder {
 		}
 		
 		//if it's a constant
-		if(token.trim().matches("-*\\d+")) {
+		if(token.trim().matches("-*\\d+(\\.\\d+)*")) {
 			Constant constant = new Constant(Double.parseDouble(token.trim()));
 			currentStack.push(constant);
 			return constant;
