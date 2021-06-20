@@ -35,6 +35,12 @@ public abstract class FunctionAB implements FunctionIF {
 
 
 	/**
+	 * this function's critical point finder
+	 */
+	CriticalPointFinder criticalPointFinder;
+
+
+	/**
 	 * Computes samples of this function from lowerBound to upperBound with a given step 
 	 * @param lowerBound
 	 * @param upperBound
@@ -125,16 +131,23 @@ public abstract class FunctionAB implements FunctionIF {
 			zeroFinder = ZeroFinderBuilder.getZeroFinder("bisection");
 		}
 
-		//get and return this function's zeros
+		//get and return this function's zeros in a given interval
 		return zeroFinder.getZeros(this, lowerBound, upperBound);
 	}
 
 
 
+	@Override
+	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound){
 
+		//make a new critical point finder if the current one is null
+		if(criticalPointFinder==null) {
+			criticalPointFinder = new CriticalPointFinder();
+		}
 
-
-
+		//get and retrun this function's critical points in a given interval
+		return criticalPointFinder.getCriticalPoints(this, lowerBound, upperBound);		
+	}
 
 
 
@@ -157,16 +170,7 @@ public abstract class FunctionAB implements FunctionIF {
 	}
 
 
-	public ArrayList<Coordinate> getCriticalPoints(){
-		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
-		return criticalPointFinder.getCriticalPoints(this);
-	}
 
-
-	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound){
-		CriticalPointFinder criticalPointFinder = new CriticalPointFinder();
-		return criticalPointFinder.getCriticalPoints(this, lowerBound, upperBound);		
-	}
 
 
 	@Override

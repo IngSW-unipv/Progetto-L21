@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- * ALL OF THE PROJECT REVOLVES AROUND THIS PUNY LITTLE INTERFACE!
+ * ALL OF THE PROJECT REVOLVES AROUND THIS INTERFACE!
  * 
  * Following the popular bandwagon, we could say that,
  * in this model, "EVERYTHING is an FunctionIF".
@@ -12,14 +12,6 @@ import java.util.ArrayList;
  * Meaning: constants, variables, operators and functions, all implement
  * this interface. This is a flavor of the "Composite" GoF-pattern.
  * 
- * 
- * 
- * METHODS OF THIS INTERFACE:
- * 
- * 1)getValue: which returns a numerical value given an input value. 
- * 
- * 2)getDerivative: which returns another OperationIF, that is 
- * supposed to represent the derivative of this OperationIF.
  * 
  *
  */
@@ -54,19 +46,13 @@ public interface FunctionIF {
 	/** * returns the zeros/roots of this function */ 
 	public ArrayList<Coordinate> getZeros(double lowerBound, double upperBound);
 	
+	
 	/**
-	 * returns the critical/stationary points of this function. 
-	 * (In the default interval).
+	 *returns the critical/stationary points of a function in a given interval. 	
+	 * @param lowerBound
+	 * @param upperBound
 	 * @return
 	 */
- 	public ArrayList<Coordinate> getCriticalPoints();
- 	
- 	
- 	
- 	
- 	/**
- 	 * returns the critical/stationary points of a function in an interval. 	
- 	 */
  	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound);
  	
  	
@@ -78,17 +64,17 @@ public interface FunctionIF {
  	
 	
 	/**
- 	 * Get the color of this function from a hash based on its expression.
+	 * Get the color of this function from a hash based on its expression.
  	 * Useful for color-coding the graphs/representations functions.
- 	 */
+	 * @return
+	 */
  	public Color getColor();
 	
  	/**
- 	 * 
- 	 * @param f
+ 	 * @param otherFunctionIF
  	 * @return
  	 */
- 	public boolean equals(FunctionIF f);
+ 	public boolean equals(FunctionIF otherFunctionIF);
  	
 
 }
