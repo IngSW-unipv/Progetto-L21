@@ -36,9 +36,17 @@ public class DerivativeTest {
 	public void startTest() {
 		System.out.println("Start test number " + ++countTest );
 	}
-
+	
 	@Test
 	public void testGetDerivative1() throws SyntaxException {
+		FunctionIF function = Parser.parseAndbuild("5");
+		FunctionIF derivate = Parser.parseAndbuild("0");
+		logger.info("Running scenario derivative of 5");
+		assertEquals("Result ", derivate.toString(), function.getDerivative().getSimplified().toString());
+	}
+
+	@Test
+	public void testGetDerivative2() throws SyntaxException {
 		FunctionIF function = Parser.parseAndbuild("x");
 		FunctionIF derivate = Parser.parseAndbuild("1");
 		logger.info("Running scenario derivative of x");
@@ -46,7 +54,7 @@ public class DerivativeTest {
 	}
 	
 	@Test
-	public void testGetDerivative2() throws SyntaxException {
+	public void testGetDerivative3() throws SyntaxException {
 		FunctionIF function = Parser.parseAndbuild("x^2");
 		FunctionIF derivate = Parser.parseAndbuild("(2.0/x)*x^(2.0)");
 		logger.info("Running scenario derivative of x^2");
@@ -55,7 +63,7 @@ public class DerivativeTest {
 	
 	
 	@Test
-	public void testGetDerivative3() throws SyntaxException {
+	public void testGetDerivative4() throws SyntaxException {
 		FunctionIF function = Parser.parseAndbuild("x^3");
 		FunctionIF derivate = Parser.parseAndbuild("(3.0/x)*x^(3.0)");
 		logger.info("Running scenario derivative of x^3");
@@ -63,7 +71,7 @@ public class DerivativeTest {
 	}
 	
 	@Test
-	public void testGetDerivative4() throws SyntaxException {
+	public void testGetDerivative5() throws SyntaxException {
 		FunctionIF function = Parser.parseAndbuild("x^3+x^2");
 		FunctionIF derivate = Parser.parseAndbuild("(3*x^(2.0)+(2*x))");// fix simplified division
 		logger.info("Running scenario derivative of x^3+x^2");
@@ -71,7 +79,7 @@ public class DerivativeTest {
 	}
 	
 	@Test
-	public void testGetDerivative5() throws SyntaxException {
+	public void testGetDerivative6() throws SyntaxException {
 		FunctionIF function = Parser.parseAndbuild("x+ln(x)+3*sin(x)");
 		FunctionIF derivate = Parser.parseAndbuild("(1+1/x+3*cos(x))");
 		logger.info("Running scenario derivative of x+ln(x)+3*sin(x)");
