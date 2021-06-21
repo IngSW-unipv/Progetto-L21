@@ -25,10 +25,10 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 	Calculator controller;
 	Module customFunctions; 
 	
-	public SavedFunctionsMenu(Calculator controller) {
-		super("Funzione Salvata");
+	public SavedFunctionsMenu(Calculator controller, String moduleName, String menuName ) {
+		super(menuName);
 		this.controller = controller;
-		customFunctions = ModuleManager.getInstance().getModule("customFunctions");
+		customFunctions = ModuleManager.getInstance().getModule(moduleName);
 		customFunctions.addListener(this);
 		reloadMenu();
 	}

@@ -137,7 +137,7 @@ public class TextualScanning implements CalculatorListener{
 			System.exit(0);
 			break;
 		default:
-			System.out.println("ERROR: '"+firstArgument+"' not recognzied as a command!\nEnter 'help-sh' for a list of all valid commands.");
+			System.out.println("ERROR: '"+firstArgument+"' not recognized as a command!\nEnter 'help-sh' for a list of all valid commands.");
 			break;
 			
 		}

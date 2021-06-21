@@ -36,7 +36,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	double xMax = 20;
 	double yMin = -20;
 	double yMax = 20;
-	double step = 0.1;
+	double STEP = 0.1;
 	Color BG_COLOR =  Color.gray;
 	Color AXES_COLOR = Color.black;
 	Color ZEROS_COLOR = Color.YELLOW;
@@ -71,7 +71,8 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	/**
 	 * stores the functions to be plotted cumulatively (by order of insertion) on the same instance of the graph.
 	 */
-	ArrayList<FunctionIF> functionsOnDisplay = new ArrayList<FunctionIF>();
+	public ArrayList<FunctionIF> functionsOnDisplay = new ArrayList<FunctionIF>();
+
 
 
 	/**
@@ -108,9 +109,10 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		//start listening to the graph-settings Module
 		graphModule = ModuleManager.getInstance().getModule("graph");
 		graphModule.addListener(this);
+
 	}
 
-	
+
 	@Override
 	public void onFunctionAdded(FunctionIF function) {
 		functionsOnDisplay.add(function);
@@ -139,7 +141,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 			break;
 		}
 	}
-	
+
 
 	/**
 	 * Convert Cartesian point to pixel point
@@ -227,6 +229,10 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 			g2d.drawString("("+cursorCartesianCoord.x+", "+cursorCartesianCoord.y+")", p.x, p.y);
 		}
 
+
+
+
+
 	}
 
 
@@ -276,7 +282,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		//get a list of Cartesian coordinates (samples)
 		ArrayList<Coordinate> cartesianPoints;
 		try {
-			cartesianPoints = function.getSamples(xMin, xMax, step);
+			cartesianPoints = function.getSamples(xMin, xMax, STEP);
 		} catch (NullPointerException e) {
 			return;
 		}
@@ -300,12 +306,6 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 
 			//if the slope is greater than or equal to a threshold, don't join two consecutive points
 			if(Math.abs(slope)>=300) {
-
-//				Stroke dashed = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-//				g2d.setStroke(dashed);
-//				g2d.setColor(Color.pink);
-//				g2d.drawLine(displayPoints.get(i).x, displayPoints.get(i).y, displayPoints.get(i+1).x, displayPoints.get(i+1).y);
-
 				continue;
 			}
 
@@ -317,6 +317,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		}
 
 	}
+
 
 
 	/**
@@ -409,19 +410,19 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	}
 	//>--------------END IN-GRAPH MOTION------------------------<
 
-	
-	
-	
+
+
+
 	/**
 	 * clears the graph
 	 */
 	public void clearGraph() {
 		controller.removeAll();
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Save a snapshot of the graph as an image.
 	 */
@@ -473,6 +474,12 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		graphModule.put("AXES_COLOR", AXES_COLOR.getRGB()+"");
 		repaint();
 	}
+
+	public void setStep(double step) {
+		graphModule.put("STEP", step+"");
+		repaint();
+	}
+
 	//>---------END SET PERSISTENT PREFRERENCES-----------------<//
 
 	//>---HANDLE PERSISTENCE LISTENING-------------------------<
@@ -521,6 +528,10 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 			int axesColorInt = Integer.parseInt(value);
 			AXES_COLOR = new Color(axesColorInt);
 			break;
+		case "STEP":
+			this.STEP = Double.parseDouble(value);
+			break;
+
 		}
 	}
 	//>---END HANDLE PERSISTENCE LISTENING-------------------------<
@@ -594,7 +605,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	//>--END INTERACTIVE PROCEDURES-----------------------<//
 
 
-	
+
 
 
 

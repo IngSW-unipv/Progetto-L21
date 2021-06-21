@@ -48,8 +48,7 @@ public class AppFrame extends JFrame{
 		
 		//make and add the menu bar to this frame
 		AppMenuBar menuBar = new AppMenuBar(controller, graphPanel);
-		this.setJMenuBar(menuBar);
-		
+		this.setJMenuBar(menuBar);	
 		
 		//>--SET THIS FRAME'S LAYOUT, AND INSERT ALL OF THE PANELS-----<
 		//set this frame's layout to border layout
@@ -95,7 +94,8 @@ public class AppFrame extends JFrame{
 	}
 	
 	
-	
+
+
 	
 	
 	
