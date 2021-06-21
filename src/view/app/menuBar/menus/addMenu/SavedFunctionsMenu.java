@@ -24,12 +24,14 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 	
 	Calculator controller;
 	Module customFunctions; 
+	boolean abilityToAdd;
 	
-	public SavedFunctionsMenu(Calculator controller, String moduleName, String menuName ) {
+	public SavedFunctionsMenu(Calculator controller, String moduleName, String menuName, boolean abilityToAdd) {
 		super(menuName);
 		this.controller = controller;
 		customFunctions = ModuleManager.getInstance().getModule(moduleName);
 		customFunctions.addListener(this);
+		this.abilityToAdd = abilityToAdd;
 		reloadMenu();
 	}
 	
@@ -51,24 +53,55 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String name = JOptionPane.showInputDialog("scegli un nome per la funzione da salvare:");
-				String expression = JOptionPane.showInputDialog("inserisci un'espressione valida:");
-				if(name==null||expression==null) {	
+				if(name==null) {
 					return;
 				}
+				String expression = JOptionPane.showInputDialog("inserisci un'espressione valida:");
+				if(expression==null) {	
+					return;
+				}
+				
 				customFunctions.put(name.trim(), expression.trim());
 			}
 
 		});
-		this.add(saveNewFunction);
 		
+		if(abilityToAdd) {
+			this.add(saveNewFunction);
+		}
+		
+		
+		
+		
+		
+		
+		//deletes all of the functions in the module.
+		JMenuItem deleteAllItem = new JMenuItem("elimina tutto");
+		deleteAllItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				customFunctions.removeAll();
+			}
+			
+		});
+		
+		this.add(deleteAllItem);
+
 		
 		//add all of the previously saved functions
 		for(String savedFunctionName : customFunctions.getKeyValMap().keySet()) {
+			
+			//ignore empty names
+			if(savedFunctionName.trim().isEmpty()) {
+				continue;
+			}
+			
 			JMenu savedFunction = new JMenu(savedFunctionName);
 			
 			JMenuItem displayItem = new JMenuItem("mostra");
 			displayItem.addActionListener(new ActionListener() {
-
+	
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					controller.addFunction(savedFunctionName+"(x)");
@@ -82,13 +115,18 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					ModuleManager.getInstance().getModule("customFunctions").remove(savedFunctionName);						
+					customFunctions.remove(savedFunctionName);						
 				}
 				
 			});
 			
+			//displays the function's definition
+			JMenuItem definition = new JMenuItem(customFunctions.get(savedFunctionName));
+			
+			
 			savedFunction.add(displayItem);
 			savedFunction.add(deleteItem);
+			savedFunction.add(definition);
 			this.add(savedFunction);
 		}
 	}

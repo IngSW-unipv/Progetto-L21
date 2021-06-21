@@ -38,9 +38,14 @@ public class AddMenu extends JMenu{
 		});
 
 		//add the saved functions selector submenu
-		JMenu savedFunctionsMenu = new SavedFunctionsMenu(controller, "customFunctions", "Funzione Custom");
+		JMenu savedFunctionsMenu = new SavedFunctionsMenu(controller, "customFunctions", "Funzione Custom", true);
+
+		
+		JMenu history = new SavedFunctionsMenu(controller, "functionsHistoryModule", "Cronologia", false);
 
 
+		
+		/*
 		//make the "history" menu item
 		JMenuItem history = new JMenuItem("Cronologia");
 		history.addActionListener(new ActionListener() {
@@ -50,6 +55,7 @@ public class AddMenu extends JMenu{
 				JOptionPane.showMessageDialog(null, ModuleManager.getInstance().getModule("functionsHistoryModule").read());
 			}
 		});
+		*/
 
 
 

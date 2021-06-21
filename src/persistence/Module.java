@@ -134,7 +134,11 @@ public class Module extends TextFile {
 		//notify listeners of this module's change
 		notifyModuleListeners(key, null);
 	}
-
+	
+	public void removeAll() {
+		write("");
+		notifyModuleListeners("", null);
+	}
 	
 
 	private void notifyModuleListeners(String key, String newVal) {

@@ -88,8 +88,10 @@ public class Calculator{
 			}
 		}
 
+		
+		
 		//if parsing went ok, try adding the FunctionIF object...
-		functionsHistoryModule.put(stringExpression, stringExpression);
+		functionsHistoryModule.put("function"+System.currentTimeMillis()%1000, stringExpression);
 		return addFunction(newFunction);
 
 	}
