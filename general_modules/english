@@ -20,10 +20,10 @@ export_menu_title : Export
 export_menu_snapshot : snapshot
 help_menu_title : Help
 help_menu_welcome : Welcome!
-help_menu_about : about
+help_menu_about : About
 please_restart_the_app : please restart the app
-help_doc : file:./HtmlFiles/HelpHTML.html
-welcome_doc : file:./HtmlFiles/WelcomeHTML.html
+help_doc : file:./HtmlFiles/HelpHTML_ENG.html
+welcome_doc : file:./HtmlFiles/WelcomeHTML_ENG.html
 
 
 

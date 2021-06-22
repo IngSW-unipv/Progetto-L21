@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Help Frame</title>
+	</head>
+	<body style="background-color:grey; font-family:verdana;">
+		<h1 style="text-align:center;">Progetto studio di funzioni - Help</h1>
+		<h2>Funzioni supportate</h2>
+		Queste elencate sono le funzioni supportate. Nota che l'argomento può essere (x) o qualcosa di più semplice:
+		 <ul>
+			<li>sin(arg)</li>
+			<li>cos(arg)</li>
+			<li>tan(arg)</li>
+			<li>ln(arg)</li>
+			<li>logBase(arg)</li>
+		</ul> 
+		<h2>CaseInsestive</h2>
+		Questa applicazione è caseInsestive, ovvero inserire SIN (x) equivale a sin (X).
+		<h2>Bottoni sul Menu</h2>
+		Un breve elenco delle funzioni svolte da ciascun pulsante nel menu:
+		<ul>
+			<li>Aggiungi->Nuova Funzione : per aggiungere una nuova funzione</li>
+			<li>Aggiungi->Funzione definita da utente->aggiungi : memorizzare delle funzioni </li>
+			<li>Aggiungi->Cronologia : mostrare la cronologia delle funzioni inserite </li>
+			<li>Visualizza->zeri : mostrare gli zeri sul grafico </li>
+			<li>Visualizza->estremanti : mostrare gli estremanti sul grafico</li>
+			<li>Visualizza->coordinata puntata : mostrare sul grafico la coordinata puntata dal mouse</li>
+			<li>Visualizza->opzioni cromatiche : impostare le preferenze grafiche</li>
+			<li>Visualizza->passo : impostare il passo per il calcolo dei Samples</li>
+			<li>Esporta->istantanea : esportare una foto del grafico</li>
+		</ul> 
+		<h2>Sintassi delle funzioni</h2>
+		La sintassi per l'inserimento delle funzioni prevede di utilizzare "x" come variabile indipendente e di utilizzare sempre parentesi tonde per indicare una funzione (es. tan (x + 2)).
+		<h2>Funzioni definite dall'utente</h2>
+		E' possibile utilizzare le funzioni salvate come argomenti per creare funzioni più complesse da disegnare. Per farlo è sufficiente specificare il nome scelto per la funzione salvata, seguito dalle parentesi tonde con una x.<br> Per esempio:<br>
+			funzione definita dall'utente: a = x + 2<br>
+			funzione da plottare: sin (a (x)) == sin (x + 2)
+		<h2>Scorciatoie da tastiera</h2>
+		Puoi anche utilizzare le scorciatoie da tastiera per migliorare l'utilizzo del programma:
+		<ul>
+			<li>CTRL && +/- zoom in / out/</li>
+			<li>CTRL && [arrow key]: movimento sinistro-destro / sopra-sotto</li>
+			<li>CTRL && H: ritorno alla home (es: prospettiva di default sul grafico)</li>
+			<li>CTRL && P: disegnare nuova funzione sul grafico</li>
+			<li>CTRL && E: esportare una istantanea grafico</li>
+			<li>CTRL && X: mostra estremanti (eXtremanti)</li>
+			<li>CTRL && Z: mostra zeri</li>
+			<li>CTRL && C: svuoatare il grafico.</li>
+		</ul>
+		<h2>Comandi da shell</h2>
+		Se utilizzi il programma da shell, dovresti conoscere i seguenti comandi:
+		<ul>
+			<li>help-sh: mostra le informazioni</li>
+			<li>plot [expression]: disegna una nuova funzione sul grafico</li>
+			<li>del [expression]: rimuove tutte le funzioni con quella espressione</li>
+			<li>deriv [expression]: deriva l'espressione e la plotta </li>
+			<li>help: mostra la finestra di help</li>
+			<li>hdls: attiva/disattiva la 'headless' mode (headless mode disabilita i frame pop-up).</li>
+			<li>show: mostra il graphFrame se era nascosto</li>
+			<li>smpl [expression]: semplificare l'espressione</li>
+			<li>eval [expression]: valuta l'espressione</li>
+			<li>exit: chiude il programma</li>
+		</ul>
+		</body>
+</html>
