@@ -9,9 +9,9 @@ view_menu_axes_color : colore assi
 view_menu_step : passo
 view_menu_select_language : seleziona lingua
 add_menu_title : Aggiungi
-add_menu_new_function : Nuova funzione
-add_menu_custom_function : Funzione definita da utente
-add_menu_history : Cronologia
+add_menu_new_function : nuova funzione
+add_menu_custom_function : funzione definita da utente
+add_menu_history : cronologia
 add_menu_delete_everything : elimina tutto
 add_menu_delete : elimina
 add_menu_show : mostra

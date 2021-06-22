@@ -21,12 +21,12 @@ import view.app.menuBar.menus.AbstractMenu;
  *
  */
 public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
-	
-	
+
+
 	Calculator controller;
 	Module customFunctions; 
 	boolean abilityToAdd;
-	
+
 	public SavedFunctionsMenu(Calculator controller, String moduleName, String menuName, boolean abilityToAdd) {
 		super(menuName);
 		this.controller = controller;
@@ -35,18 +35,18 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 		this.abilityToAdd = abilityToAdd;
 		reloadMenu();
 	}
-	
-	
+
+
 	/**
 	 * Loads all of the saved functions from the customFunctions
 	 * module to the menu.
 	 */
 	private void reloadMenu() {
-		
+
 		//remove all previous items 
 		this.removeAll();
-		
-		
+
+
 		//add the "save new function item"
 		JMenuItem saveNewFunction = new JMenuItem(LANGUAGE_MODULE.get("add_menu_add"));
 		saveNewFunction.addActionListener(new ActionListener() {
@@ -61,21 +61,21 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 				if(expression==null) {	
 					return;
 				}
-				
+
 				customFunctions.put(name.trim(), expression.trim());
 			}
 
 		});
-		
+
 		if(abilityToAdd) {
 			this.add(saveNewFunction);
 		}
-		
-		
-		
-		
-		
-		
+
+
+
+
+
+
 		//deletes all of the functions in the module.
 		JMenuItem deleteAllItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete_everything"));
 		deleteAllItem.addActionListener(new ActionListener() {
@@ -84,33 +84,33 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 			public void actionPerformed(ActionEvent arg0) {
 				customFunctions.removeAll();
 			}
-			
+
 		});
-		
+
 		this.add(deleteAllItem);
 
-		
+
 		//add all of the previously saved functions
 		for(String savedFunctionName : customFunctions.getKeyValMap().keySet()) {
-			
+
 			//ignore empty names
 			if(savedFunctionName.trim().isEmpty()) {
 				continue;
 			}
-			
+
 			JMenu savedFunction = new JMenu(savedFunctionName);
-			
+
 			JMenuItem displayItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_show"));
 			displayItem.addActionListener(new ActionListener() {
-	
+
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					controller.addFunction(savedFunctionName+"(x)");
 				}
-				
+
 			});
-			
-			
+
+
 			JMenuItem deleteItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete"));
 			deleteItem.addActionListener(new ActionListener() {
 
@@ -118,13 +118,13 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 				public void actionPerformed(ActionEvent arg0) {
 					customFunctions.remove(savedFunctionName);						
 				}
-				
+
 			});
-			
+
 			//displays the function's definition
 			JMenuItem definition = new JMenuItem(customFunctions.get(savedFunctionName));
-			
-			
+
+
 			savedFunction.add(displayItem);
 			savedFunction.add(deleteItem);
 			savedFunction.add(definition);
@@ -143,5 +143,5 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 	@Override
 	public void dealWithSingularUpdate(String key, String value) {			
 	}
-	
+
 }

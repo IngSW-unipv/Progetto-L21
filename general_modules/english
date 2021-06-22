@@ -9,9 +9,9 @@ view_menu_axes_color : axes color
 view_menu_step : step
 view_menu_select_language : select language
 add_menu_title : Add
-add_menu_new_function : New Function
+add_menu_new_function : new function
 add_menu_custom_function : custom function
-add_menu_history : History
+add_menu_history : history
 add_menu_delete_everything : delete everything
 add_menu_delete : delete
 add_menu_show : show
@@ -20,7 +20,7 @@ export_menu_title : Export
 export_menu_snapshot : snapshot
 help_menu_title : Help
 help_menu_welcome : welcome!
-help_menu_about : About
+help_menu_about : about
 please_restart_the_app : please restart the app
 help_doc : file:./HtmlFiles/HelpHTML_ENG.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML_ENG.html
