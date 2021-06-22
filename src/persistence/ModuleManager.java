@@ -14,8 +14,11 @@ public class ModuleManager {
 
 	private static ModuleManager instance = null;
 
-	private static String PATH_TO_MODULES_DIR = Module.PATH_TO_MODULES_DIR;
-
+	private static String PATH_TO_LOCAL_SETTINGS_MODULES_DIR = "modules";
+	
+	private static String PATH_TO_GENERAL_MODULES_DIR = "general_modules";
+	
+	
 	private HashMap<String, Module> loadedModulesMap;
 
 
@@ -24,16 +27,25 @@ public class ModuleManager {
 		loadedModulesMap=  new HashMap<String, Module>();
 
 		//create the modules directory in case it doesn't exist yet
-		File modulesDir = new File(PATH_TO_MODULES_DIR);
+		File modulesDir = new File(PATH_TO_LOCAL_SETTINGS_MODULES_DIR);
 		if(!modulesDir.exists()) {
 			modulesDir.mkdir();
 		}
 
 
 		//load the modules that are present at launch-time
-		for(File file : new File(PATH_TO_MODULES_DIR).listFiles()) {
-			loadedModulesMap.put(file.getName(), new Module(file.getName()));
+		
+		//load the custom/local modules
+		for(File file : new File(PATH_TO_LOCAL_SETTINGS_MODULES_DIR).listFiles()) {
+			loadedModulesMap.put(file.getName(), new Module(PATH_TO_LOCAL_SETTINGS_MODULES_DIR, file.getName()));
 		}
+		
+		//load the general/public modules
+		for(File file : new File(PATH_TO_GENERAL_MODULES_DIR).listFiles()) {
+			loadedModulesMap.put(file.getName(), new Module(PATH_TO_GENERAL_MODULES_DIR, file.getName()));
+		}
+		
+		
 	}
 
 	/**
@@ -68,10 +80,10 @@ public class ModuleManager {
 		if(module==null) {
 
 			//load the Module:
-			module = new Module(name);
+			module = new Module(PATH_TO_LOCAL_SETTINGS_MODULES_DIR, name);
 			loadedModulesMap.put(name, module);
 
-			//if the module in question doesn't exist on the disk, create a new empty Module. 
+			//if the module in question doesn't exist on the disk, create a new empty Module, in the PATH_TO_LOCAL_SETTINGS_MODULES_DIR. 
 			if(!module.exists()) {
 				module.create();
 			}

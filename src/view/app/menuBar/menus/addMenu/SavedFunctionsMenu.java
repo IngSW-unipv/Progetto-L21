@@ -11,6 +11,7 @@ import controller.Calculator;
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
+import view.app.menuBar.menus.AbstractMenu;
 
 /**
  * This menu lets the user pick a saved function from the customFunctions module.
@@ -19,7 +20,7 @@ import persistence.ModuleManager;
  * displayed functions panel)
  *
  */
-public class SavedFunctionsMenu extends JMenu implements ModuleListener{
+public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 	
 	
 	Calculator controller;
@@ -47,7 +48,7 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 		
 		
 		//add the "save new function item"
-		JMenuItem saveNewFunction = new JMenuItem("aggiungi");
+		JMenuItem saveNewFunction = new JMenuItem(LANGUAGE_MODULE.get("add_menu_add"));
 		saveNewFunction.addActionListener(new ActionListener() {
 
 			@Override
@@ -76,7 +77,7 @@ public class SavedFunctionsMenu extends JMenu implements ModuleListener{
 		
 		
 		//deletes all of the functions in the module.
-		JMenuItem deleteAllItem = new JMenuItem("elimina tutto");
+		JMenuItem deleteAllItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete_everything"));
 		deleteAllItem.addActionListener(new ActionListener() {
 
 			@Override

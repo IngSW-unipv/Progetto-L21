@@ -14,11 +14,7 @@ import java.util.regex.Pattern;
 
 public class Module extends TextFile {
 
-	/**
-	 * This is the path to the directory where modules are stored.
-	 */
-	public final static String PATH_TO_MODULES_DIR = "modules";
-	
+
 	/**
 	 * This Module's name
 	 */
@@ -29,8 +25,8 @@ public class Module extends TextFile {
 	 */
 	ArrayList<ModuleListener> listenersList;
 	
-	public Module(String name) {
-		super(PATH_TO_MODULES_DIR+File.separator+name);
+	public Module(String dirPath, String name) {
+		super(dirPath+File.separator+name);
 		this.name = name;
 		listenersList = new ArrayList<ModuleListener>();
 	}
