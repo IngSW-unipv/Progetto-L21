@@ -11,25 +11,20 @@ import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-public class AboutFrame extends JFrame {
+public class AboutFrame extends AbstractPopupFrame {
 
 	public AboutFrame() {
-		super("Help");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("./images/help.JPG"));
-        getContentPane().add(Box.createRigidArea(new Dimension(400, 300)));
-        pack();
-	    setLocationByPlatform(true);
-	    setVisible(true);
-	    setLocationRelativeTo(null);
-	    JEditorPane display = new JEditorPane();
-	    try {
-			display.setPage("file:./HtmlFiles/HelpHTML.html");
+		super("Help", "./images/help.JPG");
+
+		try {
+			display.setPage(LANGUAGE_MODULE.get("help_doc"));
 		} catch (IOException e) {
 			System.out.println("errore url");
 		}
-	    add(new JScrollPane(display));
-	    repaint();
-	    revalidate();
+
+		add(new JScrollPane(display));
+		repaint();
+		revalidate();
 	}
 
 

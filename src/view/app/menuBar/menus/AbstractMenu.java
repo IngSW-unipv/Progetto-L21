@@ -9,9 +9,6 @@ public abstract class AbstractMenu extends JMenu {
 	
 	
 	static String currentLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
-	
-	
-	
 	static protected Module LANGUAGE_MODULE =ModuleManager.getInstance().getModule(currentLanguage !=null ? currentLanguage : "english");	
 	
 	

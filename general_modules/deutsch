@@ -19,9 +19,8 @@ help_menu_title : Hilfe
 help_menu_welcome : Wilkommen!
 help_menu_about : Über die App
 please_restart_the_app : bitte die App wieder starten
-
-
-
+help_doc : file:./HtmlFiles/HelpHTML.html
+welcome_doc : file:./HtmlFiles/WelcomeHTML.html
 
 
 

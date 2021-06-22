@@ -19,8 +19,8 @@ help_menu_title : Aiuto
 help_menu_welcome : Benvenuto!
 help_menu_about : info
 please_restart_the_app : ricaricare l'applicazione
-
-
+help_doc : file:./HtmlFiles/HelpHTML.html
+welcome_doc : file:./HtmlFiles/WelcomeHTML.html
 
 
 

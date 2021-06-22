@@ -19,9 +19,8 @@ help_menu_title : مساعدة
 help_menu_welcome : أهلا و سهلا
 help_menu_about : عن التطبيق
 please_restart_the_app : يرجى إعادة تشغيل التطبيق
-
-
-
+help_doc : file:./HtmlFiles/HelpHTML.html
+welcome_doc : file:./HtmlFiles/WelcomeHTML.html
 
 
 
