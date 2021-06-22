@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import controller.Calculator;
+import persistence.ModuleManager;
 import view.app.insertedFunctionsPanel.InsertedFunctionsPanel;
 import view.app.menuBar.AppMenuBar;
 import view.graph.GraphPanel;
@@ -31,7 +32,11 @@ public class AppFrame extends JFrame{
 	
 	//App-Parameters
 	String ICON_PATH = "./images/Cattura.JPG";
-	String TITLE = "Calcolatrice Grafica";
+	
+	String localLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
+	String TITLE = ModuleManager.getInstance().getModule( localLanguage!=null? localLanguage : "english").get("app_title");
+	
+	
 	
 	public AppFrame(Calculator controller) {
 		

@@ -1,3 +1,4 @@
+app_title : GraphiCalc
 view_menu_title : View
 view_menu_zeros : roots
 view_menu_critial_points : critical points
@@ -12,6 +13,8 @@ add_menu_new_function : New Function
 add_menu_custom_function : custom function
 add_menu_history : History
 add_menu_delete_everything : delete everything
+add_menu_delete : delete
+add_menu_show : show
 add_menu_add : add
 export_menu_title : Export
 export_menu_snapshot : snapshot

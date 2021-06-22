@@ -1,3 +1,4 @@
+app_title :  حاسبة رسومية
 view_menu_title : مظهر
 view_menu_zeros : أصفار
 view_menu_critial_points : نقاط حرجة
@@ -12,6 +13,8 @@ add_menu_new_function : دالة جديدة
 add_menu_custom_function : دالة خصوصية
 add_menu_history : تاريخ
 add_menu_delete_everything : مسح الكل
+add_menu_delete : مسح
+add_menu_show : عرض
 add_menu_add : أضيف
 export_menu_title : تصدير
 export_menu_snapshot : صورة

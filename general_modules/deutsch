@@ -1,3 +1,4 @@
+app_title : GraphicCalc
 view_menu_title : Aussehen
 view_menu_zeros : Wurzeln
 view_menu_critial_points : Kritische Punkten
@@ -12,6 +13,8 @@ add_menu_new_function : Neue Funktion
 add_menu_custom_function : Personalisierte Funktion
 add_menu_history : History
 add_menu_delete_everything : alles löschen
+add_menu_delete : löschen
+add_menu_show : zeigen
 add_menu_add : hinzufügen
 export_menu_title : Exportieren
 export_menu_snapshot : Schnappschuss

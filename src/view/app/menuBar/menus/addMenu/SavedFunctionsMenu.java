@@ -100,7 +100,7 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 			
 			JMenu savedFunction = new JMenu(savedFunctionName);
 			
-			JMenuItem displayItem = new JMenuItem("mostra");
+			JMenuItem displayItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_show"));
 			displayItem.addActionListener(new ActionListener() {
 	
 				@Override
@@ -111,7 +111,7 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 			});
 			
 			
-			JMenuItem deleteItem = new JMenuItem("elimina");
+			JMenuItem deleteItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete"));
 			deleteItem.addActionListener(new ActionListener() {
 
 				@Override
