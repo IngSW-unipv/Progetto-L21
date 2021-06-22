@@ -19,12 +19,12 @@ add_menu_add : aggiungi
 export_menu_title : Esporta
 export_menu_snapshot : istantanea
 help_menu_title : Aiuto
-help_menu_welcome : Benvenuto!
+help_menu_welcome : benvenuto!
 <<<<<<< Updated upstream
 help_menu_about : info
 please_restart_the_app : riavviare l'applicazione
-help_doc : file:./HtmlFiles/HelpHTML.html
-welcome_doc : file:./HtmlFiles/WelcomeHTML.html
+help_doc : file:./HtmlFiles/HelpHTML_ITA.html
+welcome_doc : file:./HtmlFiles/WelcomeHTML_ITA.html
 =======
 help_menu_about : Info
 please_restart_the_app : ricaricare l'applicazione
