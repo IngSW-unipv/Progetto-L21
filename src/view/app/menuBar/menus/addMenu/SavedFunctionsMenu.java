@@ -71,11 +71,7 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 			this.add(saveNewFunction);
 		}
 
-
-
-
-
-
+		
 		//deletes all of the functions in the module.
 		JMenuItem deleteAllItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete_everything"));
 		deleteAllItem.addActionListener(new ActionListener() {

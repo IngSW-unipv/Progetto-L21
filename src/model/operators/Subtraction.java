@@ -25,12 +25,6 @@ public class Subtraction extends BinaryFunction {
 		return "("+leftOperand+" - "+rightOperand+")";
 	}
 
-
-
-
-
-
-
 	@Override
 	public FunctionIF getSimplified() {
 		//simplify the operarands recursively
@@ -51,7 +45,6 @@ public class Subtraction extends BinaryFunction {
 		if(rightOperand.equals(new Constant(0))) {
 			return leftOperand;
 		}
-
 
 		return this;
 	}

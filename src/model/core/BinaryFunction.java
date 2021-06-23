@@ -16,10 +16,11 @@ package model.core;
  */
 
 public abstract class BinaryFunction extends FunctionAB {
+	
+	public FunctionIF leftOperand;
+	public FunctionIF rightOperand;
 
-	protected FunctionIF leftOperand;
-	protected FunctionIF rightOperand;
-
+	
 	public BinaryFunction(FunctionIF leftOperand, FunctionIF rightOperand) {
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;
@@ -34,7 +35,7 @@ public abstract class BinaryFunction extends FunctionAB {
 	}
 
 
-
+	
 
 
 }

@@ -1,7 +1,8 @@
 package functionTest;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import java.util.logging.Logger;
+
 import org.junit.*;
 
 import model.core.FunctionIF;
@@ -29,10 +30,7 @@ public class CosineTest {
 		System.out.println("Start test number " + ++countTest );
 	}
 	
-	/**
-	 * Test method for {@link model.functions.Cosine#getValue(double)}.
-	 * @throws SyntaxException 
-	 */
+
 	@Test
 	public void testGetValue() throws SyntaxException {
 		FunctionIF o = Parser.parseAndbuild("x");
@@ -41,10 +39,7 @@ public class CosineTest {
 		assertEquals("Result ", 1, cos.getValue(0), DELTA); 
 	}
 
-	/**
-	 * Test method for {@link model.functions.Cosine#getDerivative()}.
-	 * @throws SyntaxException 
-	 */
+
 	@Test
 	public void testGetDerivative() throws SyntaxException {
 		FunctionIF o = Parser.parseAndbuild("x");
