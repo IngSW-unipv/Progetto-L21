@@ -20,11 +20,12 @@ export_menu_title : Esporta
 export_menu_snapshot : istantanea
 help_menu_title : Aiuto
 help_menu_welcome : benvenuto!
-<<<<<<< Updated upstream
 help_menu_about : info
 please_restart_the_app : riavviare l'applicazione
 help_doc : file:./HtmlFiles/HelpHTML_ITA.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML_ITA.html
+view_menu_max_functions : massimo numero funzioni
+view_menu_max_insert_new_max_functions : inserisci un nuovo limite
 
 
 

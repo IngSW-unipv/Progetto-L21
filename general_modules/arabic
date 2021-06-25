@@ -24,6 +24,9 @@ help_menu_about : عن التطبيق
 please_restart_the_app : يرجى إعادة تشغيل التطبيق
 help_doc : file:./HtmlFiles/HelpHTML.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML.html
+view_menu_max_functions : أقصى عدد دالات
+view_menu_max_insert_new_max_functions : غير العدد
+
 
 
 

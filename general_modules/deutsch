@@ -24,6 +24,8 @@ help_menu_about : Über die App
 please_restart_the_app : bitte die App wieder starten
 help_doc : file:./HtmlFiles/HelpHTML.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML.html
+view_menu_max_functions : max Funktionen
+view_menu_max_insert_new_max_functions : wählen Sie eine neue Grenze 
 
 
 

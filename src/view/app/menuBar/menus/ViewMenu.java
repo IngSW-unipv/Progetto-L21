@@ -119,6 +119,7 @@ public class ViewMenu extends AbstractMenu {
 
 		chromaticsMenu.add(setAxesColor);
 
+		
 
 		//make a new sub-menu for the step
 		JMenu stepMenu = new JMenu(LANGUAGE_MODULE.get("step"));
@@ -139,8 +140,19 @@ public class ViewMenu extends AbstractMenu {
 		add(stepMenu);
 
 
-
-
+		
+		//make an item to select the number of insertable functions
+		JMenuItem insertableFunctions = new JMenuItem(LANGUAGE_MODULE.get("view_menu_max_functions"));
+		insertableFunctions.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String functionsNumber = JOptionPane.showInputDialog(LANGUAGE_MODULE.get("view_menu_max_insert_new_max_functions"));
+				ModuleManager.getInstance().getModule("graph").put("MAX_INSERTABLE_FUNCTIONS", functionsNumber);	
+			}
+			
+		});
+		add(insertableFunctions);
+		
 
 	}
 

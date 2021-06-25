@@ -7,6 +7,7 @@ import parser.Parser;
 import parser.SyntaxException;
 import persistence.ModuleManager;
 import persistence.Module;
+import persistence.ModuleListener;
 
 
 /**
@@ -31,13 +32,13 @@ import persistence.Module;
  *
  */
 
-public class Calculator{
+public class Calculator implements ModuleListener{
 
 	/**
 	 * List of FunctionIFs inserted by user
 	 */
 	private ArrayList<FunctionIF> functions;
-	
+
 
 	/**
 	 *Due to performance issues, we thought it might be a good
@@ -57,12 +58,21 @@ public class Calculator{
 	 * Persistence module to store the history of inputed functions
 	 */
 	private Module functionsHistoryModule = ModuleManager.getInstance().getModule("functionsHistoryModule");
+
+	
+	/**
+	 * Persistence module to store the graph settings
+	 */
+
+	private Module graphModule = ModuleManager.getInstance().getModule("graph");
+
 	
 	
 	
 	public Calculator() {
 		this.functions = new ArrayList<FunctionIF>();
 		this.listeners = new ArrayList<CalculatorListener>();
+		graphModule.addListener(this);
 	}
 
 
@@ -88,8 +98,8 @@ public class Calculator{
 			}
 		}
 
-		
-		
+
+
 		//if parsing went ok, try adding the FunctionIF object...
 		functionsHistoryModule.put("function"+System.currentTimeMillis()%1000, stringExpression);
 		return addFunction(newFunction);
@@ -104,7 +114,7 @@ public class Calculator{
 	 */
 	public FunctionIF addFunction(FunctionIF function) {
 
-		
+
 		//reject any function if max amount is exceeded
 		if(functions.size()+1>MAX_INSERTABLE_FUNCTIONS) {
 
@@ -116,7 +126,7 @@ public class Calculator{
 			return null;
 		}
 
-		
+
 		//simplify the function before adding it
 		function = function.getSimplified();
 
@@ -179,8 +189,8 @@ public class Calculator{
 		}
 		functions.clear();
 	}
-	
-	
+
+
 	/**
 	 * add a listener to this Calculator.
 	 */
@@ -206,11 +216,11 @@ public class Calculator{
 	public FunctionIF buildFunction(String stringExpression){
 
 		FunctionIF f = null;
-		
+
 		try {
 			//call the parser and build a function from the string-expression
 			f = Parser.parseAndbuild(stringExpression);
-		
+
 		} catch (SyntaxException | IllegalArgumentException e) {
 			//notify listeners in case of a syntax exception:
 			for(CalculatorListener listener : listeners) {
@@ -224,6 +234,24 @@ public class Calculator{
 		}
 
 		return f;
+	}
+
+
+	@Override
+	public void dealWithModuleUpdate(Module moduleThatGotUpdated) {
+		//update everything 
+		for(String chiave : moduleThatGotUpdated.getKeyValMap().keySet()) {
+			dealWithSingularUpdate(chiave, moduleThatGotUpdated.get(chiave));
+		}
+	}
+
+	@Override
+	public void dealWithSingularUpdate(String key, String value) {
+		switch(key) {
+		case "MAX_INSERTABLE_FUNCTIONS":
+			MAX_INSERTABLE_FUNCTIONS = Integer.parseInt(value);
+			break;
+		}
 	}
 
 

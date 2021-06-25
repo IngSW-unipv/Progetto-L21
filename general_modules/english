@@ -24,7 +24,8 @@ help_menu_about : about
 please_restart_the_app : please restart the app
 help_doc : file:./HtmlFiles/HelpHTML_ENG.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML_ENG.html
-
+view_menu_max_functions : max functions
+view_menu_max_insert_new_max_functions : insert a new limit for the insertable functions
 
 
 
