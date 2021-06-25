@@ -147,6 +147,9 @@ public class ViewMenu extends AbstractMenu {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String functionsNumber = JOptionPane.showInputDialog(LANGUAGE_MODULE.get("view_menu_max_insert_new_max_functions"));
+				if(functionsNumber==null) {
+					return;
+				}
 				ModuleManager.getInstance().getModule("graph").put("MAX_INSERTABLE_FUNCTIONS", functionsNumber);	
 			}
 			
