@@ -1,8 +1,8 @@
 package model.core;
 
 /**
- * UnaryFunction can be extended by single-input functions.
- * 
+ * UnaryFunction can be extended by single-variable functions.
+ * @author Team - L21
  */
 
 public abstract class UnaryFunction extends FunctionAB {
@@ -28,6 +28,5 @@ public abstract class UnaryFunction extends FunctionAB {
 		return this;
 	}
 	
-	
-	
+
 }

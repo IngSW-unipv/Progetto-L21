@@ -2,12 +2,12 @@ package model.zeroFinder;
 
 /**
  * Constructs a Concrete ZeroFinder.
- * 
+ * It could be useful in case we come about a different method to find zeros
+ *
+ * @author Team - L21
  */
 
 public class ZeroFinderBuilder {
-	
-	
 	
 	/**
 	 * Get a concrete ZeroFinder
@@ -21,7 +21,6 @@ public class ZeroFinderBuilder {
 		case "bisection":
 			return new BisectionZeroFinder();
 		}
-		
 		
 		//by default
 		return new SimpleZeroFinder();

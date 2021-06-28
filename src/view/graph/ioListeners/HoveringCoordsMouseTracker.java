@@ -9,8 +9,6 @@ import java.awt.event.MouseMotionListener;
 
 import model.core.Coordinate;
 import view.graph.GraphPanel;
-
-
 /**
  * This is a mouse listener that tracks the coordinate pointed
  * to by the cursor at any given time.
@@ -19,15 +17,14 @@ import view.graph.GraphPanel;
  * the coordinate in question changes. (ie: whenever
  * the cursor moves).
  * 
+ * @author Team - L21
  *
  */
-
 public class HoveringCoordsMouseTracker implements MouseMotionListener {
 	
 	GraphPanel panelToBeTracked;
 	
-	
-	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
+	Coordinate cursorCartesianCoord = new Coordinate(0,0);
 	
 	public HoveringCoordsMouseTracker(GraphPanel panelToBeTracked) {
 		this.panelToBeTracked = panelToBeTracked;
@@ -67,6 +64,7 @@ public class HoveringCoordsMouseTracker implements MouseMotionListener {
 		panelToBeTracked.repaint();
 	}
 
+	
 	/**
 	 * Returns the coordinate pointed to by the cursor.
 	 * To be called by the GraphPanel.
@@ -82,6 +80,4 @@ public class HoveringCoordsMouseTracker implements MouseMotionListener {
 		
 	}
 	
-	
-
 }

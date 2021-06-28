@@ -4,21 +4,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import model.core.Coordinate;
 import model.core.FunctionIF;
-/*
+/**
  * Find the zeros of function using the Bisection Algorithm
+ * 
+ * @author Team - L21
+ *
  */
 public class BisectionZeroFinder extends SimpleZeroFinder {
 
 	HashMap<Double,Coordinate> finalResult;
 
+
 	public BisectionZeroFinder() {
 		super();
 	}
+
 
 	@Override
 	public ArrayList<Coordinate> getZeros(FunctionIF function, double lowerBound, double upperBound) {
 
 		finalResult = new HashMap<Double,Coordinate>();
+
 		//tries finding zeros with the default precision (almostZero)
 		ArrayList<Coordinate> results = super.getZeros(function, lowerBound,  upperBound);
 		return applyMethod(function, results);
@@ -29,12 +35,11 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 	public ArrayList<Coordinate> getZeros(FunctionIF function) {
 
 		finalResult = new HashMap<Double,Coordinate>();
+
 		ArrayList<Coordinate> results =  super.getZeros(function);
 		return applyMethod(function, results);
 
 	}
-
-
 
 
 	public ArrayList<Coordinate> applyMethod(FunctionIF function, ArrayList<Coordinate> results){
@@ -46,7 +51,6 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 
 		int indexZeros = 0;
 		int i = 0;
-
 
 		for (Coordinate c : results) {
 			// find the "count"
@@ -81,12 +85,9 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 	 * contain a root.
 	 */
 	private Coordinate bisectionMetod(FunctionIF f, double x1, double x2){
-		double xm, fx1, fx2, fxm;
+		double xm, fx1, fxm;
 
 		fx1 = f.getValue(x1);
-
-		fx2 = f.getValue(x2);
-
 
 		while(Math.abs((x2-x1)) > 1.0E-7) {
 
@@ -99,17 +100,11 @@ public class BisectionZeroFinder extends SimpleZeroFinder {
 			}
 			else {
 				x2 = xm;
-				fx2 = fxm;
 			}
 		}
 
 		return new Coordinate(x1, 0);
 	}
-
-
-
-
-
 
 
 }

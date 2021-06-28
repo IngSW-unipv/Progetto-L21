@@ -1,5 +1,9 @@
 package persistence;
-
+/**
+ * Get notified about a change of a module.
+ * @author Team - L21
+ *
+ */
 public interface ModuleListener{
 
 	/**

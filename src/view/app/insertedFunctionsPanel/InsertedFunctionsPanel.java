@@ -1,13 +1,11 @@
 package view.app.insertedFunctionsPanel;
 
-
 import java.util.HashMap;
 import javax.swing.JPanel;
 import controller.Calculator;
 import controller.CalculatorListener;
 import controller.ErrorCodes;
 import model.core.FunctionIF;
-
 /**
  * The InsertedFunctionsPanel is the space on the screen
  * where all of the currently plotted functions are shown.
@@ -19,15 +17,21 @@ import model.core.FunctionIF;
  * controller, so it creates/deletes FunctionFragments 
  * automatically whenever they're needed/not needed anymore.
  *
+ * @author Team - L21
+ * 
  */
-
+@SuppressWarnings("serial")
 public class InsertedFunctionsPanel extends JPanel implements CalculatorListener{
 
 
-	//Keeps track of fragments. One fragment for each plotted function.
+	/*
+	 * Keeps track of fragments. One fragment for each plotted function.
+	 */
 	HashMap<String, FunctionFragment> functionFragmentsMap;
 
-	//This panel observes a Calculator controller.
+	/*
+	 * This panel observes a Calculator controller.
+	 */
 	Calculator controller;
 
 	public InsertedFunctionsPanel(Calculator controller) {
@@ -45,12 +49,14 @@ public class InsertedFunctionsPanel extends JPanel implements CalculatorListener
 		addFunctionFragment(function);
 	}
 
+	
 	@Override
 	public void onFunctionRemoved(FunctionIF function) {
 		//remove no longer needed fragment of deleted function
 		removeFunctionFragment(function);
 	}
 
+	
 	@Override
 	public void onError(ErrorCodes errorCode, String message) {
 		//does nothing about it for now
@@ -70,6 +76,7 @@ public class InsertedFunctionsPanel extends JPanel implements CalculatorListener
 		this.revalidate();
 	}
 
+	
 	/**
 	 * removes an old FunctionFragment of a deleted function.
 	 * @param expression
@@ -80,24 +87,6 @@ public class InsertedFunctionsPanel extends JPanel implements CalculatorListener
 		this.repaint();
 		this.revalidate();
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
 

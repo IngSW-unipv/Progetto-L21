@@ -3,7 +3,11 @@ package model.operators;
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
 import model.numbers.Constant;
-
+/**
+ * 
+ * @author Team - L21
+ *
+ */
 public class Subtraction extends BinaryFunction {
 
 	public Subtraction(FunctionIF leftOperand, FunctionIF rightOperand) {
@@ -27,9 +31,9 @@ public class Subtraction extends BinaryFunction {
 
 	@Override
 	public FunctionIF getSimplified() {
+		
 		//simplify the operarands recursively
-		leftOperand = leftOperand.getSimplified();
-		rightOperand = rightOperand.getSimplified();
+		super.getSimplified();
 
 		//if both operands are constants
 		if(leftOperand instanceof Constant && rightOperand instanceof Constant) {

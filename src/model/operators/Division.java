@@ -3,7 +3,11 @@ package model.operators;
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
 import model.numbers.Constant;
-
+/**
+ * 
+ * @author Team - L21
+ *
+ */
 public class Division extends BinaryFunction {
 
 	/**
@@ -39,9 +43,9 @@ public class Division extends BinaryFunction {
 
 	@Override
 	public FunctionIF getSimplified() {
+
 		//simplify the operarands recursively
-		leftOperand = leftOperand.getSimplified();
-		rightOperand = rightOperand.getSimplified();
+		super.getSimplified();
 
 		//if numerator = denominator
 		if(leftOperand.equals(rightOperand)) {
@@ -65,13 +69,8 @@ public class Division extends BinaryFunction {
 			return new Power(((Power)leftOperand).leftOperand, exp);
 		}
 		
-		
 		return this;
 	}
-
-
-
-
 
 
 }

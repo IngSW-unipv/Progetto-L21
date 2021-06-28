@@ -5,7 +5,7 @@ import model.core.FunctionIF;
 
 /**
  * Represents a variable value.
- *
+ * @author Team - L21
  */
 
 public class Variable extends BasicOperand {

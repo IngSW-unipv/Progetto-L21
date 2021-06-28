@@ -1,12 +1,6 @@
-/**
- * 
- */
 package view.shell;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import controller.Calculator;
 import controller.CalculatorListener;
 import controller.ErrorCodes;
@@ -14,18 +8,15 @@ import model.core.FunctionIF;
 import persistence.FileIO;
 import view.help.AboutFrame;
 import view.help.WelcomeFrame;
-
-
 /**
  * 
  * The command shell can be used to plot functions on a graph-frame,
  * or to test some other functionalities of the system.
  * 
  * For a list of all of the commands, go to HtmlFiles/shell_commands.txt
- * 
+ * @author Team - L21
  */
-
-public class TextualScanning implements CalculatorListener{
+public class Shell implements CalculatorListener{
 
 	/**
 	 * The controller.
@@ -43,7 +34,7 @@ public class TextualScanning implements CalculatorListener{
 	boolean headlessFlag;
 	
 	
-	public TextualScanning(Calculator c) {
+	public Shell(Calculator c) {
 		this.controller=c;
 		this.graphFrame = new GraphFrame(c);
 		c.addListener(this);
@@ -67,6 +58,7 @@ public class TextualScanning implements CalculatorListener{
 	 * @param calculator
 	 */
 	public void mainLoop(Calculator calculator) {
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 
 		while(true) {
@@ -83,7 +75,6 @@ public class TextualScanning implements CalculatorListener{
 			runCommand(firstArgument, secondArgument);
 		}
 	}
-
 
 
 	/**
@@ -150,19 +141,19 @@ public class TextualScanning implements CalculatorListener{
 			graphFrame.setVisible(true);
 		}
 	}
-
+	
+	
 	@Override
 	public void onFunctionRemoved(FunctionIF function) {
 		if(!headlessFlag) {
 			graphFrame.setVisible(true);
 		}
 	}
-
+	
+	
 	@Override
 	public void onError(ErrorCodes errorCode, String message) {
 		System.out.println(errorCode+": "+message);
 	}
-
-
-
+	
 }

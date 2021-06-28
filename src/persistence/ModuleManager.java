@@ -3,11 +3,12 @@ package persistence;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 /**
  * 
  * This class manages Modules.
  * (It is meant to be a singleton).
+ * 
+ * @author Team - L21
  *
  */
 public class ModuleManager {
@@ -17,7 +18,6 @@ public class ModuleManager {
 	private static String PATH_TO_LOCAL_SETTINGS_MODULES_DIR = "modules";
 	
 	private static String PATH_TO_GENERAL_MODULES_DIR = "general_modules";
-	
 	
 	private HashMap<String, Module> loadedModulesMap;
 
@@ -31,9 +31,6 @@ public class ModuleManager {
 		if(!modulesDir.exists()) {
 			modulesDir.mkdir();
 		}
-
-
-		//load the modules that are present at launch-time
 		
 		//load the custom/local modules
 		for(File file : new File(PATH_TO_LOCAL_SETTINGS_MODULES_DIR).listFiles()) {
@@ -45,9 +42,9 @@ public class ModuleManager {
 			loadedModulesMap.put(file.getName(), new Module(PATH_TO_GENERAL_MODULES_DIR, file.getName()));
 		}
 		
-		
 	}
 
+	
 	/**
 	 * gets the static instance of ModuleManager.
 	 * @return
@@ -71,8 +68,6 @@ public class ModuleManager {
 	 * @return
 	 */
 	public Module getModule(String name) {
-
-
 
 		Module module = loadedModulesMap.get(name);
 
@@ -103,14 +98,6 @@ public class ModuleManager {
 	public ArrayList<Module> getModules(){
 		return new ArrayList<Module>(loadedModulesMap.values());
 	}
-
-
-
-
-
-
-
-
 
 
 }

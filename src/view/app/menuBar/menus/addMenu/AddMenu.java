@@ -2,18 +2,18 @@ package view.app.menuBar.menus.addMenu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
 import controller.Calculator;
-import persistence.FileIO;
-import persistence.ModuleManager;
 import view.app.menuBar.menus.AbstractMenu;
 import view.graph.GraphPanel;
-
+/**
+ * Use to add new functions on the graph 
+ * 
+ * @author Team - L21
+ *
+ */
+@SuppressWarnings("serial")
 public class AddMenu extends AbstractMenu{
 
 	Calculator controller;
@@ -52,9 +52,5 @@ public class AddMenu extends AbstractMenu{
 		this.add(history);
 
 	}
-
-
-
-
 
 }

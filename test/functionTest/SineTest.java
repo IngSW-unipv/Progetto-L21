@@ -1,6 +1,3 @@
-/**
- * 
- */
 package functionTest;
 
 import static org.junit.Assert.*;
@@ -17,9 +14,9 @@ import model.core.FunctionIF;
 import model.functions.Sine;
 import parser.Parser;
 import parser.SyntaxException;
-
 /**
- * @author Angelo
+ * 
+ * This class tests the Sine (getValue + getDerivative)
  *
  */
 public class SineTest {

@@ -1,7 +1,4 @@
 package model.core;
-
-
-
 /**
  * A BinaryFunction takes in two FunctionIFs as operands.
  * 
@@ -12,6 +9,8 @@ package model.core;
  * BinaryFunction can be extended by the 
  * basic operators (+, -, *, /), as well as by 
  * two-input functions, etc...
+ * 
+ * @author Team - L21
  *
  */
 
@@ -33,9 +32,5 @@ public abstract class BinaryFunction extends FunctionAB {
 		this.rightOperand = rightOperand.getSimplified(); 
 		return this;
 	}
-
-
-	
-
 
 }

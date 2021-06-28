@@ -1,6 +1,5 @@
 package view.app.menuBar.menus;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +8,14 @@ import javax.swing.*;
 import view.graph.GraphPanel;
 import view.help.AboutFrame;
 import view.help.WelcomeFrame;
-
+/**
+ * 
+ * Show help info 
+ * 
+ * @author Team - L21
+ *
+ */
+@SuppressWarnings("serial")
 public class HelpMenu extends AbstractMenu {
 	
 	GraphPanel graphPanel;
@@ -23,7 +29,7 @@ public class HelpMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {					
-				WelcomeFrame wFrame = new WelcomeFrame();
+				new WelcomeFrame();
 			}
 			
 		});
@@ -33,7 +39,7 @@ public class HelpMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {					
-				AboutFrame aFrame = new AboutFrame();
+				new AboutFrame();
 			}
 			
 		});
@@ -42,6 +48,5 @@ public class HelpMenu extends AbstractMenu {
 		this.add(infoItem);
 		this.add(helpItem);
 	}
-
 
 }

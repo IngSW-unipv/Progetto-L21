@@ -4,8 +4,11 @@ import model.core.BinaryFunction;
 import model.core.FunctionIF;
 import model.functions.NaturalLogarithm;
 import model.numbers.Constant;
-
-
+/**
+ * 
+ * @author Team - L21
+ *
+ */
 public class Power extends BinaryFunction {
 
 	/**
@@ -30,18 +33,17 @@ public class Power extends BinaryFunction {
 	}
 
 
-
 	@Override
 	public String toString() {
 		return leftOperand+"^"+"("+rightOperand+")";
 	}
 
+	
 	@Override
 	public FunctionIF getSimplified() {
 
 		//simplify the operarands recursively
-		leftOperand = leftOperand.getSimplified();
-		rightOperand = rightOperand.getSimplified();
+		super.getSimplified();
 
 		// both costant
 		if(leftOperand instanceof Constant && rightOperand instanceof Constant) {
@@ -57,7 +59,6 @@ public class Power extends BinaryFunction {
 		if(rightOperand.equals(new Constant(0))) {
 			return new Constant(1);
 		}
-
 
 		return this;
 	}

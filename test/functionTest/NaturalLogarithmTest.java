@@ -14,7 +14,11 @@ import model.core.FunctionIF;
 import model.functions.NaturalLogarithm;
 import parser.Parser;
 import parser.SyntaxException;
-
+/**
+ * 
+ * This class tests the NaturalLogarithm (getValue + getDerivative)
+ *
+ */
 public class NaturalLogarithmTest {
 	private static final double DELTA = 1e-15;
 	private  Logger logger = Logger.getLogger("loggerTest");

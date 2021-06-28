@@ -5,7 +5,7 @@ import model.core.FunctionIF;
 
 /**
  * Represents a constant value.
- *
+ * @author Team - L21
  */
 
 public class Constant extends BasicOperand {

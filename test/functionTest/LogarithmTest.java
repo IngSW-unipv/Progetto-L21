@@ -14,7 +14,11 @@ import model.core.FunctionIF;
 import model.functions.Logarithm;
 import parser.Parser;
 import parser.SyntaxException;
-
+/**
+ * 
+ * This class tests the Logarithm (getValue + getDerivative)
+ *
+ */
 public class LogarithmTest {
 	private static final double DELTA = 1e-15;
 	private  Logger logger = Logger.getLogger("loggerTest");

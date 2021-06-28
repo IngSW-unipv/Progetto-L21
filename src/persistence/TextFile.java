@@ -2,7 +2,12 @@ package persistence;
 
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * Just a text file.
+ * @author Team - L21
+ *
+ */
+@SuppressWarnings("serial")
 public class TextFile extends File {
 
 	public TextFile(String path) {
@@ -37,6 +42,4 @@ public class TextFile extends File {
 		}
 	}
 	
-	
-
 }

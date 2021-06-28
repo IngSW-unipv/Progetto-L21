@@ -1,5 +1,7 @@
 package model.functions;
-
+/**
+ * @author Team - L21
+ */
 import model.core.FunctionIF;
 
 public class NaturalLogarithm extends Logarithm {

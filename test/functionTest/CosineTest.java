@@ -11,7 +11,7 @@ import parser.Parser;
 import parser.SyntaxException;
 
 /**
- * @author Angelo
+ * This class tests the Cosine (getValue + getDerivative)
  *
  */
 public class CosineTest {

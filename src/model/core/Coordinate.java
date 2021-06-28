@@ -4,6 +4,8 @@ package model.core;
  * This is a container-class for an x and a y point.
  * It's used to represent a (real-number) coordinate on a 
  * Cartesian Coordinate System.
+ * 
+ * @author Team - L21
  */
 
 public class Coordinate {

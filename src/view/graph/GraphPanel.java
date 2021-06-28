@@ -25,9 +25,8 @@ import persistence.ModuleManager;
 import view.graph.ioListeners.GraphKeyListener;
 import view.graph.ioListeners.HoveringCoordsMouseTracker;
 import view.graph.ioListeners.MovePanelWithMouseListener;
+// DA CONTROLLARE E VERIFICARE !!!
 
-
-@SuppressWarnings("serial")
 public class GraphPanel extends JPanel implements ModuleListener, CalculatorListener{
 
 

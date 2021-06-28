@@ -5,7 +5,7 @@ package model.core;
  * 
  * It can be extended by Constants as well as Variable
  * numbers.
- * 
+ * @author Team - L21
  */
 
 public abstract class BasicOperand extends FunctionAB {
@@ -25,13 +25,6 @@ public abstract class BasicOperand extends FunctionAB {
 	public String toString() {
 		return literal;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

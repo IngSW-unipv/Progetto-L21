@@ -2,13 +2,14 @@ package view.shell;
 
 import java.awt.*;
 import javax.swing.JFrame;
-
 import controller.Calculator;
-import controller.CalculatorListener;
-import controller.ErrorCodes;
-import model.core.FunctionIF;
 import view.graph.GraphPanel;
-
+/**
+ * This is a simplified Frame for the shell users
+ * 
+ * @author Team - L21
+ *
+ */
 @SuppressWarnings("serial")
 public class GraphFrame extends JFrame{
 	
@@ -23,7 +24,6 @@ public class GraphFrame extends JFrame{
 		this.setFocusable(true);
 		this.add(g);
 		
-		
 		this.pack(); // Causes this Window to be sized to fit the preferred size and layouts of its subcomponents.(dimensions of panel)
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setLocationRelativeTo(null);
@@ -36,6 +36,4 @@ public class GraphFrame extends JFrame{
 		
 	}
 
-	
-	
 }

@@ -10,32 +10,37 @@ import persistence.ModuleManager;
 import view.app.insertedFunctionsPanel.InsertedFunctionsPanel;
 import view.app.menuBar.AppMenuBar;
 import view.graph.GraphPanel;
-
 /**
  * This is a standalone frame that does not rely on the tester shell
  * for commands.
  * 
- * @author user
+ * @author Team - L21
  *
  */
-
+@SuppressWarnings("serial")
 public class AppFrame extends JFrame{
 	
-	//The Calculator object is an Observable controller.
+	/*
+	 * The Calculator object is an Observable controller.
+	 */
 	Calculator controller;
 	
-	//The graph panel specialized for plotting functions.
+	/*
+	 * The graph panel specialized for plotting functions.
+	 */
 	static GraphPanel graphPanel;
 	
-	//Displays the inserted functions' expressions, and allows their deletion.
+	/*
+	 * Displays the inserted functions' expressions, and allows their deletion.
+	 */
 	InsertedFunctionsPanel insertedFunctionsPanel;
 	
-	//App-Parameters
+	/*
+	 * App-Parameters
+	 */
 	String ICON_PATH = "./images/Cattura.JPG";
-	
 	String localLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
 	String TITLE = ModuleManager.getInstance().getModule( localLanguage!=null? localLanguage : "english").get("app_title");
-	
 	
 	
 	public AppFrame(Calculator controller) {
@@ -98,29 +103,4 @@ public class AppFrame extends JFrame{
 		setIconImage(kit.getImage(iconPath));
 	}
 	
-	
-
-
-	
-	
-	
-	
-
-	
-
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

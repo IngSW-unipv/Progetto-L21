@@ -4,15 +4,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import view.graph.GraphPanel;
-
 /**
  * This Class controls the action of keystrokes on the 
  * GraphPanel.
  *  
- * @author user
+ * @author Team - L21
  *
  */
-
 public class GraphKeyListener implements KeyListener {
 	
 	GraphPanel graphPanel;
@@ -20,7 +18,6 @@ public class GraphKeyListener implements KeyListener {
 	public GraphKeyListener(GraphPanel graphPanel) {
 		this.graphPanel = graphPanel;
 	}
-	
 	
 	
 	/**
@@ -44,7 +41,6 @@ public class GraphKeyListener implements KeyListener {
 	 * CTRL && C: clears the graph.
 	 * 
 	 */
-	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		
@@ -101,9 +97,6 @@ public class GraphKeyListener implements KeyListener {
 				graphPanel.clearGraph();
 			}
 			break;
-			
-			
-			
 		}
 		
 	}

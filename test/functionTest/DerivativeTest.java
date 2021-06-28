@@ -1,6 +1,3 @@
-/**
- * 
- */
 package functionTest;
 
 import static org.junit.Assert.*;
@@ -16,13 +13,12 @@ import org.junit.Test;
 import model.core.FunctionIF;
 import parser.Parser;
 import parser.SyntaxException;
-
 /**
- * @author Angelo
+ * This class tests the derivatives
  *
  */
+
 public class DerivativeTest {
-	private static final double DELTA = 1e-15;
 	private  Logger logger = Logger.getLogger("loggerTest");
 	private static int countTest;
 	

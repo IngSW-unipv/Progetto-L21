@@ -16,7 +16,6 @@ import javax.swing.JPopupMenu;
 import controller.Calculator;
 import model.core.FunctionIF;
 import persistence.ModuleManager;
-
 /**
  * Each plotted function gets to have a FunctionFragment that
  * represents its expression on screen, allows the user 
@@ -26,37 +25,68 @@ import persistence.ModuleManager;
  * Eventually this may contain further options to 
  * be applied on single functions.
  *
+ * @author Team - L21
+ * 
  */
+@SuppressWarnings("serial")
 public class FunctionFragment extends JPanel implements MouseListener{
 
-	//controller
+	/*
+	 * controller
+	 */
 	Calculator controller;
-	//this fragment's function
+	
+	/*
+	 * this fragment's function
+	 */
 	FunctionIF function;
-	//button that deletes its function 
+	
+	/*
+	 * button that deletes its function 
+	 */
 	JButton removeButton;
-	//the expression of this fragment's function
+	
+	/*
+	 * the expression of this fragment's function
+	 */
 	String expression;
-	//label used to display the expression
+	
+	/*
+	 * label used to display the expression
+	 */
 	JLabel label;
-	//button that allows you to differentiate its function
+	
+	/*
+	 * button that allows you to differentiate its function
+	 */
 	JButton deriveButton;
-	//this fragment's popup menu
+	
+	/*
+	 * this fragment's popup menu
+	 */
 	FragmentsPopupMenu popupMenu;
 	
+	
 	public FunctionFragment(FunctionIF function, Calculator controller) {
+		
 		//set this fragment's function
 		this.function = function;
+		
 		//make a new label 
 		label = new JLabel(function.getExpression().toString());
+		
 		//set the color of the label to match the color of the function on the graph
 		label.setForeground(function.getColor());
+		
 		//make a new remove button
 		removeButton = new JButton("/");
+		
 		//color of remove button text = RED
 		removeButton.setForeground(Color.red);
+		
 		//make a new derive button
 		deriveButton = new JButton("d/dx");
+		
 		//make a new popup menu for this fragment
 		popupMenu = new FragmentsPopupMenu(function,controller);
 
@@ -66,10 +96,12 @@ public class FunctionFragment extends JPanel implements MouseListener{
 		this.add(deriveButton);
 		this.add(label);
 
+		
 		//IMPORTANT: makes sure that keylistening doesn't get stuck on this panel for some swing-related reason.
-		removeButton.setFocusable(false);
-		deriveButton.setFocusable(false);
+		//removeButton.setFocusable(true);
+		//deriveButton.setFocusable(false);
 
+		
 		//set the remove button's action to = delete the function
 		removeButton.addActionListener(new ActionListener() {
 			@Override
@@ -78,6 +110,7 @@ public class FunctionFragment extends JPanel implements MouseListener{
 				controller.removeFunction(function);
 			}
 		});
+		
 		
 		//set the derive's button action
 		deriveButton.addActionListener(new ActionListener() {
@@ -91,6 +124,8 @@ public class FunctionFragment extends JPanel implements MouseListener{
 		});
 	}
 
+	
+	//--------------------------- TESTARE E DECIDERE SE LASCIARLO O MENO
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -113,7 +148,7 @@ public class FunctionFragment extends JPanel implements MouseListener{
 	public void mouseReleased(MouseEvent e) {			
 	}
 	//>-----------END UNIMPLEMENTED METHODS----------------<
-
+	
 }
 
 
@@ -170,7 +205,7 @@ class FragmentsPopupMenu extends JPopupMenu{
 	}
 }
 //>---------- END FRAGMENTSPOPUPMENU-------------------//<
-
+//END - TEST
 
 
 

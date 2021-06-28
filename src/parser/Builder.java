@@ -20,7 +20,11 @@ import model.operators.Subtraction;
 import model.operators.Sum;
 import persistence.Module;
 import persistence.ModuleManager;
-
+/**
+ * Build a FunctionIF object, given a postFixList (SyntaxTree) of an expression
+ * @author Team - L21
+ *
+ */
 public class Builder {
 
 	/**
@@ -28,12 +32,10 @@ public class Builder {
 	 */
 	static String[] OPERATORS = new String[]{"+", "-", "*", "/", "^"};
 
-
 	/**
 	 * This token signifies the end of a function.
 	 */
 	public static final String END_OF_FUNCTION = "END_OF_FUNCTION";
-
 
 	/**
 	 * 	this stack keeps the last two generated operands, so that 
@@ -53,13 +55,11 @@ public class Builder {
 	 */
 	private Stack<FunctionIF> altStack = new Stack<>();
 
-
 	/**
 	 * this is a reference to a stack that switches 
 	 * between mainStack and altStack. 
 	 */
 	private Stack<FunctionIF> currentStack = mainStack;
-
 
 
 	/**
@@ -86,10 +86,6 @@ public class Builder {
 	}
 
 
-
-
-
-
 	/**
 	 * Given an expression, this method builds an OperationIF
 	 * object. It could be a Constant, a Variable, an Operator
@@ -99,7 +95,6 @@ public class Builder {
 	 * @return
 	 */
 	private FunctionIF build(String token) {
-
 
 		//if it's x
 		if(token.toLowerCase().equals("x")) {
@@ -115,13 +110,10 @@ public class Builder {
 			return constant;
 		}
 
-
 		//if it's an operator
 		if(isOperator(token)) {
 			return buildOperator(token);
 		}
-
-
 
 		//if it's the end of a function
 		if(isEndOfFunction(token)) {
@@ -148,12 +140,8 @@ public class Builder {
 			functionsStack.push(newFunction);
 		}
 
-
-
-
 		return null;
 	}
-
 
 
 	/**
@@ -213,7 +201,6 @@ public class Builder {
 	}
 
 
-
 	/**
 	 * Check if a token represents the end of a function.
 	 * @param token
@@ -227,15 +214,12 @@ public class Builder {
 	}
 
 
-
 	/**
 	 * Builds a function object from a function's name.
 	 * @param function
 	 * @return
 	 */
-
 	private static FunctionIF buildFunction(String function) {
-
 
 		switch(function.toLowerCase()) {
 		case "sin":
@@ -256,14 +240,11 @@ public class Builder {
 
 		}
 
-
 		//general logarithm:
 		if(function.matches("log\\d+")) {
 			double base = Double.parseDouble(function.replace("log", ""));
 			return new Logarithm(null, base);
 		}
-
-
 
 		//try building a stored custom function identified by its name
 		return buildSavedFunction(function);
@@ -271,9 +252,12 @@ public class Builder {
 		//if no match was found, this method returns null.
 	}
 
-
-
-	//build a saved function from the customFunctions module
+	
+	/**
+	 * Build a saved-function from available modules
+	 * @param name
+	 * @return
+	 */
 	private static FunctionIF buildSavedFunction(String name) {
 
 		FunctionIF mask;
@@ -295,9 +279,5 @@ public class Builder {
 		return null;
 
 	}
-
-
-
-
 
 }

@@ -8,25 +8,23 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
 import view.graph.GraphPanel;
-
 /**
  * Takes care of all of the mouse-based movement interactions
  * with the GraphPanel.
  * 
- * @author user
+ * @author Team - L21
  *
  */
-
 public class MovePanelWithMouseListener implements MouseMotionListener, MouseListener, MouseWheelListener {
 
 	GraphPanel graphPanel;
-	
+
 	Point initialMousePosition = new Point(1,1);
-	
+
 	public MovePanelWithMouseListener(GraphPanel graphPanel) {
 		this.graphPanel = graphPanel;
 	}
-	
+
 	/**
 	 * Make use of the mouse's scroll-wheel to 
 	 * zoom in on the graph.
@@ -39,10 +37,10 @@ public class MovePanelWithMouseListener implements MouseMotionListener, MouseLis
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 	}
-	
-	
+
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		initialMousePosition = e.getPoint();
@@ -53,11 +51,10 @@ public class MovePanelWithMouseListener implements MouseMotionListener, MouseLis
 	public void mouseDragged(MouseEvent e) {
 		int distanceMovedX = e.getX()- initialMousePosition.x;
 		int distanceMovedY = e.getY()- initialMousePosition.y;
-		//TODO: Dynamic calibration. (Fix this magic number):
+		//TODO: Dynamic calibration. (Fix this magic number): 30
 		graphPanel.panHorizontally(distanceMovedX/30);
 		graphPanel.panVerically(-distanceMovedY/30);
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {

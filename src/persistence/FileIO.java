@@ -6,7 +6,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
+/**
+ * An easy method to read/write files
+ * 
+ * @author Team - L21
+ *
+ */
 public class FileIO {
 	
 	/**
@@ -50,12 +55,4 @@ public class FileIO {
 		}	
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-
 }

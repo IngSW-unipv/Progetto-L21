@@ -2,10 +2,10 @@ package main;
 
 import controller.Calculator;
 import view.app.AppFrame;
-
 /**
- * Test the app!
- *
+ * Test the GUI app!
+ * @author Team - L21
+ * 
  */
 
 public class MainApp {

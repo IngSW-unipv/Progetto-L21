@@ -3,7 +3,11 @@ package model.operators;
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
 import model.numbers.Constant;
-
+/**
+ * 
+ * @author Team - L21
+ *
+ */
 public class Sum extends BinaryFunction {
 
 	public Sum(FunctionIF leftOperand, FunctionIF rightOperand) {
@@ -26,12 +30,11 @@ public class Sum extends BinaryFunction {
 	}
 
 
-
 	@Override
 	public FunctionIF getSimplified() {
+		
 		//simplify the operarands recursively
-		leftOperand = leftOperand.getSimplified();
-		rightOperand = rightOperand.getSimplified();
+		super.getSimplified();
 
 		//if both operands are constants
 		if(leftOperand instanceof Constant && rightOperand instanceof Constant) {
@@ -47,7 +50,6 @@ public class Sum extends BinaryFunction {
 		if(rightOperand.equals(new Constant(0))) {
 			return leftOperand;
 		}
-
 
 		return this;
 	}

@@ -1,5 +1,7 @@
 package model.functions;
-
+/**
+ * @author Team - L21
+ */
 import model.core.FunctionIF;
 import model.core.UnaryFunction;
 import model.numbers.Constant;
@@ -29,6 +31,4 @@ public class Cosine extends UnaryFunction {
 		return "cos("+operand+")";
 	}
 
-	
-	
 }

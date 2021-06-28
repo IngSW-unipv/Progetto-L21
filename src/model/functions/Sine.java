@@ -1,5 +1,7 @@
 package model.functions;
-
+/**
+ * @author Team - L21
+ */
 import model.core.FunctionIF;
 import model.core.UnaryFunction;
 import model.operators.Product;
@@ -28,8 +30,4 @@ public class Sine extends UnaryFunction {
 		return "sin("+operand+")";
 	}
 	
-	
-	
-	
-
 }

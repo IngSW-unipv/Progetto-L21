@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import model.core.Coordinate;
 import model.core.FunctionIF;
-
+/**
+ * This interface could be implemented by different algorithms
+ * @author Team - L21
+ *
+ */
 public interface ZeroFinderIF {
 	
 	/**
@@ -14,7 +18,6 @@ public interface ZeroFinderIF {
 	 */
 	public ArrayList<Coordinate> getZeros(FunctionIF function);
 	
-	
 	/**
 	 * Computes the zeroes of a function in an interval.
 	 * @param function
@@ -22,9 +25,7 @@ public interface ZeroFinderIF {
 	 * @param upperBound
 	 * @return
 	 */
-	
 	public ArrayList<Coordinate> getZeros(FunctionIF function, double lowerBound, double upperBound);
-	
 	
 	/**
 	 * For the purpose of approximation, set a number close enough to zero, that can be considered as good as zero.

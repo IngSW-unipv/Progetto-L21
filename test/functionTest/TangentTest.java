@@ -14,7 +14,11 @@ import model.core.FunctionIF;
 import model.functions.Tangent;
 import parser.Parser;
 import parser.SyntaxException;
-
+/**
+ * 
+ * This class tests the Tangent (getValue + getDerivative)
+ *
+ */
 public class TangentTest {
 	private static final double DELTA = 1e-15;
 	private  Logger logger = Logger.getLogger("loggerTest");

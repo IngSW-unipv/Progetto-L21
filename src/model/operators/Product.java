@@ -3,7 +3,11 @@ package model.operators;
 import model.core.BinaryFunction;
 import model.core.FunctionIF;
 import model.numbers.Constant;
-
+/**
+ * 
+ * @author Team - L21
+ *
+ */
 public class Product extends BinaryFunction {
 
 	public Product(FunctionIF leftOperand, FunctionIF rightOperand) {
@@ -30,9 +34,7 @@ public class Product extends BinaryFunction {
 	public FunctionIF getSimplified() {
 		
 		//simplify the operarands recursively
-		leftOperand = leftOperand.getSimplified();
-		rightOperand = rightOperand.getSimplified();
-		
+		super.getSimplified();
 		
 		//both costant
 		if(leftOperand instanceof Constant && rightOperand instanceof Constant) {

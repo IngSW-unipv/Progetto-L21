@@ -1,11 +1,16 @@
-package tests;
+package persistence.test;
 
 import java.util.ArrayList;
 
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
-
+/**
+ * This is a tutorial to use the persistance package
+ * 
+ * @author Team - L21
+ *
+ */
 public class PersistanceTester {
 	
 	/**

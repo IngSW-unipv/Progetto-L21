@@ -2,14 +2,16 @@ package view.app.menuBar.menus;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-
 import view.graph.GraphPanel;
-
+/**
+ * 
+ * Allows the user to export images
+ * 
+ * @author Team - L21
+ *
+ */
+@SuppressWarnings("serial")
 public class ExportMenu extends AbstractMenu {
 
 	GraphPanel graphPanel;
@@ -30,8 +32,5 @@ public class ExportMenu extends AbstractMenu {
 		});
 		this.add(exportSnapshot);
 	}
-
-	
-	
 
 }

@@ -10,7 +10,14 @@ import javax.swing.JOptionPane;
 
 import persistence.ModuleManager;
 import view.graph.GraphPanel;
-
+/**
+ * 
+ * Displays a bunch of view options
+ * 
+ * @author Team - L21
+ *
+ */
+@SuppressWarnings("serial")
 public class ViewMenu extends AbstractMenu {
 
 	GraphPanel graphPanel;
@@ -21,13 +28,13 @@ public class ViewMenu extends AbstractMenu {
 		super(LANGUAGE_MODULE.get("view_menu_title"));
 		this.graphPanel = graphPanel;
 
-		
+
 		//make a menu to select the language
 		JMenu selectLanguageMenu = new JMenu(LANGUAGE_MODULE.get("select_language"));
 
 		//make a menu item for each available language
 		for(String language : ModuleManager.getInstance().getModule("available_langs").getKeyValMap().keySet()) {
-						
+
 			JMenuItem langItem = new JMenuItem(language);
 			langItem.addActionListener(new ActionListener() {
 
@@ -37,13 +44,12 @@ public class ViewMenu extends AbstractMenu {
 					localSettings.put("language", language);
 					JOptionPane.showMessageDialog(null, ModuleManager.getInstance().getModule(language).get("please_restart_the_app"));
 				}		
-				
+
 			});
-			
+
 			//add the language item to the langs menu
 			selectLanguageMenu.add(langItem);
 		}
-		
 		//add the language selction menu
 		this.add(selectLanguageMenu);
 
@@ -73,6 +79,7 @@ public class ViewMenu extends AbstractMenu {
 		});
 		this.add(viewCriticalPoints);	
 
+		
 		//make the view coordinates by hovering cursor item
 		JMenuItem viewHoveringCoordinates = new JMenuItem(LANGUAGE_MODULE.get("view_menu_hovering_coords"));
 		viewHoveringCoordinates.addActionListener(new ActionListener() {
@@ -88,7 +95,6 @@ public class ViewMenu extends AbstractMenu {
 
 		//make a new sub-menu for color-related stuff
 		JMenu chromaticsMenu = new JMenu(LANGUAGE_MODULE.get("view_menu_color_options"));
-		this.add(chromaticsMenu);
 
 
 		//make the bg-color selection item
@@ -105,6 +111,7 @@ public class ViewMenu extends AbstractMenu {
 
 		chromaticsMenu.add(setBgColor);
 
+		
 		//make the axes-color selection item
 		JMenuItem setAxesColor = new JMenuItem(LANGUAGE_MODULE.get("view_menu_axes_color"));
 		setAxesColor.addActionListener(new ActionListener() {
@@ -119,12 +126,13 @@ public class ViewMenu extends AbstractMenu {
 
 		chromaticsMenu.add(setAxesColor);
 
+		this.add(chromaticsMenu);
 		
-
+		
 		//make a new sub-menu for the step
 		JMenu stepMenu = new JMenu(LANGUAGE_MODULE.get("step"));
 
-
+		
 		JMenuItem stepOne = new StepMenuItem(1);
 		JMenuItem stepZeroPointOne = new StepMenuItem(0.1);
 		JMenuItem stepZeroPointFive = new StepMenuItem(0.5);
@@ -137,10 +145,10 @@ public class ViewMenu extends AbstractMenu {
 		stepMenu.add(stepZeroPointFive);
 
 
-		add(stepMenu);
+		this.add(stepMenu);
 
 
-		
+
 		//make an item to select the number of insertable functions
 		JMenuItem insertableFunctions = new JMenuItem(LANGUAGE_MODULE.get("view_menu_max_functions"));
 		insertableFunctions.addActionListener(new ActionListener() {
@@ -150,17 +158,21 @@ public class ViewMenu extends AbstractMenu {
 				if(!functionsNumber.matches("\\d+")) {
 					return;
 				}
-				ModuleManager.getInstance().getModule("graph").put("MAX_INSERTABLE_FUNCTIONS", functionsNumber);	
+				ModuleManager.getInstance().getModule("graph").put("MAX_INSERTABLE_FUNCTIONS", functionsNumber);
+				JOptionPane.showMessageDialog(null, LANGUAGE_MODULE.get("please_restart_the_app"));
 			}
-			
+
 		});
 		add(insertableFunctions);
 		
-
 	}
 
 
-
+	/**
+	 * To avoid duplicate code
+	 * @author Team - L21
+	 *
+	 */
 	class StepMenuItem extends JMenuItem{
 
 		StepMenuItem(double step){
@@ -175,10 +187,5 @@ public class ViewMenu extends AbstractMenu {
 			});
 		}
 	}
-
-
-
-
-
 
 }

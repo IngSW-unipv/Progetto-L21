@@ -3,48 +3,13 @@ package parser;
 import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
-import java.util.Stack;
-import java.util.regex.Pattern;
-
 import org.scijava.parsington.ExpressionParser;
-
 import model.core.FunctionIF;
-
 /**
- * Something about the general philosophy of this popular 
- * OO approach to mathematics:
- * 
- * 
- * The top-container, or top-level OperationIF, (aka:  the "oggettone"),
- * knows its general structure, and applies it to its components,
- * calling their methods and combining them suitably. 
- * 
- * This process can carry on recursively, with each sub-container
- * knowing its structure and combining its sub-elements suitably,
- * till a point is reached where the elements to be combined are
- * atomic (ie: the Base Case).
- * 
- * 
- * 
- * Eg: if the top container is a Sum, and the operation requested
- * of it is differentiation, the "oggettone" returns the Sum 
- * of the derivatives of its components. 
- * 
- * Each component knows what its own derivative is, if not 
- * directly, indirecly: by calling the getDerivative method
- * of its components.
- * 
- * In this scenario (differentiaton), the process halts 
- * when the component is direcly aware of what its derivative is, 
- * ie: when the component is a Constant or a Variable. 
- * This is the Base Case.
- *  
- * 
- * 
- * 
+ * Convert an expression in a postFixList and calls the Builder
+ * @author Team - L21
  *
  */
-
 public class Parser {
 	
 	/**
@@ -74,20 +39,9 @@ public class Parser {
 		FunctionIF oggettone;
 		
 		try {
-			oggettone = builder.build(postfixList);
-			
-			/*
-			postfixList = parsePostfixList(oggettone.toString());
-			String simplifiedExpression = new Simplifier().simplifyExpression(postfixList);
-			
-			System.out.println(simplifiedExpression);
-			
-			postfixList = parsePostfixList(simplifiedExpression);
-			
-			oggettone = builder.build(postfixList);
-			*/
-			
+			oggettone = builder.build(postfixList);			
 		} catch (EmptyStackException e) {
+			
 			throw new SyntaxException();
 		}
 		
@@ -96,8 +50,6 @@ public class Parser {
 		
 		return oggettone;
 	}
-	
-	
 	
 	
 	/**
@@ -129,29 +81,10 @@ public class Parser {
 			
 			postfixList.add(token.toString());
 		}
-		
-		
-		//test this method without side-effects
-		//String simplifiedExpression = new Simplifier().simplifyExpression(postfixList);
-		
-		
+
 		//return a postfix list of tokens that is compatible with the conventions required by the rest of the project.
 		return postfixList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 }

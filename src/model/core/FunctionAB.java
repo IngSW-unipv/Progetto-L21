@@ -10,11 +10,11 @@ import model.zeroFinder.ZeroFinderIF;
 /**
  * Implements some behaviors that are common 
  * to all kinds of FunctionIFs.
+ * 
+ * @author Team - L21
  */
 
 public abstract class FunctionAB implements FunctionIF {
-
-
 
 	/**
 	 * stash the last-calculated bounds and step
@@ -26,13 +26,10 @@ public abstract class FunctionAB implements FunctionIF {
 	 */
 	ArrayList<Coordinate> cachedSamples;
 
-
 	/**
 	 * this function's zerofinder
 	 */
 	ZeroFinderIF zeroFinder;
-
-
 
 	/**
 	 * this function's critical point finder
@@ -49,13 +46,10 @@ public abstract class FunctionAB implements FunctionIF {
 	 */
 	public ArrayList<Coordinate> getSamples(double lowerBound, double upperBound, double step){
 
-
-
 		//check if the samples required are the same as the previous ones, if they are, return the cached samples
 		if(lastLowerBound == lowerBound && lastUpperBound==upperBound && lastStep==step) {
 			return cachedSamples;
 		}
-
 
 		ArrayList<Coordinate> coordinatesList = new ArrayList<Coordinate>();
 
@@ -74,14 +68,13 @@ public abstract class FunctionAB implements FunctionIF {
 		if ( ((int)step) != step )
 			coordinatesList.add(new Coordinate(i, getValue(i)));
 
-
 		lastLowerBound = lowerBound;
 		lastUpperBound =upperBound;
 		lastStep =step;
 		cachedSamples = coordinatesList;
+
 		return coordinatesList;
 	}
-
 
 
 	/**
@@ -104,8 +97,6 @@ public abstract class FunctionAB implements FunctionIF {
 	public String getExpression() {
 		return toString();
 	}
-
-
 
 
 	/**
@@ -136,7 +127,6 @@ public abstract class FunctionAB implements FunctionIF {
 	}
 
 
-
 	@Override
 	public ArrayList<Coordinate> getCriticalPoints(double lowerBound, double upperBound){
 
@@ -148,7 +138,6 @@ public abstract class FunctionAB implements FunctionIF {
 		//get and retrun this function's critical points in a given interval
 		return criticalPointFinder.getCriticalPoints(this, lowerBound, upperBound);		
 	}
-
 
 
 	/**
@@ -165,14 +154,10 @@ public abstract class FunctionAB implements FunctionIF {
 			key+=((int)expression.charAt(i));
 		}
 
-
 		return new Color( (int)(1000000*(0.3*(double)key))  );
 	}
 
-
-
-
-
+	
 	@Override
 	public boolean equals(FunctionIF f) {
 		return f.getExpression().toLowerCase().equals(this.getExpression().toLowerCase()); 
@@ -183,13 +168,5 @@ public abstract class FunctionAB implements FunctionIF {
 	public FunctionIF getSimplified() {
 		return this;
 	}
-
-
-
-
-
-
-
-
 
 }

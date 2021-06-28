@@ -1,21 +1,21 @@
 package main;
 
 import controller.Calculator;
-import view.shell.GraphFrame;
-import view.shell.TextualScanning;
-
+import view.shell.Shell;
+/**
+ * Test the console app!
+ * @author Team - L21
+ * 
+ */
 public class MainConsole {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
-
+		
+		//make a new controller.
 		Calculator c = new Calculator();
-		//GraphFrame g = new GraphFrame(c);
-//		FunctionIF f = c.addFunction("x^2+1");
-//		FunctionIF f2 = c.addFunction("sin(x)");
-		TextualScanning t = new TextualScanning(c);
+		
+		//start the app!
+		new Shell(c);
 		
 	}
 

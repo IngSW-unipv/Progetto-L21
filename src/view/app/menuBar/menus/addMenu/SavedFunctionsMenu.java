@@ -19,9 +19,11 @@ import view.app.menuBar.menus.AbstractMenu;
  * (You can save a plotted function by clicking on its expression in the 
  * displayed functions panel)
  *
+ * @author Team - L21
+ *
  */
+@SuppressWarnings("serial")
 public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
-
 
 	Calculator controller;
 	Module customFunctions; 
@@ -46,7 +48,6 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 		//remove all previous items 
 		this.removeAll();
 
-
 		//add the "save new function item"
 		JMenuItem saveNewFunction = new JMenuItem(LANGUAGE_MODULE.get("add_menu_add"));
 		saveNewFunction.addActionListener(new ActionListener() {
@@ -70,7 +71,6 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 		if(abilityToAdd) {
 			this.add(saveNewFunction);
 		}
-
 		
 		//deletes all of the functions in the module.
 		JMenuItem deleteAllItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_delete_everything"));
@@ -136,6 +136,7 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 	public void dealWithModuleUpdate(Module module) {
 		reloadMenu();
 	}
+	
 	@Override
 	public void dealWithSingularUpdate(String key, String value) {			
 	}

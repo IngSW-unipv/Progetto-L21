@@ -7,7 +7,6 @@ import parser.Parser;
 import parser.SyntaxException;
 import persistence.ModuleManager;
 import persistence.Module;
-import persistence.ModuleListener;
 
 
 /**
@@ -28,51 +27,45 @@ import persistence.ModuleListener;
  * If a function is removed, the CalculatorListeners are told about 
  * that too.
  * 
- * @author Team L21
+ * 
+ * @author Team - L21
  *
  */
 
-public class Calculator implements ModuleListener{
+public class Calculator{
 
 	/**
 	 * List of FunctionIFs inserted by user
 	 */
 	private ArrayList<FunctionIF> functions;
 
-
-	/**
-	 *Due to performance issues, we thought it might be a good
-	 *idea to limit the tot. number of simultaneously 
-	 *plottable functions. Eventually the user may change 
-	 *this amount, at their own RAM card's risk.
-	 */
-	int MAX_INSERTABLE_FUNCTIONS  = 3;
-
 	/**
 	 * List of listeners 
 	 */
 	private ArrayList<CalculatorListener> listeners;
-
 
 	/**
 	 * Persistence module to store the history of inputed functions
 	 */
 	private Module functionsHistoryModule = ModuleManager.getInstance().getModule("functionsHistoryModule");
 
-	
 	/**
 	 * Persistence module to store the graph settings
 	 */
-
 	private Module graphModule = ModuleManager.getInstance().getModule("graph");
+	
+	/**
+	 *Due to performance issues, we thought it might be a good
+	 *idea to limit the tot. number of simultaneously 
+	 *plottable functions.
+	 */
+	String maxFunctions = graphModule.get("MAX_INSERTABLE_FUNCTIONS") == null ? "3" : graphModule.get("MAX_INSERTABLE_FUNCTIONS"); 
+	int MAX_INSERTABLE_FUNCTIONS  = Integer.parseInt(maxFunctions);
 
-	
-	
 	
 	public Calculator() {
 		this.functions = new ArrayList<FunctionIF>();
 		this.listeners = new ArrayList<CalculatorListener>();
-		graphModule.addListener(this);
 	}
 
 
@@ -97,8 +90,6 @@ public class Calculator implements ModuleListener{
 				return null;
 			}
 		}
-
-
 
 		//if parsing went ok, try adding the FunctionIF object...
 		functionsHistoryModule.put("function"+System.currentTimeMillis()%1000, stringExpression);
@@ -125,7 +116,6 @@ public class Calculator implements ModuleListener{
 
 			return null;
 		}
-
 
 		//simplify the function before adding it
 		function = function.getSimplified();
@@ -208,7 +198,6 @@ public class Calculator implements ModuleListener{
 	}
 
 
-
 	/**
 	 * To build a FunctionIF from a String
 	 * @throws SyntaxException 
@@ -235,32 +224,5 @@ public class Calculator implements ModuleListener{
 
 		return f;
 	}
-
-
-	@Override
-	public void dealWithModuleUpdate(Module moduleThatGotUpdated) {
-		//update everything 
-		for(String chiave : moduleThatGotUpdated.getKeyValMap().keySet()) {
-			dealWithSingularUpdate(chiave, moduleThatGotUpdated.get(chiave));
-		}
-	}
-
-	@Override
-	public void dealWithSingularUpdate(String key, String value) {
-		switch(key) {
-		case "MAX_INSERTABLE_FUNCTIONS":
-			MAX_INSERTABLE_FUNCTIONS = Integer.parseInt(value);
-			break;
-		}
-	}
-
-
-
-
-
-
-
-
-
 
 }
