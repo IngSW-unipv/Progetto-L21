@@ -4,9 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import controller.Calculator;
+import view.app.GraphController;
 import view.app.menuBar.menus.AbstractMenu;
-import view.graph.GraphPanel;
 /**
  * Use to add new functions on the graph 
  * 
@@ -16,17 +15,10 @@ import view.graph.GraphPanel;
 @SuppressWarnings("serial")
 public class AddMenu extends AbstractMenu{
 
-	Calculator controller;
-	GraphPanel graphPanel;
-
-	public AddMenu(Calculator controller, GraphPanel graphPanel) {
-
+	public AddMenu(GraphController interactivePopups) {
 		//set the title
-		super(LANGUAGE_MODULE.get("add_menu_title"));
-		//set the controller
-		this.controller = controller;
-		//set the graph panel
-		this.graphPanel = graphPanel;
+		super(LANGUAGE_MODULE.get("add_menu_title"), interactivePopups);
+
 
 		//make the "add function" menu item
 		JMenuItem addFunctionItem = new JMenuItem(LANGUAGE_MODULE.get("add_menu_new_function"));
@@ -34,15 +26,15 @@ public class AddMenu extends AbstractMenu{
 		addFunctionItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.addFunctionProcedure();
+				interactivePopups.addFunctionProcedure();
 			}
 		});
 
 		//add the saved functions selector submenu
-		JMenu savedFunctionsMenu = new SavedFunctionsMenu(controller, "customFunctions", LANGUAGE_MODULE.get("custom_function"), true);
+		JMenu savedFunctionsMenu = new SavedFunctionsMenu(interactivePopups, "customFunctions", LANGUAGE_MODULE.get("custom_function"), true);
 
 		//add the history selector submenu
-		JMenu history = new SavedFunctionsMenu(controller, "functionsHistoryModule", LANGUAGE_MODULE.get("add_menu_history"), false);
+		JMenu history = new SavedFunctionsMenu(interactivePopups, "functionsHistoryModule", LANGUAGE_MODULE.get("add_menu_history"), false);
 
 		
 		//add the items to the addMenu menu

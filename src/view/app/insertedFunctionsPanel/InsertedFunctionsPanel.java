@@ -69,7 +69,6 @@ public class InsertedFunctionsPanel extends JPanel implements CalculatorListener
 	 */
 	private void addFunctionFragment(FunctionIF function) {
 		FunctionFragment newFrag = new FunctionFragment(function, controller);
-		this.addMouseListener(newFrag);
 		functionFragmentsMap.put(function.getExpression().toString(), newFrag);
 		this.add(newFrag);
 		this.repaint();

@@ -3,6 +3,8 @@ package view.graph.ioListeners;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import controller.Calculator;
+import view.app.GraphController;
 import view.graph.GraphPanel;
 /**
  * This Class controls the action of keystrokes on the 
@@ -14,9 +16,11 @@ import view.graph.GraphPanel;
 public class GraphKeyListener implements KeyListener {
 	
 	GraphPanel graphPanel;
+	GraphController interactivePopups;
 	
-	public GraphKeyListener(GraphPanel graphPanel) {
+	public GraphKeyListener(GraphPanel graphPanel, Calculator controller) {
 		this.graphPanel = graphPanel;
+		interactivePopups = new GraphController(controller, graphPanel);
 	}
 	
 	
@@ -74,27 +78,27 @@ public class GraphKeyListener implements KeyListener {
 			break;		
 		case KeyEvent.VK_P:
 			if(arg0.isControlDown()) {
-				graphPanel.addFunctionProcedure();
+				interactivePopups.addFunctionProcedure();
 			}
 			break;
 		case KeyEvent.VK_E:
 			if(arg0.isControlDown()) {
-				graphPanel.saveSnapshotProcedure();
+				interactivePopups.saveSnapshotProcedure();
 			}
 			break;
 		case KeyEvent.VK_X:
 			if(arg0.isControlDown()) {
-				graphPanel.toggleHighlightCriticalPoints();
+				interactivePopups.toggleHighlightCriticalPoints();
 			}
 			break;
 		case KeyEvent.VK_Z:
 			if(arg0.isControlDown()) {
-				graphPanel.toggleHighlightZeros();
+				interactivePopups.toggleHighlightZeros();
 			}
 			break;	
 		case KeyEvent.VK_C:
 			if(arg0.isControlDown()) {
-				graphPanel.clearGraph();
+				interactivePopups.controller.removeAll();
 			}
 			break;
 		}

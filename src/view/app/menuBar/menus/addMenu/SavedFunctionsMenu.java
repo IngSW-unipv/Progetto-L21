@@ -7,10 +7,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import controller.Calculator;
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
+import view.app.GraphController;
 import view.app.menuBar.menus.AbstractMenu;
 
 /**
@@ -25,13 +25,11 @@ import view.app.menuBar.menus.AbstractMenu;
 @SuppressWarnings("serial")
 public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 
-	Calculator controller;
 	Module customFunctions; 
 	boolean abilityToAdd;
 
-	public SavedFunctionsMenu(Calculator controller, String moduleName, String menuName, boolean abilityToAdd) {
-		super(menuName);
-		this.controller = controller;
+	public SavedFunctionsMenu(GraphController interactivePopups, String moduleName, String menuName, boolean abilityToAdd) {
+		super(menuName, interactivePopups);
 		customFunctions = ModuleManager.getInstance().getModule(moduleName);
 		customFunctions.addListener(this);
 		this.abilityToAdd = abilityToAdd;
@@ -101,7 +99,7 @@ public class SavedFunctionsMenu extends AbstractMenu implements ModuleListener{
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					controller.addFunction(savedFunctionName+"(x)");
+					interactivePopups.controller.addFunction(savedFunctionName+"(x)");
 				}
 
 			});

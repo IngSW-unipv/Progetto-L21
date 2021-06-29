@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import view.graph.GraphPanel;
+import view.app.GraphController;
 import view.help.AboutFrame;
 import view.help.WelcomeFrame;
 /**
@@ -18,12 +18,9 @@ import view.help.WelcomeFrame;
 @SuppressWarnings("serial")
 public class HelpMenu extends AbstractMenu {
 	
-	GraphPanel graphPanel;
-
-	public HelpMenu(GraphPanel graphPanel) {
+	public HelpMenu(GraphController interactivePopups) {
 		//set title
-		super(LANGUAGE_MODULE.get("help_menu_title"));
-		this.graphPanel = graphPanel;
+		super(LANGUAGE_MODULE.get("help_menu_title"), interactivePopups);
 		JMenuItem infoItem = new JMenuItem(LANGUAGE_MODULE.get("help_menu_welcome"));
 		infoItem.addActionListener(new ActionListener() {
 

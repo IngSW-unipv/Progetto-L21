@@ -9,13 +9,18 @@ package main;
  *
  */
 public class ChooseMain {
-
 	/**
 	 * @param args
 	 */
 	@SuppressWarnings("static-access")
 	public static void main(String[] args) {
-
+		
+		// by default start the GUI App
+		if (args.length == 0) {
+			new MainApp().main(null);
+			return;
+		}
+		
 		switch (args[0].trim().toLowerCase()) {
 		case "shell":
 			new MainConsole().main(null);

@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import persistence.ModuleManager;
-import view.graph.GraphPanel;
+import view.app.GraphController;
 /**
  * 
  * Displays a bunch of view options
@@ -20,14 +20,10 @@ import view.graph.GraphPanel;
 @SuppressWarnings("serial")
 public class ViewMenu extends AbstractMenu {
 
-	GraphPanel graphPanel;
-
-	public ViewMenu(GraphPanel graphPanel) {
+	public ViewMenu(GraphController interactivePopups) {
 
 		//set the title
-		super(LANGUAGE_MODULE.get("view_menu_title"));
-		this.graphPanel = graphPanel;
-
+		super(LANGUAGE_MODULE.get("view_menu_title"),interactivePopups);
 
 		//make a menu to select the language
 		JMenu selectLanguageMenu = new JMenu(LANGUAGE_MODULE.get("select_language"));
@@ -61,7 +57,7 @@ public class ViewMenu extends AbstractMenu {
 		viewZeros.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.toggleHighlightZeros();
+				interactivePopups.toggleHighlightZeros();
 			}				
 		});
 		this.add(viewZeros);	
@@ -73,7 +69,7 @@ public class ViewMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.toggleHighlightCriticalPoints();
+				interactivePopups.toggleHighlightCriticalPoints();
 			}
 
 		});
@@ -86,7 +82,7 @@ public class ViewMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.toggleHoverCoordinates();
+				interactivePopups.toggleHoverCoordinates();
 			}
 
 		});
@@ -103,7 +99,7 @@ public class ViewMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.setBackgroundColorProcedure();
+				interactivePopups.setBackgroundColorProcedure();
 
 			}
 
@@ -118,7 +114,7 @@ public class ViewMenu extends AbstractMenu {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				graphPanel.setAxesColorProcedure();
+				interactivePopups.setAxesColorProcedure();
 
 			}
 
@@ -182,7 +178,7 @@ public class ViewMenu extends AbstractMenu {
 			addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					graphPanel.setStep(step);
+					interactivePopups.setStep(step);
 				}
 			});
 		}
