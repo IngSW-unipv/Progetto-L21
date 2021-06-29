@@ -4,7 +4,7 @@ import javax.swing.JMenu;
 
 import persistence.Module;
 import persistence.ModuleManager;
-import view.app.GraphController;
+import view.graph.GraphController;
 /**
  * 
  * An abstract extended by all the menus

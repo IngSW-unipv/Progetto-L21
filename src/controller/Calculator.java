@@ -63,6 +63,13 @@ public class Calculator{
 	int MAX_INSERTABLE_FUNCTIONS  = Integer.parseInt(maxFunctions);
 
 	
+
+	
+	//grab the language Module
+	String currentLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
+    Module LANGUAGE_MODULE =ModuleManager.getInstance().getModule(currentLanguage !=null ? currentLanguage : "english");
+	
+	
 	public Calculator() {
 		this.functions = new ArrayList<FunctionIF>();
 		this.listeners = new ArrayList<CalculatorListener>();
@@ -111,7 +118,7 @@ public class Calculator{
 
 			//notify listeners
 			for(CalculatorListener listener : listeners) {
-				listener.onError(ErrorCodes.FUNCTIONS_LIMIT_REACHED, "Limite funzioni settato a: "+this.MAX_INSERTABLE_FUNCTIONS);
+				listener.onError(ErrorCodes.FUNCTIONS_LIMIT_REACHED, LANGUAGE_MODULE.get("error_max_func_limit_reached")+this.MAX_INSERTABLE_FUNCTIONS);
 			}
 
 			return null;
@@ -213,12 +220,12 @@ public class Calculator{
 		} catch (SyntaxException | IllegalArgumentException e) {
 			//notify listeners in case of a syntax exception:
 			for(CalculatorListener listener : listeners) {
-				listener.onError(ErrorCodes.SYNTAX_ERROR, "Sintassi errata! re-inserisci:");
+				listener.onError(ErrorCodes.SYNTAX_ERROR, LANGUAGE_MODULE.get("error_wrong_syntax"));
 			}
 		} catch(ArithmeticException e) {
 			//notify listeners in case of an arithmetic exception:
 			for(CalculatorListener listener : listeners) {
-				listener.onError(ErrorCodes.ARITHMETIC_ERROR, "Aritmetica errata! re-inserisci:");
+				listener.onError(ErrorCodes.ARITHMETIC_ERROR, LANGUAGE_MODULE.get("error_faulty_arithmetics"));
 			}
 		}
 

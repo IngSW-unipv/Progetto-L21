@@ -26,10 +26,12 @@ help_doc : file:./HtmlFiles/HelpHTML_ENG.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML_ENG.html
 view_menu_max_functions : max functions
 view_menu_max_insert_new_max_functions : insert a new limit for the insertable functions
-
-
-
-
+error_max_func_limit_reached : max insertable funcs. limit set to: 
+error_wrong_syntax : wrong syntax! Please re-insert:
+error_faulty_arithmetics : math error! Please re-insert:
+select_bg_color : select the bg-color
+select_axes_color : select the axes' color
+insert_a_new_func : insert a new function:
 
 
 

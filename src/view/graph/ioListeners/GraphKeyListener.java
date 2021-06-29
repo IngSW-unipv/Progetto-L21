@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import controller.Calculator;
-import view.app.GraphController;
+import view.graph.GraphController;
 import view.graph.GraphPanel;
 /**
  * This Class controls the action of keystrokes on the 

@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import persistence.ModuleManager;
-import view.app.GraphController;
+import view.graph.GraphController;
 /**
  * 
  * Displays a bunch of view options

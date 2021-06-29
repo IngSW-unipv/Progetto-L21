@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import view.app.GraphController;
+
 import view.app.menuBar.menus.AbstractMenu;
+import view.graph.GraphController;
 /**
  * Use to add new functions on the graph 
  * 

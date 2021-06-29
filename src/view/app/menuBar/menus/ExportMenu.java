@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
 
-import view.app.GraphController;
+import view.graph.GraphController;
 /**
  * 
  * Allows the user to export images

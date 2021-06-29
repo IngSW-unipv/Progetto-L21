@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import view.app.GraphController;
+import view.graph.GraphController;
 import view.help.AboutFrame;
 import view.help.WelcomeFrame;
 /**

@@ -2,11 +2,11 @@ package view.app.menuBar;
 
 import javax.swing.JMenuBar;
 import controller.Calculator;
-import view.app.GraphController;
 import view.app.menuBar.menus.ExportMenu;
 import view.app.menuBar.menus.HelpMenu;
 import view.app.menuBar.menus.ViewMenu;
 import view.app.menuBar.menus.addMenu.AddMenu;
+import view.graph.GraphController;
 import view.graph.GraphPanel;
 /**
  * This custom menu bar contains the main options and menus to access

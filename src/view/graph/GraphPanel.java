@@ -22,7 +22,6 @@ import model.core.FunctionIF;
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
-import view.app.GraphController;
 import view.graph.ioListeners.GraphKeyListener;
 import view.graph.ioListeners.HoveringCoordsMouseTracker;
 import view.graph.ioListeners.MovePanelWithMouseListener;
@@ -75,7 +74,9 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	/*
 	 * PERSISTANCE MODULES
 	 */
-	Module graphModule;
+	Module LANGUAGE_MODULE;
+	
+	
 
 	/**
 	 * the controller that this GraphPanel listens to.
@@ -129,9 +130,12 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		this.addKeyListener(keyListener);
 
 		//start listening to the graph-settings Module
-		graphModule = ModuleManager.getInstance().getModule("graph");
-		graphModule.addListener(this);
+		ModuleManager.getInstance().getModule("graph").addListener(this);
 
+		
+		//grab the language Module
+		String currentLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
+	    LANGUAGE_MODULE =ModuleManager.getInstance().getModule(currentLanguage !=null ? currentLanguage : "english");
 	}
 
 

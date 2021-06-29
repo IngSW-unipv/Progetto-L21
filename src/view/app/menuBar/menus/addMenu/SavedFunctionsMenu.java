@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import persistence.Module;
 import persistence.ModuleListener;
 import persistence.ModuleManager;
-import view.app.GraphController;
 import view.app.menuBar.menus.AbstractMenu;
+import view.graph.GraphController;
 
 /**
  * This menu lets the user pick a saved function from the customFunctions module.

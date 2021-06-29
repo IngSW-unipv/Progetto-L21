@@ -1,4 +1,4 @@
-package view.app;
+package view.graph;
 
 import java.awt.Color;
 import java.io.File;
@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import controller.Calculator;
 import persistence.Module;
 import persistence.ModuleManager;
-import view.graph.GraphPanel;
 /**
  * It's a pure fabrication made to contain popups, iteractive procedures and persistance info to get input from th user 
  * 
@@ -25,6 +24,12 @@ public class GraphController {
 
 	private GraphPanel graphPanel;
 
+
+	//grab the language Module
+	String currentLanguage = ModuleManager.getInstance().getModule("local_settings").get("language");
+	Module LANGUAGE_MODULE =ModuleManager.getInstance().getModule(currentLanguage !=null ? currentLanguage : "english");
+
+
 	public GraphController(Calculator controller, GraphPanel graphPanel) {
 		this.controller = controller;
 		this.graphPanel = graphPanel;
@@ -37,7 +42,7 @@ public class GraphController {
 	 */
 	public void setBackgroundColorProcedure() {
 
-		Color chosenColor = JColorChooser.showDialog(graphPanel, "Seleziona il colore di sfondo", null);
+		Color chosenColor = JColorChooser.showDialog(graphPanel, LANGUAGE_MODULE.get("select_bg_color"), null);
 		if(chosenColor==null) {
 			return;
 		}
@@ -49,7 +54,7 @@ public class GraphController {
 	 * Prompts the user to select the color of the axes.
 	 */
 	public void setAxesColorProcedure() {
-		Color color = JColorChooser.showDialog(graphPanel, "Seleziona il colore degli assi", null);
+		Color color = JColorChooser.showDialog(graphPanel, LANGUAGE_MODULE.get("select_axes_color"), null);
 		if(color==null) {
 			return;
 		}
@@ -73,7 +78,7 @@ public class GraphController {
 	 * Default add function procedure
 	 */
 	public void addFunctionProcedure() {
-		String message = "Inserisci una funzione:";
+		String message = LANGUAGE_MODULE.get("insert_a_new_func");
 		addFunctionProcedure(message);
 	}
 
@@ -96,7 +101,7 @@ public class GraphController {
 	}
 	//>--END INTERACTIVE PROCEDURES-----------------------<//
 
-	
+
 	//>-----------SET PERSISTENT PREFRERENCES--------------<//
 	public void toggleHighlightZeros() {
 		graphModule.put("HIGHLIGHT_ZEROS", (!graphPanel.HIGHLIGHT_ZEROS)+"");

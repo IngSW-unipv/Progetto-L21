@@ -26,9 +26,12 @@ help_doc : file:./HtmlFiles/HelpHTML_ITA.html
 welcome_doc : file:./HtmlFiles/WelcomeHTML_ITA.html
 view_menu_max_functions : massimo numero funzioni
 view_menu_max_insert_new_max_functions : inserisci un nuovo limite
-
-
-
+error_max_func_limit_reached : Limite funzioni settato a: 
+error_wrong_syntax : sintassi errata! Re-inserisci:
+error_faulty_arithmetics : aritmetica errata! Re-inserisci:
+select_bg_color : Seleziona il colore di sfondo
+select_axes_color : Seleziona il colore degli assi
+insert_a_new_func : Inserisci una nuova funzione
 
 
 
