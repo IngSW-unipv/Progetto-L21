@@ -82,8 +82,8 @@ public class FunctionFragment extends JPanel{
 
 		
 		//IMPORTANT: makes sure that keylistening doesn't get stuck on this panel for some swing-related reason.
-		//removeButton.setFocusable(true);
-		//deriveButton.setFocusable(false);
+		removeButton.setFocusable(false);
+		deriveButton.setFocusable(false);
 
 		
 		//set the remove button's action to = delete the function
