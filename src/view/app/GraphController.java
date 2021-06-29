@@ -111,7 +111,6 @@ public class GraphController {
 
 	// TODO !!
 	public void toggleHoverCoordinates() {
-		System.out.println(graphPanel.HOVER_COORDINATES);
 		graphModule.put("HOVER_COORDINATES", (!graphPanel.HOVER_COORDINATES)+"");
 		graphPanel.repaint();
 	}
