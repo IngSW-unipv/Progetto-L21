@@ -236,6 +236,8 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 			}
 		}
 
+		
+		System.out.println(HOVER_COORDINATES);
 		if(HOVER_COORDINATES) {
 			//paints the coordinate that the cursor is hovering on
 			g2d.setColor(Color.black);
