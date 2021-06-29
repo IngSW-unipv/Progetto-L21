@@ -50,6 +50,7 @@ public class GraphKeyListener implements KeyListener {
 		
 		switch(arg0.getKeyCode()) {
 		case KeyEvent.VK_EQUALS:
+		case KeyEvent.VK_PLUS:
 			if(arg0.isControlDown()) {
 				graphPanel.zoom(1);
 			}
