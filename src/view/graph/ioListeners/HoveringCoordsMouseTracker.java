@@ -24,7 +24,7 @@ public class HoveringCoordsMouseTracker implements MouseMotionListener {
 	
 	GraphPanel panelToBeTracked;
 	
-	Coordinate cursorCartesianCoord = new Coordinate(0,0);
+	volatile Coordinate cursorCartesianCoord = new Coordinate(0,0);
 	
 	public HoveringCoordsMouseTracker(GraphPanel panelToBeTracked) {
 		this.panelToBeTracked = panelToBeTracked;

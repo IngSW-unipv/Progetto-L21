@@ -54,7 +54,7 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 	private static final int HEIGHT = 600;
 	public boolean HIGHLIGHT_ZEROS = false;
 	public boolean HIGHLIGHT_CRITICAL_POINTS = false;
-	public boolean HOVER_COORDINATES = false;
+	public boolean HOVER_COORDINATES = true;
 
 
 	/*
@@ -120,7 +120,10 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		this.addMouseListener(movePanelWithMouseListener);
 		this.addMouseMotionListener(movePanelWithMouseListener);
 		this.addMouseWheelListener(movePanelWithMouseListener);
-
+		
+		this.addMouseMotionListener(hoveringCoordsTracker);
+		
+		
 		//add the keylistsner to the graph
 		keyListener = new GraphKeyListener(this, controller);
 		this.addKeyListener(keyListener);
@@ -237,7 +240,6 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 		}
 
 		
-		System.out.println(HOVER_COORDINATES);
 		if(HOVER_COORDINATES) {
 			//paints the coordinate that the cursor is hovering on
 			g2d.setColor(Color.black);
@@ -463,11 +465,17 @@ public class GraphPanel extends JPanel implements ModuleListener, CalculatorList
 			}
 			return;
 		case "HOVER_COORDINATES":
+			
+			
+			
 			if(value.contains("true")) {
 				addMouseMotionListener(hoveringCoordsTracker);
+				HOVER_COORDINATES  = true;
 			}else {
 				removeMouseMotionListener(hoveringCoordsTracker);
+				HOVER_COORDINATES  = false;
 			}
+			
 			return;
 		case "BACKGROUND_COLOR":
 			int colorInt = Integer.parseInt(value);
